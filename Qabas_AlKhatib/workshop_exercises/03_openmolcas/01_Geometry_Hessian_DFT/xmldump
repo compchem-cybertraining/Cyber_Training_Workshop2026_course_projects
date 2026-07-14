@@ -1,0 +1,620 @@
+<module value="gateway">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58737424</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.80853472</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01000969</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.47005806</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.50218502</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.44475271</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+<FormalCharge appear="Total charge" units="a.u" type="real"> -0.00000000</FormalCharge>
+<dipole appear="Dipole moment" units="debye" level="1" type="real" nx="3"><v> 0.00000000</v><v> -0.00000000</v><v> 0.00000000</v></dipole>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58745190</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.78137624</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01036335</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.37220332</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.30722364</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.34756842</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58745928</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77014455</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01050936</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33292243</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22888576</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30850405</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="last_energy">
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58745930</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77008846</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01051009</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33299093</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22904687</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30859665</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+<FormalCharge appear="Total charge" units="a.u" type="real"> -0.00000000</FormalCharge>
+<dipole appear="Dipole moment" units="debye" level="1" type="real" nx="3"><v> -0.00000000</v><v> 0.00000000</v><v> -0.00000000</v></dipole>
+</module>
+</module>
+<module value="mckinley">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58743314</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77737574</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01041508</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.37838186</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.31944244</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.35362744</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58743284</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.76267735</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01060606</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.28797699</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.13866144</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.26325162</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58744540</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.76968170</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01051520</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33305122</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22834266</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30784604</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58744541</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77012370</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01050946</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33305118</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22909300</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30859640</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58744167</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77013020</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01050932</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33306413</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22910492</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30859913</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58744167</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77013615</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01050925</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33306413</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22911538</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30860959</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58744349</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77012895</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01050936</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33305887</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22910818</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30860582</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58744349</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77012829</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01050937</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33305887</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22910708</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30860471</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58743908</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.75135363</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01075332</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.27290538</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.10987720</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.24953274</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58743891</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.78896975</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01026456</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.39330471</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.34857660</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.36783298</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58745150</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77009185</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01050995</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33301588</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22905367</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30858629</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58745150</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77009142</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01050995</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33301588</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22905303</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30858565</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58744795</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77009805</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01050982</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33303716</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22908955</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30860444</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58744795</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77009180</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01050990</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33303717</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22907863</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30859351</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58744934</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.76404175</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01058854</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.30318340</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.16903559</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.27840285</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58744929</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77642139</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01042768</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.36289792</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.28959830</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.33925109</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58745357</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77035593</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01050654</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33303302</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22953505</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30904846</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58745357</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77008469</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01051007</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33303302</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22907621</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30858962</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58745860</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77009086</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01051005</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33299613</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22903519</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30858045</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58745860</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77008668</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01051011</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33299613</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22902792</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30857318</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58745831</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77008466</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01051013</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33299706</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22902808</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30857270</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58745831</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77008573</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01051012</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33299706</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22902993</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30857456</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58745763</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77008606</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01051010</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33299057</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22901662</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30856842</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rdft"</method>
+<energy appear="Total KS-DFT energy" units="a.u." level="1" type="real"> -78.58745763</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.77007814</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.01051021</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.33299057</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -180.22900276</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 68.30855456</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>

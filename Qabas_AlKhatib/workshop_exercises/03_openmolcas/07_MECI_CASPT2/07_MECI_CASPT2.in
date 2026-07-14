@@ -1,0 +1,45 @@
+&GATEWAY
+  Coord
+  6
+  Ethylene
+  C  -0.015890   0.073533  -0.059560
+  C   0.012427  -0.002469   1.315694
+  H   0.857876   0.147015  -0.710529
+  H  -0.936471  -0.011696  -0.626761
+  H   0.764558   0.663382   1.762573
+  H   0.740774  -0.869764   1.328583
+  Basis = 6-31G*
+  Group = NoSym
+  RICD
+  Constraints
+    a = Ediff 1 2
+    Value
+    a = 0.000
+  End of Constraints
+
+>>> Do While
+  &SEWARD
+  >>> IF ( ITER = 1 ) <<<
+    &SCF
+      Charge = 0
+      Spin   = 1
+  >>> ENDIF <<<
+  &RASSCF
+    Title = Ethylene SA-3-CAS(2,2)SCF
+    symmetry = 1
+    Nactel = 2 0 0
+    Spin = 1
+    Inactive = 7
+    Ras2 = 2
+    ciroot  =  3  3  1
+
+  &CASPT2
+    RLXRoot = 1
+    IPEA = 0.00
+    IMAGinary = 0.20
+    XMultiState = All
+    maxiter = 2000
+    FROZen = 0
+
+  &SLAPAF
+>>> EndDo
