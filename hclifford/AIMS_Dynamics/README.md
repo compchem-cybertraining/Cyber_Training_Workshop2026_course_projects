@@ -1,6 +1,6 @@
 This folder contains all of the files relevant to performing the ab initio multiple spawning dynamics in PySPAWN
 
-* I initiated 50 trajectories from the 50 initial conditions i generated and each trajectory generates and/or used 9 files (start.py, start.log, hessian.hdf5, geometry.xyz, sim.hdf5, sim.json, sim2.hdf5, and sim2.json, Slurm.job). This is a very large amount of files so i have left initial condition #1 as is for an example but i have zipped IC 2 to 50 into a zip file only including start.py, start.log, and geometry.xyz and uploaded here.
+* I initiated 50 trajectories from the 50 initial conditions i generated and each trajectory generates and/or used 9 files (start.py, start.log, hessian.hdf5, geometry.xyz, sim.hdf5, sim.json, sim2.hdf5, and sim2.json, Slurm.job). This is a very large amount of files so i have left initial condition #1 as is for an example but i have zipped IC 1 to 50 into a zip file (IC_1_50.zip) only including start.py, start.log, and geometry.xyz and uploaded here.
 
 
 
