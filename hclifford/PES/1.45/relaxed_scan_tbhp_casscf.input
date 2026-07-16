@@ -1,0 +1,29 @@
+&GATEWAY
+  Coord = tbhp.xyz
+  Basis = cc-pVDZ
+  Group = NoSymm
+  Constraints
+    rOO = Bond O1 O2
+  Values
+    rOO = 1.45 Angstrom
+  End of Constraints
+
+>>> DoWhile
+
+&SEWARD
+
+&RASSCF
+  Spin = 1
+  NActEl = 6 0 0
+  Inactive = 22
+  Ras2 = 4
+  CiRoot = 4 4 1
+  RlxRoot = 2
+  LumOrb
+  LevShift = 1.0
+
+&ALASKA
+
+&SLAPAF
+
+>>> EndDo
