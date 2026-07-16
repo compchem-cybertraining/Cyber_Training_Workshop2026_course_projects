@@ -1,0 +1,6 @@
+parameter,value
+equilibrium_bond_length_angstrom,1.1830085452509205
+triplet_force_constant_N_per_m,1503.4443373014694
+harmonic_frequency_cm-1,1786.02336232685
+singlet_triplet_gap_at_Re_eV,0.8128573719590244
+gap_slope_eV_per_angstrom,-1.2369925410661886
