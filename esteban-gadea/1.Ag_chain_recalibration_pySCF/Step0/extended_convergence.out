@@ -1,0 +1,8 @@
+=== Joint convergence check: natoms=2, nk=16, vacuum=30 ===
+  -> ok, wall=84.64865231513977, indirect_gap=4.3318959499163885
+=== Gamma-only natoms=16 (even branch), vacuum=20 (matches natoms_scan.csv) ===
+  -> ok, wall=335.14724826812744, indirect_gap=4.321735277959857
+=== Gamma-only natoms=16, vacuum=30 (matches the joint-converged target) ===
+  -> ok, wall=713.3983814716339, indirect_gap=4.356250049657005
+=== Done in 1133.4 s ===
+Compare extended_check.csv row 1 (the joint-converged reference) against rows 2-3 (natoms=16 Gamma-only) to see how close a feasible finite cluster gets to the converged periodic answer.

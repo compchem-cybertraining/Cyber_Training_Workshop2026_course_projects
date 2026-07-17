@@ -1,0 +1,10 @@
+parameter,value,units
+beta_eq,-0.668653,eV
+A_old,0.371035,eV/Angstrom
+A_new,1.1502085,eV/Angstrom
+k_inf_adopted,3.1,dimensionless
+k_inf_raw_fit,3.090215607927062,dimensionless
+k_inf_raw_fit_err,0.03278180185497771,dimensionless
+k_inf_flavor,k_largest4,-
+q,1,-
+r_eq,2.604816,Angstrom
