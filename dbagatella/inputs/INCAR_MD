@@ -1,0 +1,15 @@
+SYSTEM = Graphene-TiO2 NVT Molecular Dynamics (300 K)
+IBRION = 0         # Molecular Dynamics
+NSW    = 5000      # Number of MD steps
+POTIM  = 1.0       # Time step in fs
+MDALGO = 2         # Nose-Hoover thermostat
+SMASS  = 0.5       # Thermostat mass parameter
+TEBEG  = 300       # Start temperature (K)
+TEEND  = 300       # Final temperature (K)
+ISIF   = 2         # Fixed cell volume, update positions
+ALGO   = Fast
+LREAL  = Auto
+PREC   = Normal
+ISMEAR = 0
+SIGMA  = 0.05
+NELM   = 60

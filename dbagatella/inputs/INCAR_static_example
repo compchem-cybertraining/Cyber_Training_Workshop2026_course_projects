@@ -1,0 +1,22 @@
+SYSTEM = Graphene-TiO2 NAMD Static Extraction - ACELERADO
+
+# --- CÁLCULO ESTÁTICO (FOTOGRAFÍA) ---
+NSW = 0
+IBRION = -1
+
+# --- CONFIGURACIÓN ELECTRÓNICA ACELERADA ---
+PREC = Normal      # Velocidad estándar manteniendo la física intacta
+ALGO = Fast        # Algoritmo de minimización ultrarrápido
+LREAL = Auto       # Proyecciones en espacio real (El verdadero salvavidas de tiempo)
+NCORE = 16         # Paralelización perfecta para tu nodo
+ENCUT = 400
+ISMEAR = 0
+SIGMA = 0.05
+NELM = 60
+ICHARG = 0
+
+# --- BLINDAJE CRÍTICO PARA LIBRA ---
+NBANDS = 400       # OBLIGATORIO
+LWAVE = .TRUE.     # Enciende la escritura del WAVECAR
+LCHARG = .FALSE.   # Apaga el CHGCAR
+LVTOT = .FALSE.    # Apaga archivos masivos
