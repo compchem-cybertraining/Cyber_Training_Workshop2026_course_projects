@@ -1,0 +1,42 @@
+
+--- Basis Set: aug-cc-pVDZ ---
+
+--- Basis Set: {basis}\n{'='*40}") ---
+  State 1 | Energy: 2.88999 eV | f: 0.0000 | Dark
+  State 2 | Energy: 5.33736 eV | f: 0.0168 | Bright
+  State 3 | Energy: 5.80990 eV | f: 0.2156 | Bright
+  State 4 | Energy: 6.41071 eV | f: 0.0000 | Dark
+  State 5 | Energy: 6.46765 eV | f: 0.0082 | Dark
+  State 6 | Energy: 7.68294 eV | f: 0.0297 | Bright
+  State 7 | Energy: 7.69534 eV | f: 0.0012 | Dark
+  State 8 | Energy: 8.14305 eV | f: 0.0000 | Dark
+  State 9 | Energy: 8.57072 eV | f: 0.0140 | Bright
+  State 10 | Energy: 8.84679 eV | f: 0.0604 | Bright
+
+--- Basis Set: aug-cc-pVTZ ---
+
+--- Basis Set: {basis}\n{'='*40}") ---
+  State 1 | Energy: 2.89375 eV | f: 0.0000 | Dark
+  State 2 | Energy: 5.34471 eV | f: 0.0160 | Bright
+  State 3 | Energy: 5.79080 eV | f: 0.2051 | Bright
+  State 4 | Energy: 6.36648 eV | f: 0.0000 | Dark
+  State 5 | Energy: 6.42826 eV | f: 0.0079 | Dark
+  State 6 | Energy: 7.45041 eV | f: 0.0017 | Dark
+  State 7 | Energy: 7.48739 eV | f: 0.0226 | Bright
+  State 8 | Energy: 7.86780 eV | f: 0.0000 | Dark
+  State 9 | Energy: 8.13417 eV | f: 0.0011 | Dark
+  State 10 | Energy: 8.40842 eV | f: 0.0177 | Bright
+
+--- Basis Set: aug-cc-pVQZ ---
+
+--- Basis Set: {basis}\n{'='*40}") ---
+  State 1 | Energy: 2.89379 eV | f: 0.0000 | Dark
+  State 2 | Energy: 5.34147 eV | f: 0.0157 | Bright
+  State 3 | Energy: 5.77545 eV | f: 0.1980 | Bright
+  State 4 | Energy: 6.34698 eV | f: 0.0000 | Dark
+  State 5 | Energy: 6.38494 eV | f: 0.0081 | Dark
+  State 6 | Energy: 7.29727 eV | f: 0.0072 | Dark
+  State 7 | Energy: 7.35451 eV | f: 0.0180 | Bright
+  State 8 | Energy: 7.63643 eV | f: 0.0000 | Dark
+  State 9 | Energy: 7.90717 eV | f: 0.0002 | Dark
+  State 10 | Energy: 8.04010 eV | f: 0.0054 | Dark
