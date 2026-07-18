@@ -1,51 +1,44 @@
-# *********************************************************************************
-# P1-5: analytic nuclear gradients of the CIS/TDA exciton Hamiltonian (cis_exciton.py).
+# Analytic nuclear gradients of the CIS/TDA exciton Hamiltonian (cis_exciton.py).
 #
-# WHY THIS IS SIMPLER THAN A TEXTBOOK CIS GRADIENT: in ab initio quantum chemistry,
-# CIS/TDDFT gradients need CPHF/Z-vector machinery because (a) the AO basis functions
-# move with the nuclei (Pulay terms) and (b) the reference orbitals come from a
-# self-consistent field, so their R-response requires solving a coupled-perturbed
-# equation. Neither applies here: our "AO" basis is the site basis, which is
-# R-INDEPENDENT and always orthonormal (S = I regardless of geometry -- same as
-# AgChain.py's ovlp_dia), and the reference orbitals are just eigenvectors of the
-# fixed one-electron H0(R) (no SCF), so their R-response is plain, uncoupled
-# Rayleigh-Schrodinger perturbation theory. No CPHF needed.
+# Simpler than a textbook CIS gradient: ab initio CIS/TDDFT gradients need CPHF/
+# Z-vector machinery because (a) the AO basis functions move with the nuclei (Pulay
+# terms) and (b) the reference orbitals come from a self-consistent field, so their
+# R-response requires solving a coupled-perturbed equation. Neither applies here: our
+# "AO" basis is the site basis, which is R-independent and always orthonormal (S = I
+# regardless of geometry -- same as AgChain.py's ovlp_dia), and the reference orbitals
+# are just eigenvectors of the fixed one-electron H0(R) (no SCF), so their R-response
+# is plain, uncoupled Rayleigh-Schrodinger perturbation theory. No CPHF needed.
 #
 # Three pieces, combined by the product rule:
 #   1. d(eps_a - eps_i)/dR_k       -- Hellmann-Feynman on H0's eigenvalues (exact,
 #                                      no eigenvector derivative needed for this piece)
-#   2. dC_p/dR_k                   -- first-order non-degenerate perturbation theory,
+#   2. dC_p/dR_k                   -- first-order perturbation theory,
 #                                      dC_p/dR_k = sum_{q != p} <q|dH0/dRk|p>/(eps_p-eps_q) C_q
-#                                      dH0/dRk is EXACTLY AgChain.py's d1ham_dia.
-#   3. dK(mu,nu)/dR_k               -- analytic derivative of the real-space kernel;
-#                                      this is EXACTLY the "array2"/dlrxco output already
-#                                      computed by TLS_module.jl's buildxc for the ionic
-#                                      force calculation. Reused, not rederived.
+#                                      dH0/dRk is exactly AgChain.py's d1ham_dia.
+#   3. dK(mu,nu)/dR_k               -- analytic derivative of the real-space kernel,
+#                                      reused from the project's original Julia
+#                                      implementation's ionic-force calculation.
 #
-# RESOLVED 2026-07-09 (P1-8): piece 2's perturbation-theory formula used to blow up
-# (zero denominator) whenever p was part of a degenerate pair -- true for every MO in
-# this ring EXCEPT the HOMO/LUMO band-edge states themselves (confirmed non-degenerate
-# in cis_exciton.py's P1-1 output; every other level comes in exact +-k degenerate
-# pairs, a direct consequence of the ring's translational symmetry). That capped the
-# whole gradient pipeline at n_near=1 -- a single, fully delocalized Bloch-like
-# configuration, which P1-7's Ehrenfest run showed CANNOT self-trap (nothing to
-# spontaneously localize -- see README). Fixed below; see mo_response's docstring for
-# the full derivation, and cis_gradient_windowed for the n_near>1 generalization this
-# unblocks.
+# Piece 2's naive formula has a zero-denominator singularity whenever p is part of a
+# degenerate pair -- true for every MO in this ring except the HOMO/LUMO band-edge
+# states themselves, a direct consequence of the ring's translational symmetry, and a
+# real blocker: it caps the gradient pipeline at n_near=1, a single, fully delocalized
+# Bloch-like configuration that cannot spontaneously localize. The fix (excluding p's
+# whole degenerate group from the response sum, not just q=p) is exact, not an
+# approximation -- see mo_response's docstring for the full derivation, and
+# cis_gradient_windowed for the n_near>1 generalization it unblocks.
 #
-# VALIDATION (2026-07-09): analytic dE/dR_k for the single HOMO->LUMO configuration
+# Validation: analytic dE/dR_k for the single HOMO->LUMO configuration
 # (exciton_gradient_1config, non-degenerate case), checked against central finite
-# differences (delta=1e-5 bohr) at 4 different nuclear DOFs for the 32-pair reference
-# geometry: relative error ~3.6e-6 at every DOF tested (finite-difference-noise-level
-# agreement). The degenerate-case fix (cis_gradient_windowed, n_near=3, pulling in one
-# full +-k degenerate pair on each side of the gap, evaluated AT the exactly-degenerate
-# equilibrium geometry) validates to ~8.7e-6 relative error against an INDEPENDENT
-# finite-difference reference (see mo_response's docstring for why the CIS EIGENVALUE,
+# differences (delta=1e-5 bohr) at 4 nuclear DOFs, 32-pair reference geometry:
+# relative error ~3.6e-6 at every DOF (finite-difference-noise-level agreement). The
+# degenerate-case fix (cis_gradient_windowed, n_near=3, pulling in one full +-k
+# degenerate pair on each side of the gap, evaluated at the exactly-degenerate
+# equilibrium geometry) validates to ~8.7e-6 relative error against an independent
+# finite-difference reference (see mo_response's docstring for why the CIS eigenvalue,
 # not an individual dC_p/dR_k, is the only thing that can be validated this way at a
-# degenerate point). n_near=1 regression-checked bit-for-bit against the original
-# exciton_gradient_1config (max energy/gradient difference ~1e-19, i.e. floating-point
-# noise) -- the fix is a strict, backward-compatible generalization.
-# *********************************************************************************
+# degenerate point). n_near=1 regression-checked bit-for-bit against the original,
+# pre-fix formula (max difference ~1e-19, floating-point noise).
 
 import numpy as np
 from cis_exciton import build_H0, build_kernel, ANGSTROM, ELECTRONVOLT
@@ -73,19 +66,14 @@ def H0_with_gradient(nchain, dimer1, lattice_ang,
 
 def kernel_with_gradient(rion, boxl, alpha, gamma, U):
     """Same K as cis_exciton.build_kernel, plus dK[k] = dK/dR_k. Reuses the exact
-    analytic form of TLS_module.jl's buildxc "array2" (dlrxco).
+    analytic form of the project's original Julia implementation's ionic-force
+    kernel derivative.
 
-    PERFORMANCE (2026-07-10, P1-9): vectorized -- the original was a Python
-    double loop over all (mu, nu) pairs, mu<nu (O(n^2) Python-level
-    iterations). Rewritten using numpy broadcasting for the pairwise distance
-    matrix and K, and vectorized fancy indexing (np.triu_indices) to scatter
-    the O(n^2) nonzero dK entries in one shot instead of assigning them one
-    pair at a time. Bit-for-bit identical output to the original (confirmed:
-    max|K_old-K_new|=0, max|dK_old-dK_new|=0, both alpha=fxcalpha and
-    alpha=0.0 exchange-kernel cases, nchain=32) -- this is a pure
-    vectorization, not an approximation. Measured speedup: ~30x (nchain=16)
-    to ~58x (nchain=32) per call. See README's P1-9 section for the full
-    per-step profiling story that motivated this."""
+    Vectorized over all (mu, nu) pairs using numpy broadcasting for the pairwise
+    distance matrix and K, and fancy indexing (np.triu_indices) to scatter the
+    O(n^2) nonzero dK entries in one shot rather than a Python double loop -- a
+    pure vectorization, bit-for-bit identical to the unvectorized version. ~30-58x
+    faster per call (nchain=16 to 32), which matters since this runs every MD step."""
     n = len(rion)
     rion = np.asarray(rion, dtype=float)
     dij_mat = rion[None, :] - rion[:, None]           # dij_mat[mu,nu] = rion[nu]-rion[mu]
@@ -115,8 +103,8 @@ def kernel_with_gradient(rion, boxl, alpha, gamma, U):
 def mo_response(C, eps, dH0, p, degeneracy_tol=1e-8):
     """
     dC_p/dR_k for every DOF k -- first-order Rayleigh-Schrodinger perturbation theory,
-    generalized (P1-8, 2026-07-09) to handle p being part of a degenerate group
-    correctly, not just the non-degenerate case.
+    generalized to handle p being part of a degenerate group correctly, not just the
+    non-degenerate case.
 
     THE FIX, IN ONE LINE: exclude p's ENTIRE degenerate group from the response sum
     (not just q == p), i.e.
@@ -185,22 +173,15 @@ def mo_response(C, eps, dH0, p, degeneracy_tol=1e-8):
     eigenvalue itself. See cis_gradient_windowed's validate_degenerate() for exactly
     this test, run AT the exactly-degenerate equilibrium geometry.
 
-    PERFORMANCE (2026-07-10, P1-9): vectorized over BOTH k and q -- the
-    original had a Python double loop (`for k: ... for q in external: ...`),
-    O(n_dof * n) Python-level iterations, which cProfile showed became the
-    single dominant cost (~48% of per-MD-step time at nchain=32) after the
-    kernel_with_gradient/get_D optimizations below were applied. Rewritten
-    as two BLAS matmuls:
+    Vectorized over both k and q as two BLAS matmuls rather than a Python double
+    loop, since this is a per-MD-step hot path:
         W[k,m] = sum_n dH0[k,m,n] C[n,p]     (np.tensordot, batched matvec)
         G[k,q] = sum_m W[k,m] C[m,q] = (W @ C)[k,q]   (= <q|dH0_k|p> for every k,q at once)
         dC_p[k,:] = sum_{q external} G[k,q]/(eps_p-eps_q) * C[:,q] = (weight @ C.T)[k,:]
-    Degenerate q's are masked out of `weight` (set to 0) rather than skipped
-    in a loop -- same "exclude p's whole degenerate group" fix, just
-    vectorized. Confirmed bit-for-bit equivalent to the original (max
-    difference ~1e-16, floating-point noise) at both equilibrium and
-    jittered geometries, for non-degenerate AND degenerate p. Measured
-    speedup: ~22x (nchain=32) to ~30x (nchain=16) per call. See README's
-    P1-9 section for the full per-step profiling story.
+    Degenerate q's are masked out of `weight` (set to 0) rather than skipped in a
+    loop -- same "exclude p's whole degenerate group" fix, just vectorized. Bit-for-
+    bit equivalent to the unvectorized version (max difference ~1e-16, floating-point
+    noise), for both non-degenerate and degenerate p. ~22-30x faster per call.
     """
     n = C.shape[0]
     mask = np.abs(eps - eps[p]) >= degeneracy_tol
@@ -216,8 +197,8 @@ def contract3(v1, T, v2):
     Same quantity as np.einsum('m,kmn,n->k', v1, T, v2), but computed as two
     BLAS calls (tensordot + matmul) instead of a generic einsum contraction --
     ~4-5x faster in practice since einsum doesn't pick an optimal contraction
-    order for this 3-operand pattern by default. Added P1-9 (2026-07-10);
-    used throughout cis_compute_adi.py's hot MD-step path."""
+    order for this 3-operand pattern by default. Used throughout
+    cis_compute_adi.py's per-MD-step hot path."""
     W = np.tensordot(T, v2, axes=([2], [0]))            # (n_dof, n)
     return W @ v1                                        # (n_dof,)
 
@@ -266,18 +247,17 @@ def exciton_gradient_1config(nchain, dimer1, lattice_ang, fxcalpha, fxcgamma, ha
 def cis_gradient_windowed(nchain, dimer1, lattice_ang, fxcalpha, fxcgamma, hartreeu,
                            n_near, state_index=0, degeneracy_tol=1e-8):
     """
-    P1-8: general n_near CIS/TDA exciton energy + gradient for an arbitrary
-    configuration window -- the n_near>1 generalization exciton_gradient_1config
-    couldn't do (it's hardcoded to the single HOMO->LUMO configuration). This is what
-    P1-7's Ehrenfest test actually needs to represent a spatially LOCALIZABLE exciton
-    (a superposition of several near-gap configurations), instead of the single
-    delocalized Bloch-like mode that produced only a uniform breathing-mode response.
+    General n_near CIS/TDA exciton energy + gradient for an arbitrary configuration
+    window -- the n_near>1 generalization exciton_gradient_1config can't do (it's
+    hardcoded to the single HOMO->LUMO configuration). A spatially localizable exciton
+    (needed for self-trapping) requires a superposition of several near-gap
+    configurations, not the single delocalized Bloch-like mode n_near=1 gives.
 
     Use an ODD n_near (1, 3, 5, ...) to keep the window symmetric -- HOMO/LUMO are
-    non-degenerate, but every level further out comes in a COMPLETE +-k degenerate
-    pair (cis_exciton.py's P1-1 finding); an even n_near would split a degenerate pair
-    across the occ/virt boundary, asymmetrically including one partner but not the
-    other, which has no clean physical justification.
+    non-degenerate, but every level further out comes in a complete +-k degenerate
+    pair (a consequence of the ring's translational symmetry); an even n_near would
+    split a degenerate pair across the occ/virt boundary, asymmetrically including one
+    partner but not the other, which has no clean physical justification.
 
     Args:
         n_near (int): occ/virt window half-width, same convention as
@@ -290,12 +270,9 @@ def cis_gradient_windowed(nchain, dimer1, lattice_ang, fxcalpha, fxcgamma, hartr
         (E_n, dE_n, configs): E_n is the state_index-th CIS eigenvalue (Ha), dE_n[k]
         is its gradient w.r.t. site DOF k (Ha/Bohr), configs is the (i,a) list.
 
-    Cost note (the "assess cost" part of P1-8): this is O(n_dof * m^2) where
-    m = (2*n_near)^2 is the number of configurations -- each of the n_dof gradient
-    components rebuilds an m x m matrix from scratch. Fine for the small windows
-    tested so far (n_near=3, m=9); revisit if scaling to the n_near~16-32 range that
-    P1-4's static cross-check found necessary for tighter quantitative agreement with
-    the real-time spectrum.
+    Cost: O(n_dof * m^2) where m = (2*n_near)^2 is the number of configurations --
+    each of the n_dof gradient components rebuilds an m x m matrix from scratch. Fine
+    for small windows (n_near=3, m=9); revisit before scaling much further.
     """
     H0, dH0, rion, boxl = H0_with_gradient(nchain, dimer1, lattice_ang)
     n = H0.shape[0]
@@ -363,14 +340,13 @@ def validate_degenerate(nchain=32, dimer1=0.0868, lattice_ang=6.0,
                          hartreeu=0.115 * ELECTRONVOLT, n_near=3, state_index=0,
                          delta=1e-5, test_dofs=(0, 1, 5, 32, 63)):
     """
-    P1-8 validation: checks cis_gradient_windowed AT the exactly-degenerate
-    equilibrium geometry (not a jittered one -- see mo_response's docstring on why
-    this specific geometry is the real test). n_near=3 pulls in one complete +-k
-    degenerate pair on each side of the gap (HOMO-1/HOMO-2, LUMO+1/LUMO+2), so this
-    directly exercises the degenerate-PT fix, not just the already-validated
-    non-degenerate HOMO/LUMO case.
+    Checks cis_gradient_windowed at the exactly-degenerate equilibrium geometry (not
+    a jittered one -- see mo_response's docstring on why this specific geometry is
+    the real test). n_near=3 pulls in one complete +-k degenerate pair on each side
+    of the gap (HOMO-1/HOMO-2, LUMO+1/LUMO+2), so this directly exercises the
+    degenerate-PT fix, not just the already-validated non-degenerate HOMO/LUMO case.
 
-    The finite-difference reference is built INDEPENDENTLY (fresh H0/CIS-matrix
+    The finite-difference reference is built independently (fresh H0/CIS-matrix
     construction and diagonalization at each perturbed geometry, no dependence on
     mo_response or any analytic gradient code) -- this is deliberate: since CIS
     eigenvalues are basis-invariant (unaffected by numpy.linalg.eigh's arbitrary
@@ -378,9 +354,9 @@ def validate_degenerate(nchain=32, dimer1=0.0868, lattice_ang=6.0,
     regardless of the individual-eigenvector labeling ambiguity that makes a
     finite-difference check of raw MO coefficients unreliable at this geometry.
 
-    Also regression-checks n_near=1 against the original exciton_gradient_1config
-    (pre-P1-8 code path) -- should match to floating-point precision, confirming the
-    fix doesn't change any already-validated behavior.
+    Also regression-checks n_near=1 against exciton_gradient_1config -- should match
+    to floating-point precision, confirming the degenerate-case fix above doesn't
+    change the already-validated non-degenerate behavior.
     """
     H0, rion, boxl = build_H0(nchain, dimer1, lattice_ang)
     eps0 = np.linalg.eigvalsh(H0)
@@ -445,7 +421,7 @@ def validate_degenerate(nchain=32, dimer1=0.0868, lattice_ang=6.0,
 
     E1_old, dE1_old = exciton_gradient_1config(nchain, dimer1, lattice_ang, fxcalpha, fxcgamma, hartreeu)
     E1_new, dE1_new, _ = cis_gradient_windowed(nchain, dimer1, lattice_ang, fxcalpha, fxcgamma, hartreeu, 1, 0)
-    print(f"\nRegression check (n_near=1 vs pre-P1-8 exciton_gradient_1config): "
+    print(f"\nRegression check (n_near=1 vs exciton_gradient_1config): "
           f"|dE|={abs(E1_old - E1_new):.2e} Ha, max|d(dE)|={np.max(np.abs(dE1_old - dE1_new)):.2e} Ha/Bohr")
 
 
@@ -493,6 +469,6 @@ def validate(nchain=32, dimer1=0.0868, lattice_ang=6.0,
 if __name__ == "__main__":
     validate()
     print("\n" + "=" * 70)
-    print("P1-8: degenerate-case validation (cis_gradient_windowed, n_near=3)")
+    print("Degenerate-case validation (cis_gradient_windowed, n_near=3)")
     print("=" * 70)
     validate_degenerate()

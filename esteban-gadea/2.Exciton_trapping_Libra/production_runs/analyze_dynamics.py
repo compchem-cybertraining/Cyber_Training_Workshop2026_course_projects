@@ -1,27 +1,9 @@
 """
-Bond-distortion and hole/electron density (IPR) diagnostics for one production run.
-
-Usage:
-    python analyze_dynamics.py <prefix>
-e.g.
-    python analyze_dynamics.py run2_selftrapping
-
-Reads `<prefix>/mem_data.hdf`, recomputes the CIS exciton state at a subsample
-of saved MD steps to get real-space hole/electron densities and their inverse
-participation ratios (IPR; n=fully delocalized, 1=fully localized on one
-site). Produces two separate figures:
-
-  - `<prefix>_maps.png` -- hole density, electron density, and the per-bond
-    distortion map (all atom/bond-index-vs-time heatmaps, same time axis), so
-    the exciton's localized region can be checked directly against where the
-    lattice is maximally distorted.
-  - `<prefix>_localization.png` -- IPR(hole)/IPR(electron) vs. time, overlaid
-    with the RMS bond-length distortion.
-
-For run3_control (ground state only, no exciton), the density/IPR panels are
-skipped automatically -- there is no CIS exciton state to recompute for a
-pure ground-state trajectory -- `<prefix>_maps.png` then contains only the
-bond-distortion map, and `<prefix>_localization.png` only the RMS trace.
+Bond-distortion and hole/electron density (IPR) diagnostics for one production
+run. Produces `<prefix>_maps.png` (hole/electron density and bond-distortion
+heatmaps) and `<prefix>_localization.png` (IPR vs. RMS bond distortion). For
+run3_control there's no exciton, so only the bond-distortion map and RMS trace
+are produced.
 """
 import sys
 import _pathsetup  # noqa: F401

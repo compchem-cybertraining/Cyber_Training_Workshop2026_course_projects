@@ -1,32 +1,8 @@
 """
-Runs 2 and 3 of 3 -- seeded exciton dynamics (self-trapping) and the matched
-ground-state control (report.md, Part II, Sections 2.4.2 and 2.4.3).
-
-Both runs start from the same 32-unit-cell (64-site) Ag ring equilibrium
-geometry and, critically, the exact same drawn nuclear velocities -- only
-which electronic state they propagate on differs (state 1, ground+exciton, vs.
-state 0, ground only). Velocities are drawn from a small Maxwell-Boltzmann
-distribution (a physically reasonable initial condition -- a real system
-carries some thermal/zero-point nuclear motion at the instant of excitation)
-rather than left at exactly zero, since the ring's exact symmetry otherwise
-gives the exciton no channel to spontaneously localize (see run_1_unseeded.py).
-Total momentum is explicitly zeroed (mean-subtracted) so none of the seeded
-kinetic energy is wasted on a physically irrelevant rigid-ring translation.
-
-Uses the ab initio-corrected Hamiltonian from Part I (report.md Section 1.6)
-via get_default_params()'s production defaults.
-
-Expected results:
-  - Run 2 (state 1, exciton): a narrowing, persistent region of lattice
-    distortion with co-localized hole and electron density -- self-trapping.
-  - Run 3 (state 0, ground, same velocity seed): bounded oscillation only, no
-    sustained growth -- confirms Run 2's localization is exciton-driven, not
-    an artifact of the random velocity kick itself.
-
-Run this on a machine with the `libra` kernel available. Output: `run2_
-selftrapping/mem_data.hdf` and `run3_control/mem_data.hdf` folders in the
-current working directory. Analyze with `analyze_dynamics.py` and, for the
-side-by-side view, `compare_runs.py`.
+Runs 2 and 3 of 3: seeded exciton dynamics and the matched ground-state
+control, from the exact same drawn (momentum-balanced) nuclear velocities --
+only the propagated electronic state differs. Ab initio-corrected Hamiltonian
+from Part I. Report: Sections 2.4.2-2.4.3.
 """
 import _pathsetup  # noqa: F401
 import sys

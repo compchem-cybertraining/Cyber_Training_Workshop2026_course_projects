@@ -1,11 +1,6 @@
 """
 Overlays RMS bond-length distortion vs. time for all three production runs on
-one plot -- the direct visual contrast behind report.md Section 2.4 (delocalized
-baseline vs. self-trapping vs. control). Saves `production_runs_comparison.png`.
-
-Run after all three of run_1_unseeded.py / run_2_selftrapping_and_control.py
-have completed and their `mem_data.hdf` files are present in the current
-directory (or point RUNS below at wherever you've placed them).
+one plot. Saves `production_runs_comparison.png`.
 """
 import _pathsetup  # noqa: F401
 import h5py

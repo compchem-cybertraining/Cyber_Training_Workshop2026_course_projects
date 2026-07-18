@@ -1,56 +1,36 @@
-# *********************************************************************************
 # Path 1 (single-quasiparticle reformulation): CIS/TDA-with-kernel exciton Hamiltonian
 # built on top of the ground-state TB Hamiltonian from AgChain.py.
 #
-# GOAL: replace "propagate the full many-electron rho(t)" with "propagate amplitudes
-# C(t) over a basis of single electron-hole excitation configurations |i->a>", which
-# genuinely fits Libra's rho = C.C+ (pure-state) convention -- see README.md's Open
-# Questions section for why the full-rho approach doesn't fit Libra's native TSH/
-# Ehrenfest engine.
+# Replaces "propagate the full many-electron rho(t)" with "propagate amplitudes C(t)
+# over a basis of single electron-hole excitation configurations |i->a>", which fits
+# Libra's rho = C.C+ (pure-state) convention -- see AgChain.py's module docstring for
+# why the full-rho approach doesn't fit Libra's native TSH/Ehrenfest engine.
 #
-# This module builds and diagonalizes the STATIC (rigid-lattice) exciton Hamiltonian
-# only -- no nuclear gradients yet (that's P1-5), no Libra plumbing yet (P1-6). Its
-# job is to nail down the correct many-body matrix-element formula and validate it
-# gives sensible (sub-gap, bound) exciton energies before anything gets wired into
-# Libra.
+# This module builds and diagonalizes the static (rigid-lattice) exciton Hamiltonian
+# only; nuclear gradients are in cis_gradient.py, the Libra port in cis_compute_adi.py.
 #
 # ---------------------------------------------------------------------------------
-# KEY DERIVATION NOTE (found empirically 2026-07-09 -- read this before changing
-# anything here):
-#
-# The standard singlet CIS/TDA matrix element for a closed-shell reference is
+# A sign/placement subtlety in the CIS matrix element, worth understanding before
+# changing this file: the standard singlet CIS/TDA matrix element for a closed-shell
+# reference is
 #     H(ia,jb) = delta_ij delta_ab (eps_a - eps_i) + 2*(ia|jb) - (ij|ab)
 # where (pq|rs) = sum_{mu,nu} C[mu,p]*C[mu,q]*K[mu,nu]*C[nu,r]*C[nu,s] is the MO-basis
 # two-electron integral built from the real-space density-density kernel K(mu,nu) =
-# hartree(mu,nu) + fxc(mu,nu) (the same kernel as TLS_module.jl's buildxc).
+# hartree(mu,nu) + fxc(mu,nu).
 #
-# Naively plugging the FULL kernel (hartree+fxc) into BOTH the direct (ia|jb) and
-# exchange (ij|ab) slots gives the WRONG sign for the fxc-driven sub-gap peak: it was
-# numerically verified that pure repulsive hartreeu (K>0) correctly produces bound
-# (sub-gap) singlet states dominated by the exchange channel -- confirming the overall
-# formula/sign convention is right in general -- but fxcalpha<0 plugged into that SAME
-# formula makes states MORE bound... no, wait: it makes them LESS bound / blue-shifted,
-# the opposite of what the fxc term is supposed to do (create the sub-gap peak). See
-# cis_dev.py in the session scratch history for the full sweep that exposed this.
-#
-# Resolution: fxc is not a literal second-quantized two-body interaction subject to
-# Pauli exchange the way a genuine Coulomb repulsion is -- it plays the role of a
-# TDDFT-style exchange-correlation KERNEL (same spirit as long-range-corrected fxc
-# kernels used to recover excitonic/BSE-like binding inside TDDFT for solids). In the
-# standard Casida/TDDFT-TDA equations, such a kernel enters ONLY the doubled "direct"
-# (Coulomb-like) slot, not the exchange slot:
+# Putting the full kernel (hartree+fxc) into both the direct (ia|jb) and exchange
+# (ij|ab) slots gives the wrong sign for the fxc-driven sub-gap peak: fxc is not a
+# literal two-body interaction subject to Pauli exchange the way a genuine Coulomb
+# repulsion is -- it plays the role of a TDDFT-style exchange-correlation kernel (the
+# same spirit as long-range-corrected fxc kernels used to recover excitonic/BSE-like
+# binding inside TDDFT for solids). In the standard Casida/TDDFT-TDA equations, such a
+# kernel enters ONLY the doubled "direct" (Coulomb-like) slot, not the exchange slot:
 #     H(ia,jb) = delta_ij delta_ab (eps_a-eps_i) + 2*(ia| K_hartree+K_fxc |jb) - (ij| K_hartree |ab)
-# i.e. hartreeu contributes to BOTH slots (it's a genuine repulsive interaction), fxc
-# contributes to the direct slot ONLY. This was verified numerically: with this split,
-# fxcalpha<0 alone (hartreeu=0) gives a positive (sub-gap) binding energy that grows
-# linearly with |fxcalpha|, and the combined hartreeu+fxcalpha case (using the general
-# default hartreeu=0.115 eV together with example/inp.in's fxcalpha=-0.1 eV) gives a
-# converged (with configuration-window size) binding energy of ~0.11 eV against a bare
-# gap of 0.386 eV for the 64-pair, dimer1=0.0868 reference geometry -- physically
-# reasonable (order the gap magnitude, not absurd), and the formula is well-behaved
-# (monotonic, converges as the window grows). Treat this as validated-by-consistency,
-# NOT yet cross-checked against the real-time Delta-rho sub-gap peak value itself --
-# that comparison is still open (see README).
+# i.e. hartreeu contributes to both slots (it's a genuine repulsive interaction), fxc
+# contributes to the direct slot only. With this split, fxcalpha alone (hartreeu=0)
+# gives a positive (sub-gap) binding energy that grows linearly with |fxcalpha|, and
+# the combined hartreeu+fxc case is well-behaved (monotonic, converges as the
+# configuration window grows) -- see validate() below.
 # ---------------------------------------------------------------------------------
 
 import numpy as np
@@ -62,9 +42,9 @@ ELECTRONVOLT = 1.0 / 27.211386245988
 def build_H0(nchain, dimer1, lattice_ang,
              hop=-0.0245725447, hopslope=0.007215487659, req=4.922388):
     """Ground-state (rigid-lattice) TB Hamiltonian -- same construction as AgChain.py's
-    compute_ag_chain, but returned as a plain numpy array (no Libra dependency) since
-    this module is meant to be developed/validated standalone before Step P1-6 wires
-    it into Libra's compute_model contract."""
+    compute_ag_chain, but returned as a plain numpy array (no Libra dependency), so
+    this module can be developed and validated standalone before being wired into
+    Libra's compute_model contract (cis_compute_adi.py)."""
     n = 2 * nchain
     lattice = lattice_ang * ANGSTROM
     r1 = lattice * (1 - dimer1) / 2
@@ -143,11 +123,10 @@ def cis_hamiltonian(C, eps, occ_idx, virt_idx, K_direct, K_exchange):
 def validate(n_near=5, nchain=64, dimer1=0.0868, lattice_ang=6.0,
              fxcalpha=-0.1 * ELECTRONVOLT, fxcgamma=0.26 * ANGSTROM, hartreeu=0.115 * ELECTRONVOLT):
     """
-    Build H0, the MO basis, and the windowed CIS Hamiltonian for the example/inp.in-like
-    geometry, and report the bare gap / lowest exciton eigenvalue / binding energy.
-    Defaults use fxcalpha/fxcgamma from example/inp.in and hartreeu from the general
-    default in IOmodule.jl (example/inp.in itself sets hartreeu=0, giving a smaller,
-    fxc-only binding energy -- pass hartreeu=0.0 to reproduce that case exactly).
+    Build H0, the MO basis, and the windowed CIS Hamiltonian at the reference geometry,
+    and report the bare gap / lowest exciton eigenvalue / binding energy. Defaults
+    reproduce the original model's reference parameters; pass hartreeu=0.0 for the
+    fxc-only case used throughout the production runs (cis_compute_adi.py).
     """
     H0, rion, boxl = build_H0(nchain, dimer1, lattice_ang)
     n = H0.shape[0]

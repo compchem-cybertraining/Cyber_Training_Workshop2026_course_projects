@@ -1,36 +1,30 @@
-# *********************************************************************************
-# P1-11: real-space exciton character from the CIS wavefunction -- the direct
-# diagnostic for "is there actually an exciton localizing here", complementing the
-# P1-10 control (which showed state 1's dynamics differs from state 0's for the
-# same velocity seed, but doesn't show WHAT is localized).
+# Real-space exciton character from the CIS wavefunction -- the direct diagnostic
+# for "is there actually an exciton localizing here, and where."
 #
-# PHYSICS: for a CIS/TDA state Psi = sum_(i,a) Psi_(i,a) |i->a>, the standard
-# "where is the hole/where is the excited electron" real-space marginal densities
-# are obtained by marginalizing |Psi_(i,a)|^2 over the partner index and
-# projecting onto real space via the MO coefficients:
+# For a CIS/TDA state Psi = sum_(i,a) Psi_(i,a) |i->a>, the standard "where is the
+# hole/where is the excited electron" real-space marginal densities are obtained by
+# marginalizing |Psi_(i,a)|^2 over the partner index and projecting onto real space
+# via the MO coefficients:
 #   rho_hole(site n) = sum_(i,a) |Psi_(i,a)|^2 * |C[n,i]|^2
 #   rho_elec(site n) = sum_(i,a) |Psi_(i,a)|^2 * |C[n,a]|^2
 # Both are individually normalized to 1 (sum_n rho_hole(n) = sum_n rho_elec(n) = 1)
 # since sum_(i,a)|Psi_(i,a)|^2 = 1 (Psi normalized) and each MO |C[:,p]|^2 is
-# itself normalized -- confirmed numerically (sandbox validation, 2026-07-10).
+# itself normalized.
 #
-# THIS IS A POST-PROCESSING-ONLY MODULE -- never called during the MD itself
+# This is a post-processing-only module -- never called during the MD itself
 # (dc1_adi/hvib_adi/etc. don't need it), only from analysis scripts that recompute
 # the CIS state at a handful of saved geometries from a completed trajectory. No
-# performance optimization applied here on purpose (clarity over speed -- this
-# runs at most a few thousand times on tiny matrices, nowhere near the per-MD-step
-# hot path P1-9 optimized).
+# performance optimization applied here on purpose: this runs at most a few
+# thousand times on small matrices, nowhere near the per-MD-step hot path in
+# cis_compute_adi.py.
 #
-# VALIDATED (2026-07-10, numpy sandbox): cis_windowed_state's E_n matches
-# cis_compute_adi.cis_windowed_energy_and_gradient's E_n EXACTLY (0.0 difference,
-# same Hm construction, just also returning Psi/configs/eps/C instead of only the
-# gradient) at nchain=8, n_near=3. rho_hole/rho_elec confirmed normalized to 1.
-# IPR (inverse participation ratio) confirmed = n exactly at the perfectly
-# symmetric equilibrium geometry (fully delocalized, consistent with the
-# originally-observed uniform/homogeneous response) and drops under a jittered
-# geometry (responds sensibly to broken symmetry) -- sanity-checked, not yet a
-# physics claim about the real seeded trajectory.
-# *********************************************************************************
+# Validated: cis_windowed_state's E_n matches
+# cis_compute_adi.cis_windowed_energy_and_gradient's E_n exactly (same Hm
+# construction, just also returning Psi/configs/eps/C instead of only the
+# gradient). rho_hole/rho_elec confirmed normalized to 1. IPR (inverse
+# participation ratio) confirmed = n exactly at the perfectly symmetric
+# equilibrium geometry (fully delocalized) and drops under a jittered geometry
+# (responds sensibly to broken symmetry).
 
 import numpy as np
 from cis_compute_adi import H0_and_dH0
@@ -40,11 +34,11 @@ from cis_gradient import kernel_with_gradient
 def cis_windowed_spectrum(rion, boxl, fxcalpha, fxcgamma, hartreeu, n_near,
                            hop=-0.0245725447, hopslope=0.007215487659, req=4.922388):
     """
-    Recompute the FULL windowed-CIS eigenvalue/eigenvector spectrum (all m
+    Recompute the full windowed-CIS eigenvalue/eigenvector spectrum (all m
     states, not just one) at an arbitrary geometry. Same Hm construction as
     cis_compute_adi.cis_windowed_energy_and_gradient / cis_windowed_state below,
     factored out so callers that need more than state_index=0 (e.g. a
-    state-crossing/gap diagnostic -- P1-16) don't have to duplicate the Hm build.
+    state-crossing/gap diagnostic) don't have to duplicate the Hm build.
 
     Returns:
         evals (m,), evecs (m, m) [evecs[:, k] is the k-th eigenvector], configs

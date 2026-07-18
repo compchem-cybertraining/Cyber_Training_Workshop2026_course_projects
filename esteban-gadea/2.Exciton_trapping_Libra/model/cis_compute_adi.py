@@ -1,59 +1,51 @@
-# *********************************************************************************
-# P1-6: CIS/TDA exciton Hamiltonian + gradients, ported into Libra's on-the-fly
+# CIS/TDA exciton Hamiltonian + gradients, ported into Libra's on-the-fly
 # ham_update_method=2 ("adiabatic") compute_model contract.
 #
-# TEMPLATE: libra_py.packages.dftbplus.methods.dftb_compute_adi (found in the
-# workshop's 4_dftbplus_methods/3_workflow/tutorial.ipynb, cell 37) -- the real
-# production function DFTB+ many-electron NA-MD workflows use. Key structural
-# findings this module mirrors exactly:
+# Template: libra_py.packages.dftbplus.methods.dftb_compute_adi, the function
+# Libra's own DFTB+ many-electron NA-MD workflows use. Key structural choices
+# this module mirrors:
 #
-#   * obj.ham_adi is diagonal = state energies directly -- Libra does NOT
-#     diagonalize anything on its side for this contract (unlike Step 2's
-#     ham_dia/AgChain.py, which handed Libra a diabatic matrix to diagonalize).
-#   * EVERY state's diagonal entry gets the SAME ground-state total energy added
-#     on top of its own (relative) energy -- dftb_compute_adi does this via
-#     `obj.ham_adi.add(i, i, e0)` after setting each state's excitation energy.
-#     States differ only by what's added on top of that shared baseline. This is
+#   * obj.ham_adi is diagonal = state energies directly -- Libra does not
+#     diagonalize anything on its side for this contract (unlike AgChain.py's
+#     ham_dia, which hands Libra a diabatic matrix to diagonalize).
+#   * Every state's diagonal entry gets the same ground-state total energy added
+#     on top of its own (relative) energy, via `obj.ham_adi.add(i, i, e0)` --
+#     states differ only by what's added on top of that shared baseline. This is
 #     why this module adds ground-state electronic + repulsive energy back in --
 #     without it the PES would be missing the dominant lattice-restoring forces.
-#   * obj.d1ham_adi is diagonal-only per DOF: d1ham_adi[k].set(i,i, dE_i/dR_k).
-#     (Note dftb_compute_adi writes `-forces[...]`; force = -dE/dR, so
-#     -forces = +dE/dR -- i.e. d1ham_adi stores the energy GRADIENT, not the
-#     force. Same convention used here.)
+#   * obj.d1ham_adi is diagonal-only per DOF: d1ham_adi[k].set(i,i, dE_i/dR_k)
+#     (the energy gradient, not the force -- force = -dE/dR).
 #   * obj.dc1_adi legitimately left all-zero when there's no NAC data -- the
-#     reference code does exactly this when NACV.DAT doesn't exist. We do the
-#     same: with a single fixed 2-state window (ground / ground+exciton) built
-#     fresh from instantaneous eigenvectors every call, there's no coupling
-#     pathway available in this simplified model, so this is a legitimate
-#     (documented) approximation, not a shortcut -- see README "Open
-#     Questions" for the state-tracking caveat this implies.
+#     reference code does exactly this when NACV data doesn't exist. With a
+#     fixed configuration window built fresh from instantaneous eigenvectors
+#     every call, there's no coupling pathway available in the base (enable_
+#     coupling=False) model, so this is a documented approximation, not a
+#     shortcut.
 #   * obj.hvib_adi = obj.ham_adi when dc1_adi/time_overlap contribute no
-#     off-diagonal terms (reference builds hvib's off-diagonals purely from
-#     the time-overlap-derived NAC estimate, which is zero here for the same
-#     reason as dc1_adi).
-#   * obj.basis_transform, obj.time_overlap_adi: identity. CAVEAT (documented,
-#     not yet resolved): true state-tracking across MD steps needs a real
-#     time-overlap between consecutive-step eigenvectors to catch state
-#     reordering/degeneracy crossing; this module assumes state identity is
-#     stable step-to-step (valid near the dimerized equilibrium geometry where
-#     HOMO/LUMO stay non-degenerate band-edge states -- see cis_gradient.py's
-#     mo_response docstring). Revisit if P1-7 dynamics shows state-order flips.
+#     off-diagonal terms (same as the reference: hvib's off-diagonals come
+#     purely from the time-overlap-derived NAC estimate, zero here for the
+#     same reason as dc1_adi).
+#   * obj.basis_transform, obj.time_overlap_adi: identity by default. Caveat:
+#     true state-tracking across MD steps needs a real time-overlap between
+#     consecutive-step eigenvectors to catch state reordering/degeneracy
+#     crossing; this module assumes state identity is stable step-to-step
+#     (valid near the dimerized equilibrium geometry where HOMO/LUMO stay
+#     non-degenerate band-edge states -- see cis_gradient.py's mo_response
+#     docstring). enable_coupling=True (below) replaces this identity fallback
+#     with a real time-overlap.
 #
-# PHYSICS REUSED AS-IS (no rederivation): cis_gradient.py's kernel_with_gradient
-# and mo_response (both geometry-agnostic already). NEW in this module: a
-# general-geometry H0_and_dH0 (P1-1/P1-5's build_H0/H0_with_gradient only build
-# the fixed equilibrium-dimerized geometry; MD moves the atoms off of it), plus
-# the repulsive potential energy/gradient (never needed before now -- Steps 1-5
-# only ever needed the electronic Hamiltonian) and the ground-state total energy/
+# Reuses cis_gradient.py's kernel_with_gradient and mo_response unchanged (both
+# already geometry-agnostic). New in this module: a general-geometry H0_and_dH0
+# (cis_exciton.py/cis_gradient.py's build_H0/H0_with_gradient only build the
+# fixed equilibrium-dimerized geometry; MD moves the atoms off of it), the
+# repulsive potential energy/gradient, and the ground-state total energy/
 # gradient assembly described above.
 #
-# VALIDATION (2026-07-09): see validate() below. Finite-difference check of the
-# FULLY ASSEMBLED ham_adi diagonal (ground-state total energy+repulsion AND
-# ground+exciton total) at a randomly-JITTERED (not equilibrium) 32-pair
-# geometry -- equilibrium geometries have near-zero net force by construction,
-# which is a weak test; jittering ensures the check exercises genuinely nonzero
-# gradients in every term.
-# *********************************************************************************
+# Validated by finite-difference check of the fully assembled ham_adi diagonal
+# (ground-state total energy+repulsion and ground+exciton total) at a randomly
+# jittered (not equilibrium) 32-pair geometry -- see validate() below.
+# Equilibrium geometries have near-zero net force by construction, a weak test;
+# jittering exercises genuinely nonzero gradients in every term.
 
 import sys
 if sys.platform == "cygwin":
@@ -65,8 +57,8 @@ import util.libutil as comn
 import numpy as np
 from cis_exciton import ANGSTROM, ELECTRONVOLT
 from cis_gradient import kernel_with_gradient, mo_response, contract3
-from cis_time_overlap import ground_exciton_time_overlap, multi_state_time_overlap   # P1-17/P1-19,
-                                                             # only used when params["enable_coupling"]=True
+from cis_time_overlap import ground_exciton_time_overlap, multi_state_time_overlap   # only used
+                                                             # when params["enable_coupling"]=True
 
 
 class tmp:
@@ -84,13 +76,13 @@ def H0_and_dH0(rion, boxl, hop=-0.668653 * ELECTRONVOLT,
     Defaults are the ab-initio-corrected (production) hopping parameters from
     Objective 1's pySCF re-parametrization (esteban-gadea/1.Ag_chain_recalibration_pySCF/
     report/objective1_report.md, Section 6): beta_eq=-0.668653 eV (unchanged), the
-    rescaled slope A=1.150209 eV/Ang, and the re-fit r_eq=3.989152 Ang -- NOT the
+    rescaled slope A=1.150209 eV/Ang, and the re-fit r_eq=3.989152 Ang -- not the
     original PBE-fit values (hop=-0.0245725447, hopslope=0.007215487659, req=4.922388,
-    all in Ha/Bohr) that every P1-1 through P1-19 development/validation run in this
-    file's history used. Those legacy values are preserved as-is in AgChain.py's and
-    cis_exciton.py's own get_default_params/build_H0 defaults (kept there deliberately,
-    since AgChain.validate() checks against a reference eigenvalue computed with them)
-    -- do not "fix" those to match production; they validate a different, older thing.
+    all in Ha/Bohr) used during this module's own development. Those legacy values
+    are preserved as-is in AgChain.py's and cis_exciton.py's own get_default_params/
+    build_H0 defaults (kept there deliberately, since AgChain.validate() checks
+    against a reference eigenvalue computed with them) -- do not "fix" those to match
+    production; they validate a different, older thing.
     """
     n = len(rion)
     H0 = np.zeros((n, n))
@@ -112,10 +104,8 @@ def H0_and_dH0(rion, boxl, hop=-0.668653 * ELECTRONVOLT,
 
 
 def repulsion_energy_and_gradient(rion, boxl, hop, pref, p, req):
-    """V(r) = -hop*pref*(req/r)^p per bond, matching
-    Ag_chains_parametrization.pdf Eq. 3 / td_code/TLS_module.jl's
-    construct_potential exactly (pref, p defaults from IOmodule.jl /
-    example/inp.in: pref=0.231122, p=15)."""
+    """V(r) = -hop*pref*(req/r)^p per bond, matching Ag_chains_parametrization.pdf
+    Eq. 3 / the project's original Julia implementation's construct_potential."""
     n = len(rion)
     E = 0.0
     dE = np.zeros(n)
@@ -138,18 +128,14 @@ def ground_state_energy_and_gradient(H0, dH0, rion, boxl, eps, C, nocc,
                                       hop, pref, p, req):
     """E_ground_total = 2*sum_occ(eps_i) + V_repulsion(R), plus its gradient
     (Hellmann-Feynman for the electronic piece, analytic for the repulsive
-    piece). This is the shared baseline dftb_compute_adi adds to EVERY state's
-    ham_adi diagonal (its `e0`/mermin_energy + `obj.ham_adi.add(i,i,e0)`).
+    piece). This is the shared baseline every state's ham_adi diagonal gets on
+    top of its own relative energy (see module docstring).
 
-    PERFORMANCE (2026-07-10, P1-9): dE_elec vectorized -- the original had a
-    Python loop over n_dof, each iteration summing nocc separate
-    C[:,i] @ dH0[k] @ C[:,i] matrix-vector-vector products (O(n_dof*nocc)
-    Python-level work). Rewritten using the occupied-space density matrix
+    dE_elec is vectorized via the occupied-space density matrix
     P = C_occ @ C_occ.T (n,n): sum_i C[:,i] . dH0[k] . C[:,i] = trace(dH0[k] @ P),
-    computed for ALL k at once as a single matrix-vector product
-    dH0.reshape(n_dof,-1) @ P.T.reshape(-1) (BLAS gemv). Confirmed bit-for-bit
-    equivalent to the original (max difference ~7e-18, floating-point noise).
-    Measured speedup: ~77x (nchain=32) to ~94x (nchain=16)."""
+    computed for all k at once as a single matrix-vector product
+    dH0.reshape(n_dof,-1) @ P.T.reshape(-1) (BLAS gemv) rather than a Python loop
+    over n_dof -- ~77-94x faster (nchain=32 to 16), since this runs every MD step."""
     n_dof, n, _ = dH0.shape
     E_elec = 2.0 * np.sum(eps[:nocc])
     Cocc = C[:, :nocc]
@@ -201,24 +187,20 @@ def cis_windowed_energy_and_gradient(rion, boxl, H0, dH0, eps, C, homo, lumo,
                                       fxcalpha, fxcgamma, hartreeu, n_near,
                                       state_index=0, degeneracy_tol=1e-8):
     """
-    P1-8b: general n_near CIS/TDA exciton energy + gradient at an ARBITRARY
-    geometry -- the arbitrary-geometry generalization of cis_gradient.py's
-    cis_gradient_windowed (P1-8a), exactly the same relationship
-    exciton_energy_and_gradient above already has to exciton_gradient_1config.
-    Reuses the degenerate-safe mo_response (P1-8a) unchanged -- that's what
-    makes n_near>1 possible: for n_near=1 this is byte-for-byte identical to
-    exciton_energy_and_gradient (regression-checked in the sandbox dev script,
-    exact 0.0 difference), but for n_near>1 the occ/virt window pulls in +-k
-    degenerate pairs (e.g. HOMO-1/HOMO-2 for n_near=3) that the old
-    single-configuration function could never have handled.
+    General n_near CIS/TDA exciton energy + gradient at an arbitrary geometry --
+    the arbitrary-geometry generalization of cis_gradient.py's cis_gradient_windowed,
+    the same relationship exciton_energy_and_gradient above has to
+    exciton_gradient_1config. Reuses the degenerate-safe mo_response unchanged --
+    that's what makes n_near>1 possible: for n_near=1 this is byte-for-byte identical
+    to exciton_energy_and_gradient, but for n_near>1 the occ/virt window pulls in
+    +-k degenerate pairs (e.g. HOMO-1/HOMO-2 for n_near=3) that a single-
+    configuration treatment can't handle.
 
-    THIS is what P1-7 was actually missing: with n_near=1, the exciton is a
-    single delocalized Bloch-like configuration with no way to spatially
-    localize (confirmed by P1-7's uniform breathing-mode result). With
-    n_near>1, the returned state (state_index=0, the lowest CIS eigenstate) is
-    a genuine superposition of several near-gap configurations -- something
-    that CAN be spatially localized, the actual object needed to test whether
-    the exciton-lattice coupling produces self-trapping.
+    n_near matters physically: with n_near=1, the exciton is a single delocalized
+    Bloch-like configuration with no way to spatially localize. With n_near>1, the
+    returned state (state_index=0, the lowest CIS eigenstate) is a genuine
+    superposition of several near-gap configurations -- something that can be
+    spatially localized, the object needed for self-trapping to be possible at all.
 
     Args:
         n_near (int): occ/virt window half-width (use ODD values -- see
@@ -231,48 +213,27 @@ def cis_windowed_energy_and_gradient(rion, boxl, H0, dH0, eps, C, homo, lumo,
         the bare gap baseline, same convention as exciton_energy_and_gradient),
         dE_n[k] is its gradient w.r.t. site DOF k (Ha/Bohr).
 
-    VALIDATED (2026-07-09, numpy sandbox): finite-difference agreement ~1e-7
-    at the EXACT equilibrium (degenerate) geometry and ~1e-9-1e-10 at a
-    jittered (non-degenerate) geometry, n_near=3 (pulls in the HOMO-1/HOMO-2
-    and LUMO+1/LUMO+2 degenerate pairs). n_near=1 regression-checked exactly
-    equal to exciton_energy_and_gradient. Real-kernel confirmed 2026-07-09.
+    Validated by finite differences: agreement ~1e-7 at the exact equilibrium
+    (degenerate) geometry and ~1e-9-1e-10 at a jittered (non-degenerate) geometry,
+    n_near=3. n_near=1 regression-checked exactly equal to exciton_energy_and_gradient.
 
-    PERFORMANCE (2026-07-10, P1-9): this is the actual per-MD-step hot path
-    (called once every Ehrenfest timestep), and the original implementation
-    made it "painfully slow" (Esteban's words) -- ~72-326 ms/step depending
-    on nchain, i.e. 25-108 minutes for a 20000-step run. Profiling
-    (cProfile) identified three redundant/unvectorized pieces, all fixed
-    here with NO change in the underlying math -- only correctness-preserving
-    rewrites (validated bit-for-bit, ~1e-17-1e-18 max difference, against the
-    original at both equilibrium and jittered geometries, nchain=16 and 32):
+    This is the per-MD-step hot path (called every Ehrenfest timestep), so it's
+    vectorized past the straightforward implementation in three ways, none of which
+    change the underlying math (validated bit-for-bit against the unvectorized
+    version, ~1e-17-1e-18 max difference):
 
-      1. REDUNDANT Dvec/dDvec RECOMPUTATION: the original recomputed
-         Dvec(i,a)/dDvec(i,a,k) from scratch for every (I,J) pair and every k
-         -- for n_near=3 (m=9 configs, 81 (I,J) pairs) that's thousands of
-         redundant recomputations of the same ~30 unique (p,q) products per
-         step. Fixed with a `get_D` memo cache keyed on (p_,q_), computed
-         once and reused.
-      2. Hm/dHk MATRIX SYMMETRY: Hm and dHk are symmetric (CIS Hamiltonian
-         and its derivative), but the original looped over ALL (I,J) pairs
-         including both (I,J) and (J,I). Fixed by looping over the upper
-         triangle only (J >= I) and mirroring, with the off-diagonal
-         contribution to Psi @ dHk @ Psi weighted by 2 (since
-         Psi[I]*dHk[I,J]*Psi[J] + Psi[J]*dHk[J,I]*Psi[I] = 2*Psi[I]*Psi[J]*dHk[I,J]
-         when dHk is symmetric) -- avoids computing dHk entirely and avoids
-         the Psi @ dHk @ Psi matrix product altogether.
-      3. UNVECTORIZED k-LOOP: the original had an explicit `for k in
-         range(n_dof)` Python loop, rebuilding an (m,m) matrix from scratch
-         every iteration. Fixed by using `contract3` (cis_gradient.py) to
-         get each (I,J) pair's full (n_dof,)-shaped gradient contribution in
-         one BLAS-backed call, accumulated directly into dE_n (no per-k
-         matrix ever built).
+      1. Memoized Dvec/dDvec: `get_D` caches each unique (p,q) product once per call
+         instead of recomputing it for every (I,J) configuration pair.
+      2. Hm/dHk matrix symmetry: loops over the upper triangle only (J >= I) and
+         mirrors, with the off-diagonal contribution to Psi @ dHk @ Psi weighted by 2
+         -- avoids ever building the full dHk matrix or computing Psi @ dHk @ Psi.
+      3. Vectorized gradient assembly: uses `contract3` (cis_gradient.py) to get each
+         (I,J) pair's full (n_dof,)-shaped gradient contribution in one BLAS-backed
+         call, accumulated directly into dE_n, instead of an explicit per-k Python
+         loop rebuilding an (m,m) matrix every iteration.
 
-      Combined with kernel_with_gradient's and mo_response's own
-      vectorization (see their docstrings), measured end-to-end speedup:
-      ~20-25x at nchain=16 (94 -> 3.7 ms/step; 31 -> 1.2 min for 20000
-      steps) and ~12-18x at nchain=32 (326 -> 17.8 ms/step; 108 -> 6.0 min
-      for 20000 steps). See README's P1-9 section for the full profiling
-      story and all measured numbers.
+      Combined with kernel_with_gradient's and mo_response's own vectorization,
+      end-to-end speedup is ~12-25x depending on nchain.
     """
     occ_idx = list(range(homo - n_near + 1, homo + 1))
     virt_idx = list(range(lumo, lumo + n_near))
@@ -344,60 +305,44 @@ def cis_compute_adi(q, params, full_id):
     Args:
         q (MATRIX(ndof, ntraj)): current site positions, Bohr. ndof = 2*nchain.
         params (dict): critical keys nchain, hop, hopslope, req, boxl, pref, p,
-            fxcalpha, fxcgamma, hartreeu, n_near (see get_default_params).
-            n_near added in P1-8b: window half-width for the CIS configuration
-            space feeding state 1's energy/gradient. n_near=1 (the original
-            P1-6 behavior) is a single delocalized Bloch-like configuration
-            that cannot spatially localize (see P1-7's result); n_near=3 (the
-            new default) mixes in the HOMO-1/HOMO-2 and LUMO+1/LUMO+2
-            degenerate pairs via cis_windowed_energy_and_gradient, giving a
-            genuinely localizable exciton state -- this is the actual point
-            of P1-8.
+            fxcalpha, fxcgamma, hartreeu, n_near (see get_default_params). n_near
+            is the CIS configuration window's half-width feeding state 1's
+            energy/gradient (see cis_windowed_energy_and_gradient's docstring for
+            why n_near>1 is needed for a spatially localizable exciton).
 
-            P1-17 (2026-07-11): optional `enable_coupling` (bool, default
-            False -- OFF unless explicitly requested, for full backward
-            compatibility with every already-completed/in-flight single-PES
-            run). When True, requires `dt` (nuclear timestep, a.u.) also in
-            params, and:
-              - populates obj.time_overlap_adi with the REAL ground-exciton
-                time-overlap S_adi(t-dt, t) (cis_time_overlap.py's validated
-                closed-form formula), instead of the identity fallback,
+            Optional `enable_coupling` (bool, default False, so every single-PES
+            production run is unaffected). This is part of the ongoing
+            nonadiabatic-coupling exploration (report.md Section 2.5), not used
+            by the three production runs. When True, requires `dt` (nuclear
+            timestep, a.u.) also in params, and:
+              - populates obj.time_overlap_adi with the real ground-exciton
+                time-overlap S_adi(t-dt, t) (cis_time_overlap.py's closed-form
+                formula), instead of the identity fallback,
               - populates obj.hvib_adi's off-diagonal via the standard
                 Hammes-Schiffer-Tully formula d_01=(S01-S10)/(2dt), matching
-                recipes/fssh2.py's nac_algo=0 / recipes/ehrenfest_onthefly.py's
-                already-set nac_update_method=2 -- this is the SAME pathway
-                4_dftbplus_methods/3_workflow/tutorial.ipynb's dftb_compute_adi
-                uses, confirmed by direct comparison against that reference
-                implementation before wiring this in.
-              - caches the previous step's MO coefficients + CIS eigenvector
-                in `params` (keyed by trajectory index, same pattern as
-                dftb_compute_adi's MO_prev/data_prev/is_first_time) since a
-                time-overlap needs BOTH steps' wavefunctions -- this makes
-                cis_compute_adi implicitly STATEFUL across calls when
-                enable_coupling=True (was fully stateless before).
-            dc1_adi is left at all-zero either way (see its own comment below
-            -- legitimate given hop_acceptance_algo/momenta_rescaling_algo
-            don't use it in this recipe, matching dftb_compute_adi's usage
-            where dc1_adi only matters for NACV-based momentum rescaling).
-            Validated in a real dynamics run (P1-18): coupling mechanism
-            confirmed correct (no crash, real nonzero time-overlaps computed),
-            but ground<->state0 coupling turned out to be suppressed by an
-            exact symmetry-driven cancellation specific to state_index=0 (see
-            README) -- motivated P1-19 below.
+                Libra's DFTB+ workflow's nac_algo=0 pathway (already set by
+                recipes/ehrenfest_onthefly.py's nac_update_method=2),
+              - caches the previous step's MO coefficients + CIS eigenvector in
+                `params` (keyed by trajectory index) since a time-overlap needs
+                both steps' wavefunctions -- this makes cis_compute_adi
+                implicitly stateful across calls when enable_coupling=True (it
+                is fully stateless otherwise).
+            dc1_adi is left at all-zero either way -- this recipe's
+            hop_acceptance_algo/momenta_rescaling_algo don't consume it, matching
+            the reference workflow, where dc1_adi only matters for NACV-based
+            momentum rescaling. Exploratory runs found the direct ground<->state0
+            coupling is suppressed by an exact symmetry-driven cancellation
+            specific to state_index=0 -- see `n_exciton_states` below.
 
-            P1-19 (2026-07-11): optional `n_exciton_states` (int, default 1 --
-            preserves the original 2-state ground+state0 model EXACTLY). Set to
-            2 to track a THIRD state (ground, exciton state_index=0, exciton
-            state_index=1), with enable_coupling=True now populating the FULL
-            3x3 time-overlap/hvib_adi (all three edges: ground<->state1,
-            ground<->state2, state1<->state2), via
-            cis_time_overlap.multi_state_time_overlap. Motivated by a 2026-07-11
-            finding: direct ground<->state0 coupling is symmetry-suppressed
-            (~1e-16, noise floor, persistent through a full 200fs trajectory),
-            but state0<->state1 (within-manifold) coupling is NOT -- it grows to
-            ~-2.4e-5 a.u. in the deeply-self-trapped regime, orders of magnitude
-            larger than either state's direct ground coupling. The 2-state model
-            structurally cannot represent this channel at all.
+            Optional `n_exciton_states` (int, default 1, preserving the original
+            2-state ground+state0 model exactly). Set to 2 to track a third state
+            (ground, exciton state_index=0, exciton state_index=1), with
+            enable_coupling=True then populating the full 3x3 time-overlap/
+            hvib_adi (all three edges) via cis_time_overlap.multi_state_time_overlap.
+            Exists because the direct ground<->state0 channel is symmetry-
+            suppressed (noise floor) while the state0<->state1 (within-manifold)
+            channel is not -- it can be orders of magnitude larger in the deeply
+            self-trapped regime, a channel the 2-state model can't represent.
         full_id: trajectory identifier.
 
     Returns:
@@ -424,16 +369,9 @@ def cis_compute_adi(q, params, full_id):
     n_near = params["n_near"]
 
     n = 2 * nchain
-    n_exciton_states = params.get("n_exciton_states", 1)   # P1-19: default 1 preserves the
-                                                             # original 2-state (ground+state0)
-                                                             # behavior EXACTLY. Set to 2 for the
-                                                             # 3-state (ground, state0, state1)
-                                                             # model, motivated by the 2026-07-11
-                                                             # finding that state0<->state1
-                                                             # within-manifold coupling is orders
-                                                             # of magnitude larger than either
-                                                             # state's direct ground coupling in
-                                                             # the deeply-self-trapped regime.
+    n_exciton_states = params.get("n_exciton_states", 1)   # default 1 preserves the original
+                                                             # 2-state (ground+state0) behavior
+                                                             # exactly -- see module docstring.
     nstates = 1 + n_exciton_states
 
     Id = Cpp2Py(full_id)
@@ -486,15 +424,10 @@ def cis_compute_adi(q, params, full_id):
         # used in the TDSE propagation itself, which runs off hvib_adi/
         # time_overlap_adi via nac_update_method=2/nac_algo=0 instead).
 
-    # ---- P1-17: real ground-exciton time-overlap + off-diagonal hvib_adi ----
-    # DIAGNOSTIC HARDENING (2026-07-11, after a boost::python::error_already_set /
-    # core-dump crash on the first real-kernel attempt, with no Python traceback
-    # surfacing -- the C++/Python boundary is swallowing whatever the actual
-    # exception was). Wrapped in try/except with explicit traceback printing +
-    # forced flush so the NEXT run attempt reveals exactly what and where, since
-    # a raw C++ abort otherwise gives no diagnostic information at all. Also
-    # print-bisected into stages so even if the traceback itself is still lost,
-    # the last stage-N print visible before the crash narrows down the culprit.
+    # Real ground-exciton time-overlap + off-diagonal hvib_adi. Wrapped in
+    # try/except with explicit traceback printing + forced flush: a raw crash at
+    # the C++/Python boundary here otherwise gives no diagnostic information at
+    # all (Libra swallows the underlying Python exception).
     if enable_coupling:
         import sys as _sys
         try:
@@ -509,8 +442,8 @@ def cis_compute_adi(q, params, full_id):
             # module has already finished loading.
             evals, evecs, configs, _, _ = cis_windowed_spectrum(
                 rion, boxl, fxcalpha, fxcgamma, hartreeu, n_near, hop, hopslope, req)
-            Psi_list = [evecs[:, si] for si in range(n_exciton_states)]   # P1-19: one Psi
-            # per tracked exciton state (was a single Psi in P1-17's 2-state version).
+            Psi_list = [evecs[:, si] for si in range(n_exciton_states)]   # one Psi per
+                                                                            # tracked exciton state
 
             params.setdefault("MO_prev", {})
             params.setdefault("Psi_prev", {})
@@ -531,12 +464,10 @@ def cis_compute_adi(q, params, full_id):
                 for qq in range(nstates):
                     obj.time_overlap_adi.set(pp, qq, complex(float(S_adi[pp, qq]), 0.0))
 
-            # Hammes-Schiffer-Tully formula on EVERY pair (p,q), p<q -- was hardcoded to
-            # just the single (0,1) ground<->state0 edge in P1-17; now covers ALL edges
-            # (ground<->state_k for every k, AND state_k<->state_l for every k!=l --
-            # this last category is what the 2026-07-11 within-manifold-coupling finding
-            # showed can be orders of magnitude LARGER than the direct ground edges in
-            # the deeply-self-trapped regime, matching dftb_compute_adi/nac_algo=0).
+            # Hammes-Schiffer-Tully formula on every pair (p,q), p<q: ground<->state_k
+            # for every k, and state_k<->state_l for every k!=l -- this last category
+            # can be orders of magnitude larger than the direct ground edges in the
+            # deeply self-trapped regime (matching Libra's DFTB+ workflow's nac_algo=0).
             for pp in range(nstates):
                 for qq in range(pp + 1, nstates):
                     d_pq = (float(S_adi[pp, qq]) - float(S_adi[qq, pp])) / (2.0 * dt)
@@ -550,7 +481,7 @@ def cis_compute_adi(q, params, full_id):
         except Exception:
             import traceback
             print("=" * 70, flush=True)
-            print("P1-17/P1-19 enable_coupling block raised an exception -- full traceback:", flush=True)
+            print("enable_coupling block raised an exception -- full traceback:", flush=True)
             traceback.print_exc()
             _sys.stdout.flush()
             _sys.stderr.flush()
@@ -574,8 +505,8 @@ def get_default_params(nchain=64, dimer1=0.0868, lattice_ang=6.0,
     hartreeu=0.0 keeps the Hartree/direct-Coulomb channel off, matching every prior
     working run in this project (see README "Note for future reference").
 
-    NOT the same as the original PBE-fit values used for every P1-1 through P1-19
-    development/validation run (hop=-0.0245725447 Ha, hopslope=0.007215487659 Ha/Bohr,
+    Not the same as the original PBE-fit values used during this module's own
+    development (hop=-0.0245725447 Ha, hopslope=0.007215487659 Ha/Bohr,
     req=4.922388 Bohr, pref=0.231122, p=15) -- those remain the legacy defaults in
     AgChain.py's own get_default_params (deliberately unchanged, see its docstring).
     n_near defaults to 3 -- the smallest odd window that pulls in a full +-k
@@ -616,13 +547,12 @@ def validate(nchain=32, dimer1=0.0868, lattice_ang=6.0, seed=0, jitter=0.02,
     contract (ground-state baseline + exciton piece together), not just the
     exciton piece alone (already validated in cis_gradient.py).
 
-    P1-8b: now defaults to n_near=3 (was hardcoded to the n_near=1 single
-    configuration before P1-8). At a JITTERED geometry the degenerate pairs
-    are already split (not exactly degenerate), so this specific test doesn't
-    exercise mo_response's degenerate-group-exclusion code path -- that's
-    what cis_gradient.py's validate_degenerate() is for (run AT the exact
-    equilibrium geometry). This test's job is to confirm the n_near=3 window
-    is wired into the FULL Libra ham_adi/d1ham_adi contract correctly.
+    Defaults to n_near=3. At a jittered geometry the degenerate pairs are already
+    split (not exactly degenerate), so this specific test doesn't exercise
+    mo_response's degenerate-group-exclusion code path -- that's what
+    cis_gradient.py's validate_degenerate() is for (run at the exact equilibrium
+    geometry). This test's job is to confirm the n_near=3 window is wired into
+    the full Libra ham_adi/d1ham_adi contract correctly.
 
     Run inside the `libra` kernel (needs liblibra_core / util.libutil on the path).
     """
@@ -661,7 +591,7 @@ def validate(nchain=32, dimer1=0.0868, lattice_ang=6.0, seed=0, jitter=0.02,
 if __name__ == "__main__":
     validate()
     print("\n" + "=" * 70)
-    print("P1-8b: same check AT the exact equilibrium (degenerate) geometry --")
-    print("this is the actual starting point P1-7's Ehrenfest run uses.")
+    print("Same check at the exact equilibrium (degenerate) geometry -- the")
+    print("actual starting point the production Ehrenfest runs use.")
     print("=" * 70)
     validate(jitter=0.0)

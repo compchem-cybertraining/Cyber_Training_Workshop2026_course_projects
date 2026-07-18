@@ -1,21 +1,7 @@
 """
-Run 1 of 3 -- unseeded exciton dynamics (report.md, Part II, Section 2.4.1).
-
-Starts a photoexcited exciton (state 1: ground + exciton) on the equilibrium,
-exactly-symmetric 32-unit-cell (64-site) Ag ring, with zero initial nuclear
-velocity, and lets it evolve under Ehrenfest mean-field dynamics using the
-ab initio-corrected Hamiltonian from Part I (report.md Section 1.6).
-
-Expected result: nothing breaks the ring's exact symmetry, so the exciton has
-no channel to spontaneously localize -- the lattice response should stay
-spatially uniform across every bond, in contrast with Run 2 (run_2_selftrapping_
-and_control.py), where a small velocity seed gives the exciton a symmetry-
-breaking channel and self-trapping develops. This run is the baseline/null
-result the other two are compared against.
-
-Run this on a machine with the `libra` kernel available (needs liblibra_core /
-util.libutil / libra_py on the path). Output: a `run1_unseeded/mem_data.hdf`
-folder in the current working directory. Analyze with `analyze_dynamics.py`.
+Run 1 of 3: exciton dynamics on the 32-unit-cell Ag ring, starting from the
+exactly symmetric equilibrium geometry with zero initial nuclear velocity, on
+the ab initio-corrected Hamiltonian from Part I. Report: Section 2.4.1.
 """
 import _pathsetup  # noqa: F401 -- sets up sys.path for the imports below
 import sys

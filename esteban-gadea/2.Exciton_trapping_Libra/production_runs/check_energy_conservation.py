@@ -1,17 +1,8 @@
 """
 Total-energy conservation check for one production run -- rules out numerical
 integration drift as the source of any observed lattice-distortion growth.
-
-Usage:
-    python check_energy_conservation.py <prefix>
-e.g.
-    python check_energy_conservation.py run2_selftrapping
-
-Reads `<prefix>/mem_data.hdf`'s saved Epot_ave/Ekin_ave/Etot_ave and plots them
-alongside the total-energy drift from t=0. Saves `<prefix>_energy_conservation.png`.
-A drift that stays at the ~1e-8-1e-7 Ha (~1e-8 relative) floor typical of this
-model's Ehrenfest integrator means any growth seen in analyze_dynamics.py's
-bond-distortion/IPR plots is real dynamics, not an artifact of the timestep.
+Reads `<prefix>/mem_data.hdf`'s saved energy components and saves
+`<prefix>_energy_conservation.png`.
 """
 import sys
 import _pathsetup  # noqa: F401

@@ -1,20 +1,19 @@
-# *********************************************************************************
-# P1-17: ground-exciton time-overlap S_adi(t, t+dt) for numerical/time-overlap-
-# based NAC (Hammes-Schiffer-Tully / local-diabatization style, the same pathway
-# 4_dftbplus_methods/3_workflow/tutorial.ipynb's dftb_compute_adi uses for a
-# genuinely non-orthogonal AO basis -- see that function + recipes/fssh2.py's
-# nac_update_method=2/nac_algo=0/rep_tdse=1/electronic_integrator=5 settings,
-# which recipes/ehrenfest_onthefly.py already mirrors verbatim).
+# Ground-exciton time-overlap S_adi(t, t+dt) for numerical/time-overlap-based
+# nonadiabatic coupling (Hammes-Schiffer-Tully / local-diabatization style), the
+# same pathway Libra's DFTB+ workflow uses for a genuinely non-orthogonal AO basis
+# (see recipes/ehrenfest_onthefly.py's nac_update_method=2/nac_algo=0/rep_tdse=1/
+# electronic_integrator=5 settings, mirrored from that workflow). Part of the
+# ongoing nonadiabatic-coupling exploration described in report.md Section 2.5 --
+# not used by the three production runs.
 #
-# PHYSICS: this TB model's site basis is orthonormal (no explicit AO overlap
-# matrix), so closed-shell determinant overlaps between two geometries reduce to
-# plain determinants of MO-coefficient dot products -- no generalized
-# non-orthogonal-overlap machinery needed (that's what makes this tractable
-# in closed form, unlike DFTB+'s ODIN-based AO-overlap route).
+# This TB model's site basis is orthonormal (no explicit AO overlap matrix), so
+# closed-shell determinant overlaps between two geometries reduce to plain
+# determinants of MO-coefficient dot products -- no generalized non-orthogonal-
+# overlap machinery needed (simpler than DFTB+'s AO-overlap route).
 #
-# DERIVATION (2026-07-11): worked through Slater-Condon rules for the singlet-
-# CSF spin-adaptation of each CIS configuration, |Psi_i^a> = (1/sqrt(2))[Phi_i^a(a)
-# + Phi_i^a(b)]. With S = C_occ(1)^T @ C_occ(2) (nocc x nocc):
+# Derivation: Slater-Condon rules for the singlet-CSF spin-adaptation of each CIS
+# configuration, |Psi_i^a> = (1/sqrt(2))[Phi_i^a(a) + Phi_i^a(b)]. With
+# S = C_occ(1)^T @ C_occ(2) (nocc x nocc):
 #
 #   <ground(1)|ground(2)>   = det(S)^2
 #   <ground(1)|CSF_jb(2)>   = sqrt(2) * det(S) * det(S, column j -> C_occ(1)^T C(:,b))
@@ -24,33 +23,23 @@
 #                             + det(S, row i replaced) * det(S, column j replaced)
 #
 # Full exciton-state overlaps are Psi-weighted sums over configuration pairs
-# (trivial given linearity of the inner product, no separate validation needed
-# for that step).
+# (trivial given linearity of the inner product).
 #
-# VALIDATED (2026-07-11, numpy sandbox, /tmp/nac_check/brute_force_check.py):
-# checked against an EXPLICIT many-electron calculation -- built actual
+# Validated against an explicit many-electron calculation: built actual
 # antisymmetrized Slater-determinant vectors in the full C(n,nocc)^2-dimensional
-# alpha x beta Fock space (occupation-number basis, via the standard
-# Cauchy-Binet/minor-determinant expansion) for a small system (n=6, nocc=3),
-# using two fully INDEPENDENT RANDOM orthonormal bases (a more stringent test
-# than two close/similar geometries -- no special structure to accidentally mask
-# a bug). Max deviation from the closed-form formula above: 1.7e-16 (machine
-# precision) across ground-ground, ground-CSF, CSF-ground, and CSF-CSF (both
-# same-configuration and different-configuration) overlaps. Also confirmed
-# analytically (and numerically) that the formula reduces to exact normalization
-# (=1) and exact orthogonality (=0) between distinct configurations/ground state
-# at coincident geometries, as required for CSFs built from an orthonormal MO set.
+# alpha x beta Fock space (occupation-number basis, via the standard Cauchy-Binet/
+# minor-determinant expansion) for a small system (n=6, nocc=3), using two fully
+# independent random orthonormal bases -- a more stringent test than two close/
+# similar geometries, since there's no special structure to accidentally mask a
+# bug. Max deviation from the closed-form formula above: 1.7e-16 (machine
+# precision) across ground-ground, ground-CSF, CSF-ground, and CSF-CSF overlaps.
+# Also confirmed the formula reduces to exact normalization (=1) and exact
+# orthogonality (=0) between distinct configurations/ground state at coincident
+# geometries, as required for CSFs built from an orthonormal MO set.
 #
-# CAVEAT (not yet checked here): assumes occupied/virtual MO *labels* stay
-# attached to the same physical orbital between geometries 1 and 2 (same
-# assumption analyze_mo_stability_p1_13.py checks at the single-particle level --
-# passed cleanly on p1_13_ehrenfest_nchain32, with one soft near-approach noted
-# around t~4500-5000 a.u. that didn't break tracking). Only tested so far for
-# CONSECUTIVE MD steps (small geometry change) via that check -- this module
-# itself works at ANY two geometries (as the random-basis validation shows), the
-# caveat is specifically about whether "MO index k" means the same physical
-# orbital at both geometries when called on real trajectory data.
-# *********************************************************************************
+# Caveat: assumes occupied/virtual MO labels stay attached to the same physical
+# orbital between the two geometries -- verified so far only for consecutive MD
+# steps (small geometry change), not at arbitrary geometry pairs.
 
 import numpy as np
 
@@ -75,14 +64,12 @@ def ground_exciton_time_overlap(C1, C2, occ, Psi1, configs1, Psi2, configs2):
     Returns:
         S_adi (2,2) real ndarray: [[<0|0>, <0|1>], [<1|0>, <1|1>]].
 
-    PERFORMANCE: precomputes each distinct row/column-replaced determinant once
-    (m calls each, m = len(configs)) rather than recomputing them inside the
-    m x m double loop needed for the CSF-CSF term (avoids the P1-9-style
-    redundant-recomputation trap) -- only the row+column-BOTH-replaced
-    determinant is genuinely unique per (i,a,j,b) pair and needs the full m^2
-    loop. Not yet profiled/further-optimized (correctness-first, same order as
-    every other piece of physics in this project) -- revisit if this becomes a
-    measurable fraction of per-step cost once wired into real dynamics.
+    Precomputes each distinct row/column-replaced determinant once (m calls each,
+    m = len(configs)) rather than recomputing them inside the m x m double loop
+    needed for the CSF-CSF term -- only the row+column-both-replaced determinant is
+    genuinely unique per (i,a,j,b) pair and needs the full m^2 loop. Not yet
+    profiled/further-optimized; revisit if this becomes a measurable fraction of
+    per-step cost once wired into real dynamics.
     """
     Cocc1, Cocc2 = C1[:, occ], C2[:, occ]
     S = Cocc1.T @ Cocc2
@@ -140,15 +127,14 @@ def ground_exciton_time_overlap(C1, C2, occ, Psi1, configs1, Psi2, configs2):
 
 def multi_state_time_overlap(C1, C2, occ, Psi1_list, Psi2_list, configs):
     """
-    P1-19: generalization of ground_exciton_time_overlap to (1 + K) states --
-    ground (index 0) plus K windowed-CIS states sharing the SAME configuration
-    window (index 1..K, e.g. state_index=0,1,...,K-1 of the same n_near window).
-    Motivated by the 2026-07-11 within-manifold coupling finding: state0<->state1
-    coupling (d~-2.4e-5 a.u. at the deeply-distorted end of p1_10_ehrenfest) is
-    orders of magnitude LARGER than either state's direct coupling to ground at
-    that point (~1e-15-1e-16, noise floor) -- the physically important channel
-    for a 3-state (ground, state0, state1) model is NOT necessarily the direct
-    ground edges.
+    Generalization of ground_exciton_time_overlap to (1 + K) states -- ground
+    (index 0) plus K windowed-CIS states sharing the same configuration window
+    (index 1..K, e.g. state_index=0,1,...,K-1 of the same n_near window). Needed
+    because the direct ground-exciton coupling channel is not always the
+    physically important one: exploratory runs found the within-manifold
+    state0<->state1 coupling can be orders of magnitude larger than either
+    state's direct coupling to ground, a channel a 2-state (ground, exciton)
+    model can't represent at all.
 
     Args:
         C1, C2 (n,n): MO coefficients at geometries 1, 2.
@@ -165,16 +151,14 @@ def multi_state_time_overlap(C1, C2, occ, Psi1_list, Psi2_list, configs):
         S_adi[0,1+k]/S_adi[1+k,0]=ground<->state k, S_adi[1+k,1+l]=state k<->state l
         (including k==l, the state's self-overlap).
 
-    VALIDATED (2026-07-11, numpy sandbox): K=1 regression-checked EXACTLY (0.0
-    difference) against ground_exciton_time_overlap (same formula, this is a
-    non-functional generalization for K=1). The state-k<->state-l cross term
-    (k!=l) independently cross-checked EXACTLY (0.0 difference) against calling
-    ground_exciton_time_overlap with state l's Psi in the "exciton" slot passed
-    through the same function's own S11 computation (the trick used in
-    diagnose_within_manifold_coupling.py before this generalization existed).
+    K=1 regression-checked exactly (0.0 difference) against
+    ground_exciton_time_overlap (same formula; this is a non-functional
+    generalization for K=1). The state-k<->state-l cross term (k!=l) independently
+    cross-checked exactly (0.0 difference) against ground_exciton_time_overlap's
+    own S11 computation with state l's Psi in the "exciton" slot.
 
-    PERFORMANCE: same precompute-once-per-config strategy as
-    ground_exciton_time_overlap, extended to be shared across ALL K states (the
+    Uses the same precompute-once-per-config strategy as
+    ground_exciton_time_overlap, extended to be shared across all K states (the
     row/col-replace determinants only depend on the configuration window, not on
     which state's Psi is being combined) -- avoids recomputing them K times.
     """

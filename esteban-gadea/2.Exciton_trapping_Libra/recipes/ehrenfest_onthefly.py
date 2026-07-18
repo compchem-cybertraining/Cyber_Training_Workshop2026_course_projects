@@ -1,24 +1,18 @@
-# *********************************************************************************
-# P1-7: Ehrenfest recipe compatible with ON-THE-FLY compute_model contracts
-# (ham_update_method=2, our cis_compute_adi.py / the real dftb_compute_adi), NOT
-# the built-in tutorial.ipynb `ehrenfest_adi_nac` / `ehrenfest_adi_ld` recipes.
+# Ehrenfest recipe compatible with on-the-fly compute_model contracts
+# (ham_update_method=2, our cis_compute_adi.py / Libra's own dftb_compute_adi),
+# NOT the built-in tutorial `ehrenfest_adi_nac` / `ehrenfest_adi_ld` recipes.
 #
-# WHY NOT REUSE THE BUILT-IN ehrenfest_adi_* RECIPES: those ship in Libra's
-# `recipes` package alongside fssh/gfsh/etc. and were exercised in tutorial.ipynb
-# exclusively against MODEL Hamiltonians (Holstein, Esch-Levine, Morse) that
-# return `ham_dia` for Libra to diagonalize internally -- i.e. they're written
-# assuming the ham_update_method=1 (diabatic) contract. We never confirmed they
-# set `ham_update_method=2`/`ham_transform_method=0`/`time_overlap_method=0`
-# (the flags that tell Libra "don't diagonalize/transform -- I already handed
-# you adiabatic properties directly", which our on-the-fly cis_compute_adi.py
-# needs, same as dftb_compute_adi). Guessing on this would repeat the exact
-# kind of wrong-assumption risk that cost time earlier in this project (the
-# ham_dia vs ham_adi confusion P1-6 resolved).
+# Why not reuse the built-in ehrenfest_adi_* recipes: those ship in Libra's
+# `recipes` package alongside fssh/gfsh/etc. and are exercised in Libra's own
+# tutorials exclusively against model Hamiltonians (Holstein, Esch-Levine, Morse)
+# that return `ham_dia` for Libra to diagonalize internally -- i.e. they're
+# written assuming the ham_update_method=1 (diabatic) contract, not the
+# ham_update_method=2 (adiabatic, on-the-fly) contract cis_compute_adi.py uses.
 #
-# INSTEAD: this module is `recipes/fssh2.py` (the workshop's real, on-the-fly-
-# validated recipe, paired with `dftb_compute_adi` in `4_non_nbra_workflow`)
-# with ONLY the two settings changed that distinguish "run FSSH2 surface
-# hopping" from "run plain mean-field Ehrenfest, no hops":
+# Instead, this module is `recipes/fssh2.py` (Libra's real, on-the-fly-validated
+# recipe, paired with dftb_compute_adi) with only the two settings changed that
+# distinguish "run FSSH2 surface hopping" from "run plain mean-field Ehrenfest,
+# no hops":
 #     tsh_method:    7 -> -1   (adiabatic dynamics, no hops)
 #     force_method:  1 -> 2    (Ehrenfest/MMST mean-field force, not state-specific)
 # Every other flag (ham_update_method=2, ham_transform_method=0,
@@ -28,17 +22,16 @@
 # since those are what make the recipe compatible with an on-the-fly
 # compute_model, independent of the hopping/force choice.
 #
-# CAVEAT for our specific case: with dc1_adi identically zero (cis_compute_adi's
-# documented fallback -- no NAC pathway in this 2-state, no-coupling model),
-# the Ehrenfest mean-field force reduces to a population-weighted average of
-# the two DECOUPLED PES gradients, and coherent population transfer cannot
-# occur (Hvib is exactly diagonal). Starting purely in state 1 (istates=[0,1])
-# means the nuclei simply feel state 1's (ground+exciton) force the whole
-# trajectory -- a legitimate and useful first test (does state 1's PES
-# self-trap the lattice distortion?), but NOT yet a test of any
-# exciton<->ground coherent/mixed dynamics. That would require a real coupling
-# term between the two configurations, which isn't in the model yet.
-# *********************************************************************************
+# Caveat: with dc1_adi identically zero (cis_compute_adi's documented fallback --
+# no NAC pathway in the base 2-state, no-coupling model), the Ehrenfest mean-field
+# force reduces to a population-weighted average of the two decoupled PES
+# gradients, and coherent population transfer cannot occur (Hvib is exactly
+# diagonal). Starting purely in state 1 (istates=[0,1]) means the nuclei simply
+# feel state 1's (ground+exciton) force the whole trajectory -- exactly what the
+# three production runs need (does state 1's PES self-trap the lattice
+# distortion?), but not a test of exciton<->ground coherent/mixed dynamics. That
+# requires a real coupling term (see model/cis_time_overlap.py, report.md
+# Section 2.5).
 
 
 def load(dyn_general):
@@ -76,8 +69,8 @@ def load(dyn_general):
     # rep_force=1 (adiabatic): matches ham_adi/d1ham_adi being what
     # cis_compute_adi.py actually provides.
     dyn_general.update({"rep_force": 1})
-    # force_method=2: Ehrenfest/MMST mean-field force (CHANGED from fssh2.py's
-    # force_method=1/state-specific -- this is the P1-7 "Ehrenfest dynamics" ask).
+    # force_method=2: Ehrenfest/MMST mean-field force (changed from fssh2.py's
+    # force_method=1/state-specific -- this is what makes it Ehrenfest dynamics).
     dyn_general.update({"force_method": 2})
     dyn_general.update({"qtsh_force_option": 0})
     dyn_general.update({"use_xf_force": 0})

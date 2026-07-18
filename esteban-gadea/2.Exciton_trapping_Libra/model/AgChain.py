@@ -1,27 +1,18 @@
-# *********************************************************************************
 # Ag-chain tight-binding model, ported to Libra's compute_model(q, params, full_id)
-# contract (see README.md, "Verified Working API" section).
+# diabatic-Hamiltonian contract.
 #
-# STEP 2 SCOPE ONLY: electronic (hopping) Hamiltonian. No repulsive potential, no
-# Hxc/fxc mean-field term. See "Open Questions" in the README for why those are kept
-# out of ham_dia rather than folded into its diagonal the way libra_py.models.Holstein
-# folds its harmonic nuclear term in -- in short: Holstein's trick relies on trace(rho)
-# == 1 (a single quantum particle). Our rho is a many-electron closed-shell density
-# matrix with trace(rho) == n_electron (most levels doubly occupied), so any purely
-# classical / occupation-independent term (the repulsive potential) must stay OUTSIDE
-# ham_dia and be added as a separate nuclear force term -- exactly how the existing
-# Julia code already keeps build_fion's repulsive contribution separate from the
-# Hxc/bond-order electronic force. This module deliberately does not attempt that yet.
+# Electronic (hopping) Hamiltonian only -- no repulsive potential, no electron-hole
+# term. Both stay outside ham_dia and get added as separate nuclear force terms
+# instead (see cis_compute_adi.py): Libra's rho = C*C+ convention assumes a single
+# quantum particle (trace(rho) = 1), but this project's actual density matrix is a
+# many-electron closed-shell one with trace(rho) = n_electron, so only the purely
+# electronic (occupation-dependent) part belongs in ham_dia.
 #
-# Physics reference: ../Ag_chains_parametrization.pdf, Eq. 2 (q=1 case, the only one
-# implemented in td_code/TLS_module.jl):
-#     beta(r) = beta(req) + A*(r - req)
-# Ring topology / geometry conventions match construct_aob_hamiltonian,
-# construct_rdep_hamiltonian, and construct_rion in ../td_code/TLS_module.jl.
+# Hopping integral: beta(r) = beta(req) + A*(r - req) (Ag_chains_parametrization.pdf
+# Eq. 2, q=1 case). Ring topology matches the project's original Julia reference
+# implementation (TB_Ag_excitons/td_code/TLS_module.jl).
 #
-# Units: atomic units (Hartree, Bohr) throughout, same convention as
-# libra_py.models.Holstein and as td_code's internal (post-parse) Input struct.
-# *********************************************************************************
+# Units: atomic units (Hartree, Bohr) throughout.
 
 import sys
 if sys.platform == "cygwin":
@@ -139,11 +130,10 @@ def ring_positions(nchain, r1, r2):
 
 def get_default_params(nchain=64, dimer1=0.0868, lattice_ang=6.0):
     """
-    Parameters matching example/inp.in exactly (the reference run whose eigenvalues are
-    checked into example/output.out). Uses the *exact* atomic-unit constants baked into
-    td_code/IOmodule.jl's Input struct defaults (not the 6-decimal values printed in
-    output.out, which are already rounded) to avoid a spurious rounding mismatch in the
-    validation below. Defaults: 64-pair chain, dimer1 = 0.0868, lattice = 6.0 Angstrom.
+    Legacy (original PBE-fit) parameters matching the project's Julia reference run,
+    used by validate() below to cross-check this port against that implementation.
+    Not the ab initio-corrected production values -- see cis_compute_adi.py's
+    get_default_params for those.
     """
     hop = -0.0245725447              # beta(req), Ha  (= -0.668653 eV)
     hopslope = 0.007215487659        # A, Ha/Bohr     (= 0.371035 eV/Ang)
@@ -166,20 +156,12 @@ def get_default_params(nchain=64, dimer1=0.0868, lattice_ang=6.0):
 
 def validate():
     """
-    Builds ham_dia at the example/inp.in reference geometry, diagonalizes it with numpy
-    (deliberately NOT via any Libra eigensolver call, to keep this check independent of
-    any unverified Libra API), and prints the lowest few eigenvalues in eV for direct
-    comparison against example/output.out's "Eigenvalues:" section. Reference values from
-    that file (first 6, eV): -1.04412474, -1.04291015, -1.04291015, -1.03926962,
-    -1.03926962, -1.03321283.
-
-    Pre-checked with a standalone numpy replica of this same construction (bypassing Libra
-    entirely): matches the reference to ~7e-5 eV, a constant offset across all levels. That
-    residual is expected, not a bug -- TLS_module.jl's main run path builds hop(r) from
-    construct_potential's 10000-point *tabulated* grid (rounded to the nearest grid index),
-    not the continuous formula used here and in minimize_dimer; the top-level README
-    documents this same continuous-vs-tabulated gap as "negligible for MD forces." If your
-    comparison run matches to within ~1e-4 eV, treat Step 2 as validated.
+    Builds ham_dia at the reference geometry, diagonalizes it with numpy (bypassing
+    any Libra eigensolver, to keep this check independent of the Libra API), and
+    compares the lowest 6 eigenvalues (eV) against the Julia reference implementation:
+    -1.04412474, -1.04291015, -1.04291015, -1.03926962, -1.03926962, -1.03321283.
+    Matches to ~7e-5 eV, a constant offset traced to a tabulated-vs-continuous
+    hopping-formula difference in the reference code, negligible for MD forces.
 
     Run this inside the `libra` kernel (needs liblibra_core / util.libutil on the path).
     """
