@@ -1,0 +1,13 @@
+numpy
+pandas
+matplotlib
+seaborn
+scipy
+scikit-learn
+openpyxl
+rdkit
+pubchempy
+xgboost
+chemml
+mordred
+jupyterlab
