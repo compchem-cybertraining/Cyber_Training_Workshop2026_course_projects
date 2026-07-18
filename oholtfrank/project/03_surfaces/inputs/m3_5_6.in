@@ -1,0 +1,29 @@
+&GATEWAY
+  Coord
+  3
+  m3_5_6
+  O 0.0 0.0 0.0
+  H 0.0 1.581592 1.224158
+  H 0.0 -1.976990 1.530198
+  Basis = O.aug-cc-pVTZ, H.aug-cc-pVDZ
+  Group = NoSym
+  RICD
+
+&SEWARD
+
+&SCF
+
+&RASSCF
+  Spin     = 1
+  Symmetry = 1
+  Nactel   = 8 0 0
+  Inactive = 1
+  Ras2     = 10
+  CIRoot   = 20 20 1
+  PRWF     = 0.05
+  ITERations = 200 100
+
+&RASSI
+  Nr of JobIphs
+    1 20
+    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20

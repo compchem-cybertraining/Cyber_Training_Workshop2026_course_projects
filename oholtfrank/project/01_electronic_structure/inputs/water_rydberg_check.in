@@ -1,0 +1,20 @@
+&GATEWAY
+  Coord
+  3
+  Water: do diffuse functions reach the 13.48 eV superexcited states?
+  O      0.000000     0.000000     0.000000
+  H      0.000000     0.756950     0.585882
+  H      0.000000    -0.756950     0.585882
+  Basis = O.aug-cc-pVTZ, H.aug-cc-pVDZ
+  Group = NoSym
+  RICD
+&SEWARD
+&SCF
+&RASSCF
+  Spin     = 1
+  Symmetry = 1
+  Nactel   = 8 0 0
+  Inactive = 1
+  Ras2     = 10
+  CIRoot   = 12 12 1
+  LumOrb

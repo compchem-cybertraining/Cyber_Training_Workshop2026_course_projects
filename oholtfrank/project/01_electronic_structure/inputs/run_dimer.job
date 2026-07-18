@@ -1,0 +1,34 @@
+#!/bin/bash
+#SBATCH --job-name=dimer_phase1
+#SBATCH --output=%x.o%j
+#SBATCH --error=%x.e%j
+#SBATCH --time=02:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=16
+#SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=2500
+#SBATCH --account=cyberwksp21
+#SBATCH --qos general-compute
+
+INP=${1:?"Usage: sbatch run_dimer.job <input_basename_without_.in>"}
+
+module load intel/2022.00
+cd $SLURM_SUBMIT_DIR
+mkdir -p scr_${INP}
+
+export MOLCAS=/projects/academic/cyberwksp21/SOFTWARE_2026/OpenMolcas
+export PATH=$PATH:/projects/academic/cyberwksp21/SOFTWARE_2026/OpenMolcas
+export MOLCAS_PROJECT=${INP}
+export MOLCAS_MEM=2000
+export MOLCAS_NPROCS=1
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=16
+export MOLCAS_MAXITER=900
+export MOLCAS_TRAP=YES
+export MOLCAS_WORKDIR=$SLURM_SUBMIT_DIR/scr_${INP}
+export MOLCAS_MOLDEN=YES
+export MOLCAS_PRINT=NORMAL
+export MOLCAS_ECHO_INPUT=YES
+
+pymolcas ${INP}.in > ${INP}.out
+rm -rf $SLURM_SUBMIT_DIR/scr_${INP}

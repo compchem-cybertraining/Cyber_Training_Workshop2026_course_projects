@@ -1,0 +1,21 @@
+#!/bin/bash -l
+#SBATCH --cluster=ub-hpc
+#SBATCH --partition=general-compute
+#SBATCH --qos=general-compute
+#SBATCH --account=cyberwksp21
+#SBATCH --job-name=vpd_frag
+#SBATCH --output=aims_%j.out
+#SBATCH --error=aims_%j.err
+#SBATCH --time=48:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=12
+#SBATCH --mem=24G
+
+export MOLCAS=/projects/academic/cyberwksp21/SOFTWARE_2026/OpenMolcas
+export PATH=$PATH:$MOLCAS
+export MOLCAS_MEM=2000
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+
+cd $SLURM_SUBMIT_DIR
+~/pyspawn/bin/python restart.py > frag_restart.log 2>&1

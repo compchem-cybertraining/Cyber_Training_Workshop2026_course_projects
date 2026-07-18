@@ -1,0 +1,59 @@
+&GATEWAY
+  Coord
+  4
+  Thioformaldehyde H2CS 
+  C       0.000000     0.000000     0.000000
+  S       0.000000     0.000000     1.611000
+  H       0.931437     0.000000    -0.571904
+  H      -0.931437     0.000000    -0.571904
+  Basis = ANO-RCC-VQZP 
+  Group = NoSym
+  RICD
+  AMFI
+
+&SEWARD
+  Relativistic = R02O02
+
+&SCF
+  Charge = 0
+  Spin   = 1
+
+&RASSCF
+  Title    = H2CS singlets SA-2-CAS(12,10)
+  Symmetry = 1
+  Nactel   = 12 0 0
+  Spin     = 1
+  Inactive = 6
+  Ras2     = 10
+  ciroot   = 2 2 1
+&CASPT2
+  IPEA       = 0.25
+  IMAGinary  = 0.20
+  MultiState = All
+  MaxIter    = 2000
+  FROZen     = 0
+  >> COPY $WorkDir/$Project.JobMix $WorkDir/JOB001
+
+&RASSCF
+  Title    = H2CS triplets SA-2-CAS(12,10)
+  Symmetry = 1
+  Nactel   = 12 0 0
+  Spin     = 3
+  Inactive = 6
+  Ras2     = 10
+  ciroot   = 2 2 1
+&CASPT2
+  IPEA       = 0.25
+  IMAGinary  = 0.20
+  MultiState = All
+  MaxIter    = 2000
+  FROZen     = 0
+  >> COPY $WorkDir/$Project.JobMix $WorkDir/JOB002
+
+&RASSI
+  NrOfJobIphs = 2 2 2
+  1 2
+  1 2
+  SPINorbit
+  SOCO = 0.0
+  EJob

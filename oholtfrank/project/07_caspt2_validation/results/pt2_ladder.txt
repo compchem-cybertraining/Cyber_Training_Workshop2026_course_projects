@@ -1,0 +1,72 @@
+=== pt2_09572.out ===
+       Total XMS-CASPT2 energies:
+::    XMS-CASPT2 Root  1     Total energy:    -76.31961425
+::    XMS-CASPT2 Root  2     Total energy:    -76.04492164
+::    XMS-CASPT2 Root  3     Total energy:    -75.98317838
+::    XMS-CASPT2 Root  4     Total energy:    -75.96030527
+::    XMS-CASPT2 Root  5     Total energy:    -75.92225061
+::    XMS-CASPT2 Root  6     Total energy:    -75.90842362
+::    XMS-CASPT2 Root  7     Total energy:    -75.89640138
+::    XMS-CASPT2 Root  8     Total energy:    -75.89058246
+::    XMS-CASPT2 Root  9     Total energy:    -75.88940606
+::    XMS-CASPT2 Root 10     Total energy:    -75.83701225
+::    XMS-CASPT2 Root 11     Total energy:    -75.83548288
+::    XMS-CASPT2 Root 12     Total energy:    -75.81204466
+::    XMS-CASPT2 Root 13     Total energy:    -75.80950402
+ 
+       Eigenvectors:
+            0.99892283      0.00000007     -0.00000012     -0.00999182     -0.00000009
+=== pt2_11000.out ===
+       Total XMS-CASPT2 energies:
+::    XMS-CASPT2 Root  1     Total energy:    -76.30662494
+::    XMS-CASPT2 Root  2     Total energy:    -76.05826021
+::    XMS-CASPT2 Root  3     Total energy:    -75.99229774
+::    XMS-CASPT2 Root  4     Total energy:    -75.96779070
+::    XMS-CASPT2 Root  5     Total energy:    -75.92284822
+::    XMS-CASPT2 Root  6     Total energy:    -75.91394097
+::    XMS-CASPT2 Root  7     Total energy:    -75.90487404
+::    XMS-CASPT2 Root  8     Total energy:    -75.89572178
+::    XMS-CASPT2 Root  9     Total energy:    -75.89393906
+::    XMS-CASPT2 Root 10     Total energy:    -75.84267103
+::    XMS-CASPT2 Root 11     Total energy:    -75.83458428
+::    XMS-CASPT2 Root 12     Total energy:    -75.82652061
+::    XMS-CASPT2 Root 13     Total energy:    -75.81625085
+ 
+       Eigenvectors:
+            0.99907220     -0.00000008     -0.00000004      0.02242106     -0.00000003
+=== pt2_13000.out ===
+       Total XMS-CASPT2 energies:
+::    XMS-CASPT2 Root  1     Total energy:    -76.26689096
+::    XMS-CASPT2 Root  2     Total energy:    -76.07573000
+::    XMS-CASPT2 Root  3     Total energy:    -75.97282336
+::    XMS-CASPT2 Root  4     Total energy:    -75.97176754
+::    XMS-CASPT2 Root  5     Total energy:    -75.90873076
+::    XMS-CASPT2 Root  6     Total energy:    -75.88829716
+::    XMS-CASPT2 Root  7     Total energy:    -75.88453052
+::    XMS-CASPT2 Root  8     Total energy:    -75.87957282
+::    XMS-CASPT2 Root  9     Total energy:    -75.86605180
+::    XMS-CASPT2 Root 10     Total energy:    -75.85335846
+::    XMS-CASPT2 Root 11     Total energy:    -75.81507621
+::    XMS-CASPT2 Root 12     Total energy:    -75.80802323
+::    XMS-CASPT2 Root 13     Total energy:    -75.79832725
+ 
+       Eigenvectors:
+            0.99825294     -0.00000010      0.00000087      0.04544579     -0.00000012
+=== pt2_16000.out ===
+       Total XMS-CASPT2 energies:
+::    XMS-CASPT2 Root  1     Total energy:    -76.20732138
+::    XMS-CASPT2 Root  2     Total energy:    -76.10211118
+::    XMS-CASPT2 Root  3     Total energy:    -75.98152368
+::    XMS-CASPT2 Root  4     Total energy:    -75.92156478
+::    XMS-CASPT2 Root  5     Total energy:    -75.88345250
+::    XMS-CASPT2 Root  6     Total energy:    -75.86680089
+::    XMS-CASPT2 Root  7     Total energy:    -75.84430263
+::    XMS-CASPT2 Root  8     Total energy:    -75.83496934
+::    XMS-CASPT2 Root  9     Total energy:    -75.81883147
+::    XMS-CASPT2 Root 10     Total energy:    -75.79135164
+::    XMS-CASPT2 Root 11     Total energy:    -75.76529289
+::    XMS-CASPT2 Root 12     Total energy:    -75.76184522
+::    XMS-CASPT2 Root 13     Total energy:    -75.75141553
+ 
+       Eigenvectors:
+            0.98427654      0.00000926      0.09139076      0.00000235      0.11496470

@@ -1,0 +1,97 @@
+192,193c192,202
+<     def get_overlap(self): #, output='rassi.out'):
+<         overlap = []
+---
+>     def get_overlap(self):
+>         """RASSI prints ONE lower triangle over BOTH geometries' states:
+>         (2N)x(2N), 2N(2N+1)/2 values. Rows 1..N = <old|old> identity.
+>         Rows N+1..2N: first N entries = cross-geometry <new_i|old_j>.
+>         Token-based parse, works for any N. Returns the NxN cross block,
+>         same orientation as the old <=10-state code."""
+>         N = self.nstates
+>         M = 2 * N
+>         ntri = M * (M + 1) // 2
+>         vals = []
+>         seen = False
+195d203
+< 
+197,231c205,234
+<                 if "OVERLAP MATRIX FOR THE ORIGINAL STATES:" in line:
+<                     current_line = next(out)
+<                     current_line = next(out)
+<                     for state in range(self.nstates):
+<                         if state < 5:
+<                             current_line = next(out)
+<                         if state >= 5 and state < 10:
+<                             current_line = next(out)
+<                             current_line = next(out)
+< 
+<                     if self.nstates < 5:
+<                         for state in range(self.nstates):
+<                             overlap.extend([float(x) for x in (current_line.split()[:self.nstates])])
+<                             current_line = next(out)
+<                             full_indexes = self.nstates+state+1
+<                             if full_indexes > 5:
+<                                 current_line = next(out)
+<                     if self.nstates >= 5 and self.nstates < 10:
+<                         for state in range(self.nstates):
+<                             overlap.extend([float(x) for x in (current_line.split()[:self.nstates])])
+<                             current_line = next(out)
+<                             overlap.extend([float(x) for x in (current_line.split()[:self.nstates-5])])
+<                             current_line = next(out)
+<                             full_indexes = self.nstates+state+1
+<                             if full_indexes > 10:
+<                                 current_line = next(out)
+<         
+<         ## WARNING: UP Tp 10 states now, needs to be adpted for more
+<         if self.nstates > 10:
+<             print('Error: Currently, the interface works with up to 10 singlet states. get_overlap in molcas_interface needs to be updated.')
+<             sys.exit(1)
+< 
+<         
+<         matrix = np.array(overlap).reshape(self.nstates,self.nstates)
+<         #print(matrix)
+---
+>                 if not seen:
+>                     if "OVERLAP MATRIX FOR THE ORIGINAL STATES:" in line:
+>                         seen = True
+>                     continue
+>                 toks = line.split()
+>                 if not toks:
+>                     continue
+>                 row = []
+>                 ok = True
+>                 for t in toks:
+>                     try:
+>                         row.append(float(t))
+>                     except ValueError:
+>                         ok = False
+>                         break
+>                 if not ok:
+>                     break
+>                 vals.extend(row)
+>                 if len(vals) >= ntri:
+>                     break
+>         if len(vals) < ntri:
+>             raise RuntimeError("get_overlap: %d floats found, need %d (2N=%d)"
+>                                % (len(vals), ntri, M))
+>         full = np.zeros((M, M))
+>         k = 0
+>         for i in range(M):
+>             for j in range(i + 1):
+>                 full[i][j] = full[j][i] = vals[k]
+>                 k += 1
+>         matrix = full[N:M, 0:N]
+233,240d235
+<         #matrix = np.zeros((self.nstates,self.nstates))
+<         #element=0
+<         #print(overlap)
+<         #for i in range(self.nstates):
+<         #    for j in range(i,self.nstates):
+<         #        matrix[i][j] = matrix[j][i] = overlap[element]
+<         #        element+=1
+<         #self.overlap = matrix
+242,244d236
+< 
+<                         
+<         

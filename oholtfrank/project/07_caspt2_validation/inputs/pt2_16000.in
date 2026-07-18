@@ -1,0 +1,28 @@
+&GATEWAY
+  Coord
+  3
+  pt2_16000
+  O 0.0 0.0 0.0
+  H 0.0 1.265274 0.979326
+  H 0.0 -0.756950 0.585882
+  Basis = O.aug-cc-pVTZ, H.aug-cc-pVDZ
+  Group = NoSym
+  RICD
+
+&SEWARD
+
+&SCF
+
+&RASSCF
+  Spin     = 1
+  Symmetry = 1
+  Nactel   = 8 0 0
+  Inactive = 1
+  Ras2     = 10
+  CIRoot   = 13 13 1
+  ITERations = 200 100
+
+&CASPT2
+  XMULtistate = 13 1 2 3 4 5 6 7 8 9 10 11 12 13
+  IPEAshift = 0.0
+  Imaginary = 0.1
