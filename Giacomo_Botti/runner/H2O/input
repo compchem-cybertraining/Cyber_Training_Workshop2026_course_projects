@@ -1,0 +1,19 @@
+&input_files
+    geom_eq="geometry.xyz"
+    traj="traj.xyz"
+    hess="Hessian_flat.out"
+    energy="h2o_energies.dat"
+    output="input.dat"
+/
+&options
+    calculation = 0
+    eta = 0.d0 !3.4d-5
+/
+&trajectory
+    steps=2500
+    dt=8.2682749151502d0
+    padding=170000
+    mask(1) = 1
+    mask(2) = 1
+    mask(3) = 1
+/

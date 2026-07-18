@@ -1,0 +1,24 @@
+&GATEWAY
+    Coord
+    2
+    OpenCazzas
+    H 0.000000 0.000000 0.000000
+    H 0.000000 0.000000 2.5
+    Basis = def2-TZVP
+    Group = NoSym
+
+&SEWARD
+
+&SCF
+    KSDFT = B3LYP
+    Charge = 0
+    Spin = 1
+
+&RASSCF
+    Title = H2 SA-2-CAS(2,2)SCF
+    symmetry = 1
+    Nactel = 2 0 0
+    Spin = 1
+    Ras2 = 4
+    ciroot = 2 2 1
+    RLXRoot = 1

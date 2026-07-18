@@ -1,0 +1,28 @@
+&GATEWAY
+  Coord
+  2
+  Hydrogen 
+  H         -0.3900956909        0.0026329421        0.0011992262
+  H          0.3900911392       -0.0026058577       -0.0012204178
+  Basis = def2-TZVP 
+  Group = NoSym
+
+>>> Do While 
+	&SEWARD
+	>>> IF ( ITER = 1 ) <<<
+		&SCF; KSDFT = B3LYP; Charge = 0; Spin = 1
+	>>> ENDIF <<<
+  &RASSCF
+		Title = H2 SA-3-CAS(2,2)SCF
+		symmetry = 1
+		Nactel = 2 0 0
+		Spin = 1
+		Inactive = 0 
+                Ras2 = 4
+		ciroot  =  2  2  1
+		RLXRoot = 1
+  &SLAPAF
+>>> EndDo
+
+&MCKINLEY
+  ShowHessian

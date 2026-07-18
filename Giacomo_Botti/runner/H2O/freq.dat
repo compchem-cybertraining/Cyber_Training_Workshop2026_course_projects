@@ -1,0 +1,20 @@
+Frequencies including rot/trans (cm^-1):
+  omega(  1) =       24.441756
+  omega(  2) =       21.098165
+  omega(  3) =       12.836112
+  omega(  4) =       12.002854
+  omega(  5) =       16.368811
+  omega(  6) =       23.793748
+  omega(  7) =     1623.109014
+  omega(  8) =     3781.808301
+  omega(  9) =     3882.543907
+
+Harmonic zero-point energy (ZPE):
+  ZPE_all   (Eh)   =  2.115839410098e-02
+  ZPE_all   (cm^-1)=  4643.730611
+  ZPE_active(Eh)   =  2.115839410098e-02
+  ZPE_active(cm^-1)=  4643.730611
+  ZPE_all   (kJ/mol)=  55.551356
+  ZPE_all   (kcal/mol)=  13.277093
+
+Velocities printed in: velocity.xyz

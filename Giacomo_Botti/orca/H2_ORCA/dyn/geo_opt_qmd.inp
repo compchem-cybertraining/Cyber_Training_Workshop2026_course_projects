@@ -1,0 +1,15 @@
+! MD B3LYP D4 Def2-TZVPD VeryTightSCF
+%PAL NPROCS 20 END
+%md
+  restart
+  timestep 0.20_fs
+  thermostat none
+  dump position stride 1 filename "trajectory.xyz"
+  dump velocity stride 1 filename "velocity.xyz"
+  run 2501
+end
+
+* xyz 0 1
+  H     -0.37202100000000     0.00251200000000     0.00114300000000
+  H      0.37201700000000    -0.00248400000000    -0.00116400000000
+*

@@ -1,0 +1,3326 @@
+   This run of MOLCAS is using the pymolcas driver
+
+                             OPE
+                             OPE          NMOL  CASOP  ENMOLC A   SO
+                 OPE        NMOLC        AS  OP EN  MO LC     AS  OP
+                OPENM       OL CA        SO  PE NM  OL CA     SOP EN
+                OP EN      MO   LC       AS  OP ENMOL  CASO   PENMOL
+                OP  EN     MO   LC       AS  OP EN     MO     LC ASO
+               OP   E  NMOL  C  AS       OP  EN MO     LC     AS  OP
+               OP  E   NMO   LC AS        OPEN  MO     LCASOP EN   M
+               O  PEN   MO  LCA  SO
+            OPE   NMO   L   CAS    OP
+        OPENMOL  CASOP     ENMOL   CASOPE
+     OPENMOLCA   SOPENMOLCASOPEN   MOLCASOPE
+    OPENMOLCAS   OP           EN   MOL    CAS
+    OPENMOLCAS       OP  ENM        O     LCA
+    OPENMOLCAS    OPEN  MOLCASO     P  E  NMO
+    OPENMOLCAS     OP               E  N  MOL
+    OPENMOLCA   SO           PENM   O  L  CAS    OPEN    MO    LCAS
+    OPENMOLCA   SOP           ENM   O  L  CAS   OP  EN  MOLC  AS   O
+    OPENMOLCA   SOPE           NM      O  LCA   S      OP  EN MO
+    OPENMOLC                AS         O  PEN   M      OL  CA  SOPE
+    OPENMO        LCASOPE  NMOL        C  ASO   P      ENMOLC     AS
+    OPE     NMO      LCA  SO     P     E   NM   OL  CA SO  PE N   MO
+          OPENMOLCA            SOPE   NMO        LCAS  O    P  ENMO
+     OPENMOLCASOPENMOLCASOPENMOLCASOPENMOLCA
+        OPENMOLCASOPENMOLCASOPENMOLCASOPE
+            OPENMOLCASOPENMOLCASOPENM
+               OPENMOLCASOPENMOLCA        version: 21.10
+                   OPENMOLCASO
+                       OPE                tag: 287-g40fddb0ff
+
+ OpenMolcas is free software; you can redistribute it and/or modify it
+ under the terms of the GNU Lesser General Public License version 2.1.
+ OpenMolcas is distributed in the hope that it will be useful, but it
+ is provided "as is" and without any express or implied warranties.
+ For more details see the full text of the license in the file
+ LICENSE or in <http://www.gnu.org/licenses/>.
+
+                 Copyright (C) The OpenMolcas Authors
+           For the author list and the recommended citation,
+                   consult the file CONTRIBUTORS.md
+
+           *************************************************
+           * pymolcas version py2.21                       *
+           *   build 7e143f0cd7e3057537d1d99ac8f53503      *
+           *   (after the EMIL interpreter by V. Veryazov) *
+           *************************************************
+
+configuration info
+------------------
+Host name: login03 (Linux)
+C Compiler ID: Intel
+C flags: -std=gnu99 -gcc-sys
+Fortran Compiler ID: Intel
+Fortran flags: -fpp -i8 -r8 -heap-arrays
+Definitions: _MOLCAS_;_I8_;_LINUX_
+Parallel: OFF (GA=OFF)
+
+
+   -------------------------------------------------------------------------------------------------------
+  |
+  |           Project: h2_S1_casscf
+  |    Submitted from: /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+  |      Scratch area: /scratch_local/slurm_job.21226199/h2_S1_casscf
+  |   Save outputs to: /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+  |            Molcas: /g100/prod/opt/applications/openmolcas/21.10/intelmpi--oneapi-2021--binary
+  |
+  | Scratch area is empty
+  |
+  |    MOLCAS_DRIVER = /g100/prod/opt/applications/openmolcas/21.10/intelmpi--oneapi-2021--binary/pymolcas
+  |    MOLCAS_NPROCS = 48
+  |    MOLCAS_SOURCE = /g100/prod/opt/applications/openmolcas/21.10/intelmpi--oneapi-2021--binary
+  | MOLCAS_STRUCTURE = 0
+  |
+   -------------------------------------------------------------------------------------------------------
+
+++ ---------   Input file   ---------
+
+&GATEWAY
+  Coord
+  2
+  Hydrogen
+  H         -0.3900956909        0.0026329421        0.0011992262
+  H          0.3900911392       -0.0026058577       -0.0012204178
+  Basis = def2-TZVP
+  Group = NoSym
+
+>>> DO WHILE
+
+  &SEWARD
+
+  >>> IF (ITER == 1)
+
+    &SCF
+     KSDFT = B3LYP
+     Charge = 0
+     Spin = 1
+
+  >>> END IF
+
+  &RASSCF
+                  Title = H2 SA-2-CAS(2,2)SCF
+                  symmetry = 1
+                  Nactel = 2 0 0
+                  Spin = 1
+                  Inactive = 0
+                  Ras2 = 4
+                  ciroot  =  2  2  1
+                  RLXRoot = 1
+
+  &CASPT2
+                  XMultiState = all
+                  convergence = 1.0d-07
+                  IPEA        = 0.00
+                  IMAGinary   = 0.25
+                  RLXRoot     = 2
+
+  >>> COPY $WorkDir/$Project.JobMix $WorkDir/JOB001
+
+  &ALASKA
+                  CutOFF=1.0D-9
+                  SHOW
+
+  &SLAPAF
+
+>>> END DO
+
+&MCKINLEY
+  ShowHessian
+
+-- ----------------------------------
+
+--- Start Module: gateway at Mon Jul 13 23:02:37 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &GATEWAY
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33441
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+ 
+++    Symmetry information:
+      ---------------------
+ 
+                    Character Table for C1 
+ 
+                             E  
+                    a        1  x, y, xy, Rz, z, xz, Ry, yz, Rx, I
+--
+ 
+ 
+++    Basis set information:
+      ----------------------
+ 
+ 
+      Basis set label: H.DEF2-TZVP.........
+ 
+      Electronic valence basis set:
+      ------------------
+      Associated Effective Charge   1.000000 au
+      Associated Actual Charge      1.000000 au
+      Nuclear Model: Point charge
+ 
+      Shell  nPrim  nBasis  Cartesian Spherical Contaminant
+         s       5       3        X                  
+         p       1       1        X                  
+--
+ 
+ 
+++    Molecular structure info:
+      -------------------------
+ 
+                    ************************************************ 
+                    **** Cartesian Coordinates / Bohr, Angstrom **** 
+                    ************************************************ 
+ 
+     Center  Label                x              y              z                     x              y              z
+        1      H1              -0.737174       0.004976       0.002266             -0.390096       0.002633       0.001199
+        2      H2               0.737165      -0.004924      -0.002306              0.390091      -0.002606      -0.001220
+--
+ 
+ 
+            Nuclear Potential Energy              0.67825131 au
+ 
+--- Stop Module: gateway at Mon Jul 13 23:02:37 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+--- Start Module: seward at Mon Jul 13 23:02:37 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &SEWARD
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33462
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+               SEWARD will generate:
+                  Multipole Moment integrals up to order  2
+                  Kinetic Energy integrals
+                  Nuclear Attraction integrals (point charge)
+                  One-Electron Hamiltonian integrals
+                  Velocity integrals
+                  Orbital angular momentum around (-0.0000  0.0000 -0.0000 )
+                  Velocity quadrupole around (-0.0000  0.0000 -0.0000 )
+                  Two-Electron Repulsion integrals
+ 
+                   Integrals are discarded if absolute value <: 0.10E-13
+                   Integral cutoff threshold is set to       <: 0.10E-15
+ 
+            Nuclear Potential Energy              0.67825131 au
+ 
+ 
+      Basis set specifications :
+      Symmetry species         a  
+      Basis functions           12
+ 
+ 
+  Input file to MOLDEN was generated!
+ 
+--- Stop Module: seward at Mon Jul 13 23:02:38 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: h2_S1_casscf.GssOrb h2_S1_casscf.guessorb.h5 h2_S1_casscf.guessorb.molden xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+>>> IF (ITER == 1)
+
+*** symbolic link created: INPORB -> h2_S1_casscf.GssOrb
+--- Start Module: scf at Mon Jul 13 23:02:38 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                                &SCF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33486
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+ ###############################################################################
+ ###############################################################################
+ ###                                                                         ###
+ ###                                                                         ###
+ ###     Minimized-density-differences option turned off!                    ###
+ ###                                                                         ###
+ ###                                                                         ###
+ ###############################################################################
+ ###############################################################################
+++    Input section:
+      --------------
+ 
+      Header of the integral files:
+      
+       Integrals generated by Gateway/Seward, Mon Jul 13 23:02:37 2026
+ 
+ 
+      Cartesian coordinates in Angstrom:
+      -----------------------------------------------------
+      No.  Label        X            Y            Z        
+      -----------------------------------------------------
+       1   H1        -0.39009569   0.00263294   0.00119923
+       2   H2         0.39009114  -0.00260586  -0.00122042
+      -----------------------------------------------------
+      Nuclear repulsion energy =    0.67825131
+--
+ 
+++    Orbital specifications:
+      -----------------------
+ 
+      Symmetry species               1
+                                     a
+      Frozen orbitals                0
+      Occupied orbitals              1
+      Secondary orbitals            11
+      Deleted orbitals               0
+      Total number of orbitals      12
+      Number of basis functions     12
+--
+ 
+      Molecular charge                           0.000
+ 
+ 
+      The same grid will be used for all iterations.
+ 
+++    Optimization specifications:
+      ----------------------------
+ 
+      SCF Algorithm: Conventional
+      D(i)-D(i-1) density differences are used
+      Number of density matrices in core                5
+      Maximum number of NDDO SCF iterations           400
+      Maximum number of HF SCF iterations             400
+      Threshold for SCF energy change            0.10E-08
+      Threshold for density matrix               0.10E-03
+      Threshold for Fock matrix                  0.15E-03
+      Threshold for linear dependence            0.10E-08
+      Threshold at which DIIS is turned on       0.15E+00
+      Threshold at which QNR/C2DIIS is turned on 0.75E-01
+      Threshold for Norm(delta) (QNR/C2DIIS)     0.20E-04
+      DIIS extrapolation of the SCF procedure
+      All orbitals punched on: SCFORB
+--
+ 
+      Input vectors read from INPORB
+      Orbital file label: *Guess orbitals
+ 
+ 
+++ Convergence information
+                                   B3LYP      iterations: Energy and convergence statistics
+ 
+Iter     Tot. B3LYP      One-elec.       Two-elec.     Energy      Max Dij or  Max Fij      DNorm      TNorm      AccCon     Time
+         Energy          Energy          Energy        Change      Delta Norm                                                in Sec.
+   1    -1.168159125    -2.927885597     1.081475166   0.00E+00    0.14E+00*   0.76E-01*    0.71E+00   0.50E+01   None         0.
+   2    -1.178424806    -3.034100517     1.177424405  -0.10E-01*   0.35E-01*   0.11E-01*    0.15E+00   0.52E+01   EDIIS        0.
+   3    -1.178817564    -3.012674851     1.155605981  -0.39E-03*   0.39E-03*   0.19E-02*    0.43E-01   0.52E+01   c2DIIS       0.
+   4    -1.178836290    -3.016472881     1.159385285  -0.19E-04*   0.11E-04    0.21E-04     0.89E-03   0.52E+01   QNRc2DIIS    0.
+   5    -1.178836290    -3.016479802     1.159392205  -0.45E-09    0.21E-05    0.13E-05     0.33E-04   0.52E+01   QNRc2DIIS    0.
+ 
+       Convergence after  5 Macro Iterations
+--
+ 
+ *****************************************************************************************************************************
+ *                                                                                                                           *
+ *                                             SCF/KS-DFT Program, Final results                                             *
+ *                                                                                                                           *
+ *                                                                                                                           *
+ *                                                                                                                           *
+ *                                                       Final Results                                                       *
+ *                                                                                                                           *
+ *****************************************************************************************************************************
+ 
+::    Total KS-DFT energy                              -1.1788362902
+      One-electron energy                              -3.0164798018
+      Two-electron energy                               1.1593922053
+      Nuclear repulsion energy                          0.6782513063
+      Kinetic energy (interpolated)                     1.1037393618
+      Virial theorem                                    1.0680386431
+      Total spin, S(S+1)                                0.0000000000
+      Total spin, S                                     0.0000000000
+      Max non-diagonal density matrix element           0.0000041651
+      Max non-diagonal Fock matrix element              0.0000000120
+ 
+ 
+      All orbitals with orbital energies smaller than  E(LUMO)+0.5 are printed
+ 
+++    Molecular orbitals:
+      -------------------
+ 
+      Title: RKS-DFT orbitals
+
+      Molecular orbitals for symmetry species 1: a  
+ 
+          Orbital            1         2         3         4    
+          Energy           -0.4267    0.0505    0.2003    0.4598
+          Occ. No.          2.0000    0.0000    0.0000    0.0000
+ 
+        1 H1     1s         0.1924   -0.0989   -0.0754    0.1276
+        2 H1     *s         0.2756   -0.0735   -0.6965    1.7125
+        3 H1     *s         0.1482   -1.9259    0.8377   -2.3526
+        4 H1     *px        0.0183    0.0470   -0.0100    0.0850
+        5 H1     *py       -0.0001   -0.0003    0.0001   -0.0006
+        6 H1     *pz       -0.0001   -0.0001    0.0000   -0.0003
+        7 H2     1s         0.1924    0.0989   -0.0754   -0.1276
+        8 H2     *s         0.2756    0.0735   -0.6965   -1.7125
+        9 H2     *s         0.1482    1.9259    0.8377    2.3526
+       10 H2     *px       -0.0183    0.0470    0.0100    0.0850
+       11 H2     *py        0.0001   -0.0003   -0.0001   -0.0006
+       12 H2     *pz        0.0001   -0.0001   -0.0000   -0.0003
+--
+ 
+ 
+++    Molecular charges:
+      ------------------
+ 
+      Mulliken charges per centre and basis function type
+      ---------------------------------------------------
+ 
+                H1      H2    
+      1s       0.2511  0.2511
+      *s       0.7397  0.7397
+      *px      0.0092  0.0092
+      *pz      0.0000  0.0000
+      *py      0.0000  0.0000
+      Total    1.0000  1.0000
+ 
+      N-E     -0.0000 -0.0000
+ 
+      Total electronic charge=    2.000000
+ 
+      Total            charge=   -0.000000
+--
+ 
+ 
+++    Molecular properties:
+      ---------------------
+ 
+      Charge (e):
+                      =   -0.0000
+      Dipole Moment (Debye):
+      Origin of the operator (Ang)=    0.0000    0.0000    0.0000
+                   X=  3.1746E-16               Y=  8.8736E-17               Z= -1.1602E-16           Total=  3.4945E-16
+      Quadrupole Moment (Debye*Ang):
+      Origin of the operator (Ang)=   -0.0000    0.0000   -0.0000
+                  XX= -1.5603E+00              XY= -3.9739E-03              XZ= -1.8354E-03              YY= -2.1521E+00
+                  YZ=  1.2325E-05              ZZ= -2.1521E+00
+      In traceless form (Debye*Ang)
+                  XX=  5.9180E-01              XY= -5.9609E-03              XZ= -2.7532E-03              YY= -2.9588E-01
+                  YZ=  1.8487E-05              ZZ= -2.9592E-01
+--
+ 
+ 
+  Input file to MOLDEN was generated!
+ 
+ ###############################################################################
+ ###############################################################################
+ ###                                                                         ###
+ ###                                                                         ###
+ ###    WARNING: RunFile label nBas                                          ###
+ ###    was used       77 times                                              ###
+ ###                                                                         ###
+ ###                                                                         ###
+ ###############################################################################
+ ###############################################################################
+--- Stop Module: scf at Mon Jul 13 23:02:39 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: h2_S1_casscf.scf.molden h2_S1_casscf.ScfOrb h2_S1_casscf.scf.h5 xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.ScfOrb
+--- Start Module: rasscf at Mon Jul 13 23:02:39 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &RASSCF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33510
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+ 
+      Header of the ONEINT file:
+      --------------------------
+      
+      Integrals generated by Gateway/Seward, Mon Jul 13 23:02:37 2026
+ 
+ 
+      OrdInt status: non-squared
+ 
+ 
+      Cartesian coordinates in Angstrom:
+      -----------------------------------------------------
+      No.  Label        X            Y            Z        
+      -----------------------------------------------------
+       1   H1        -0.39009569   0.00263294   0.00119923
+       2   H2         0.39009114  -0.00260586  -0.00122042
+      -----------------------------------------------------
+      Nuclear repulsion energy =    0.67825131
+ 
+++    Wave function specifications:
+      -----------------------------
+ 
+      Number of closed shell electrons           0
+      Number of electrons in active shells       2
+      Max number of holes in RAS1 space          0
+      Max nr of electrons in RAS3 space          0
+      Number of inactive orbitals                0
+      Number of active orbitals                  4
+      Number of secondary orbitals               8
+      Spin quantum number                      0.0
+      State symmetry                             1
+--
+ 
+++    Orbital specifications:
+      -----------------------
+ 
+      Symmetry species                           1
+                                                 a
+      Frozen orbitals                            0
+      Inactive orbitals                          0
+      Active orbitals                            4
+      RAS1 orbitals                              0
+      RAS2 orbitals                              4
+      RAS3 orbitals                              0
+      Secondary orbitals                         8
+      Deleted orbitals                           0
+      Number of basis functions                 12
+--
+ 
+++    CI expansion specifications:
+      ----------------------------
+ 
+      Number of CSFs                            10
+      Number of determinants                    10
+      Number of root(s) required                 2
+      Root chosen for geometry opt.              1
+      CI roots used                              1     2
+      weights                                0.500 0.500
+      highest root included in the CI            2
+      max. size of the explicit Hamiltonian     10
+--
+ 
+++    Optimization specifications:
+      ----------------------------
+ 
+      RASSCF algorithm: Conventional
+      Maximum number of macro iterations       200
+      Maximum number of SX iterations          100
+      Threshold for RASSCF energy            0.100E-07
+      Threshold for max MO rotation          0.100E+00
+      Threshold for max BLB element          0.100E-03
+      Level shift parameter                  0.500E+00
+      Make Quasi-Newton update
+--
+ 
+      Orbitals from runfile: scf orbitals
+      The MO-coefficients are taken from scf orbitals on runfile
+ 
+      Total molecular charge    0.00
+ 
+      ************************************************************************************************************************
+      *                                                                                                                      *
+      *                                            Wave function control section                                             *
+      *                                                                                                                      *
+      ************************************************************************************************************************
+ 
+ 
+                                         RASSCF iterations: Energy and convergence statistics
+                                         ----------------------------------------------------
+ 
+      Iter CI   SX   CI       RASSCF       Energy    max ROT     max BLB   max BLB  Level Ln srch  Step   QN   Walltime
+          iter iter root      energy       change     param      element    value   shift minimum  type update hh:mm:ss
+ Nr of preliminary CI iterations:   1
+        1   1    9    0    -0.90718087    0.00E+00  -0.35E+00*   1   7 1  0.60E-01*  0.00   0.00    SX    NO    0:00:00
+        2   1    8    0    -0.91641409   -0.92E-02*  0.65E-01    1   7 1  0.13E-01*  0.00   0.00    SX    NO    0:00:00
+        3   1    8    0    -0.91680607   -0.39E-03* -0.22E-01    1   7 1  0.39E-02*  0.00   0.00    SX    NO    0:00:00
+        4   1    7    0    -0.91685099   -0.45E-04* -0.76E-02    1   7 1  0.12E-02*  0.00   0.00    SX    NO    0:00:00
+        5   1    7    0    -0.91685708   -0.61E-05*  0.46E-02    2  10 1  0.48E-03*  0.00   1.61    LS   YES    0:00:00
+        6   1    6    0    -0.91685810   -0.10E-05*  0.21E-03    2  10 1  0.11E-03*  0.00   1.01    QN   YES    0:00:00
+        7   1    6    0    -0.91685813   -0.29E-07* -0.14E-03    2  10 1  0.35E-04   0.00   1.45    QN   YES    0:00:00
+        8   1    4    0    -0.91685813   -0.31E-08  -0.71E-05    1   7 1  0.14E-05   0.00   1.01    QN   YES    0:00:00
+      Convergence after  8 iterations
+        9   1    4    0    -0.91685813   -0.58E-11  -0.71E-05    1   7 1  0.41E-06   0.00   1.01    QN   YES    0:00:00
+ 
+      ************************************************************************************************************************
+                                                      Wave function printout:
+                       occupation of active orbitals, and spin coupling of open shells (u,d: Spin up or down)
+      ************************************************************************************************************************
+ 
+      Note: transformation to natural orbitals
+      has been made, which may change the order of the CSFs.
+ 
+      printout of CI-coefficients larger than  0.05 for root  1
+      energy=      -1.157081
+      conf/sym  1111     Coeff  Weight
+             1  2000   0.98759 0.97532
+             3  0200  -0.05093 0.00259
+             4  u0d0   0.09250 0.00856
+             7  0u0d   0.07475 0.00559
+             8  0020  -0.05538 0.00307
+            10  0002  -0.06979 0.00487
+ 
+      printout of CI-coefficients larger than  0.05 for root  2
+      energy=      -0.676636
+      conf/sym  1111     Coeff  Weight
+             2  ud00   0.99234 0.98474
+             6  0ud0  -0.12285 0.01509
+ 
+      Natural orbitals and occupation numbers for root  1
+      sym 1:   1.966824   0.000089   0.007073   0.026015
+ 
+      Natural orbitals and occupation numbers for root  2
+      sym 1:   0.999996   0.999996   0.000004   0.000004
+ 
+      ************************************************************************************************************************
+      *                                                                                                                      *
+      *                                                    Final results                                                     *
+      *                                                                                                                      *
+      ************************************************************************************************************************
+ 
+ 
+++    Wave function specifications:
+      -----------------------------
+ 
+      Number of closed shell electrons           0
+      Number of electrons in active shells       2
+      Max number of holes in RAS1 space          0
+      Max nr of electrons in RAS3 space          0
+      Number of inactive orbitals                0
+      Number of active orbitals                  4
+      Number of secondary orbitals               8
+      Spin quantum number                      0.0
+      State symmetry                             1
+--
+ 
+++    Orbital specifications:
+      -----------------------
+ 
+      Symmetry species                           1
+                                                 a
+      Frozen orbitals                            0
+      Inactive orbitals                          0
+      Active orbitals                            4
+      RAS1 orbitals                              0
+      RAS2 orbitals                              4
+      RAS3 orbitals                              0
+      Secondary orbitals                         8
+      Deleted orbitals                           0
+      Number of basis functions                 12
+--
+ 
+++    CI expansion specifications:
+      ----------------------------
+ 
+      Number of CSFs                            10
+      Number of determinants                    10
+      Number of root(s) required                 2
+      CI roots used                              1     2
+      weights                                0.500 0.500
+      highest root included in the CI            2
+      Root passed to geometry opt.               1
+--
+ 
+++    Final optimization conditions:
+      ------------------------------
+ 
+      Average CI energy                              -0.91685813
+      RASSCF energy for state  1                     -1.15708052
+      Super-CI energy                                -0.00000000
+      RASSCF energy change                           -0.00000000
+      Max change in MO coefficients              -0.165E-04
+      Max non-diagonal density matrix element    -0.707E-05
+      Maximum BLB matrix element                  0.407E-06
+      (orbital pair   1,   7 in symmetry   1)
+      Norm of electronic gradient            0.151E-01
+--
+ 
+ 
+      Final state energy(ies):
+      ------------------------
+ 
+::    RASSCF root number  1 Total energy:     -1.15708052
+::    RASSCF root number  2 Total energy:     -0.67663575
+ 
+++    Molecular orbitals:
+      -------------------
+ 
+      Pseudonatural active orbitals and approximate occupation numbers
+ 
+ 
+ 
+ 
+      Molecular orbitals for symmetry species 1: a  
+ 
+ 
+      Orbital                 1         2         3         4
+      Energy             0.0000    0.0000    0.0000    0.0000
+      Occ. No.           1.4721    0.5053    0.0149    0.0077
+ 
+     1 H1     1s         0.1994   -0.0617   -0.2545    0.4444
+     2 H1     *s         0.3083    0.0309   -0.2342    1.0178
+     3 H1     *s         0.1000   -2.1063    0.5812   -1.6628
+     4 H1     *px        0.0336    0.0431   -0.2421    0.0105
+     5 H1     *py       -0.0002   -0.0003    0.0016   -0.0001
+     6 H1     *pz       -0.0001   -0.0001    0.0008   -0.0000
+     7 H2     1s         0.1994    0.0617   -0.2545   -0.4444
+     8 H2     *s         0.3083   -0.0309   -0.2342   -1.0178
+     9 H2     *s         0.1000    2.1063    0.5812    1.6628
+    10 H2     *px       -0.0336    0.0431    0.2421    0.0105
+    11 H2     *py        0.0002   -0.0003   -0.0016   -0.0001
+    12 H2     *pz        0.0001   -0.0001   -0.0008   -0.0000
+--
+ 
+      Von Neumann Entropy (Root   1) =  0.13466
+ 
+
+      Mulliken population analysis for root number:  1
+      -----------------------------------------------
+ 
+ 
+++    Molecular charges:
+      ------------------
+ 
+      Mulliken charges per centre and basis function type
+      ---------------------------------------------------
+ 
+                H1      H2    
+      1s       0.2410  0.2410
+      *s       0.7487  0.7487
+      *px      0.0103  0.0103
+      *pz      0.0000  0.0000
+      *py      0.0000  0.0000
+      Total    1.0000  1.0000
+ 
+      N-E      0.0000 -0.0000
+ 
+      Total electronic charge=    2.000000
+ 
+      Total            charge=   -0.000000
+--
+ 
+ 
+
+      Expectation values of various properties for root number:  1
+      -----------------------------------------------------------
+ 
+ 
+++    Molecular properties:
+      ---------------------
+ 
+      Charge (e):
+                      =   -0.0000
+      Dipole Moment (Debye):
+      Origin of the operator (Ang)=    0.0000    0.0000    0.0000
+                   X= -7.6191E-15               Y=  8.4216E-16               Z=  6.7654E-17           Total=  7.6658E-15
+      Quadrupole Moment (Debye*Ang):
+      Origin of the operator (Ang)=   -0.0000    0.0000   -0.0000
+                  XX= -1.5486E+00              XY= -3.7781E-03              XZ= -1.7450E-03              YY= -2.1113E+00
+                  YZ=  1.1717E-05              ZZ= -2.1113E+00
+      In traceless form (Debye*Ang)
+                  XX=  5.6263E-01              XY= -5.6671E-03              XZ= -2.6175E-03              YY= -2.8130E-01
+                  YZ=  1.7576E-05              ZZ= -2.8133E-01
+--
+ 
+      Von Neumann Entropy (Root   2) =  1.00007
+ 
+
+      Mulliken population analysis for root number:  2
+      -----------------------------------------------
+ 
+ 
+++    Molecular charges:
+      ------------------
+ 
+      Mulliken charges per centre and basis function type
+      ---------------------------------------------------
+ 
+                H1      H2    
+      1s       0.1728  0.1728
+      *s       0.7925  0.7925
+      *px      0.0347  0.0347
+      *pz      0.0000  0.0000
+      *py      0.0000  0.0000
+      Total    1.0000  1.0000
+ 
+      N-E     -0.0000 -0.0000
+ 
+      Total electronic charge=    2.000000
+ 
+      Total            charge=   -0.000000
+--
+ 
+ 
+
+      Expectation values of various properties for root number:  2
+      -----------------------------------------------------------
+ 
+ 
+++    Molecular properties:
+      ---------------------
+ 
+      Charge (e):
+                      =   -0.0000
+      Dipole Moment (Debye):
+      Origin of the operator (Ang)=    0.0000    0.0000    0.0000
+                   X=  2.4551E-14               Y= -1.7108E-15               Z= -1.1431E-15           Total=  2.4637E-14
+      Quadrupole Moment (Debye*Ang):
+      Origin of the operator (Ang)=   -0.0000    0.0000   -0.0000
+                  XX= -9.3103E+00              XY=  3.6907E-02              XZ=  1.7046E-02              YY= -3.8141E+00
+                  YZ= -1.1446E-04              ZZ= -3.8139E+00
+      In traceless form (Debye*Ang)
+                  XX= -5.4963E+00              XY=  5.5361E-02              XZ=  2.5570E-02              YY=  2.7480E+00
+                  YZ= -1.7170E-04              ZZ=  2.7483E+00
+--
+ 
+ 
+  Input file to MOLDEN was generated!
+ 
+ 
+  Input file to MOLDEN was generated!
+ 
+ 
+  Input file to MOLDEN was generated!
+ 
+      Average orbitals are written to the RASORB file
+      Natural orbitals for root   1 are written to the RASORB.1 file
+      Natural orbitals for root   2 are written to the RASORB.2 file
+      Spin density orbitals for root   1 are written to the SPDORB.1 file
+      Spin density orbitals for root   2 are written to the SPDORB.2 file
+ 
+--- Stop Module: rasscf at Mon Jul 13 23:02:40 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: h2_S1_casscf.rasscf.molden h2_S1_casscf.rasscf.molden.1 h2_S1_casscf.rasscf.molden.2 h2_S1_casscf.RasOrb h2_S1_casscf.RasOrb.1 h2_S1_casscf.RasOrb.2
+           h2_S1_casscf.rasscf.h5 h2_S1_casscf.SpdOrb.1 h2_S1_casscf.SpdOrb.2 xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: caspt2 at Mon Jul 13 23:02:40 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &CASPT2
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33534
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+ 
+++    Wave function specifications:
+      -----------------------------
+ 
+      Number of closed shell electrons           0
+      Number of electrons in active shells       2
+      Max number of holes in RAS1 space          0
+      Max number of electrons in RAS3 space      0
+      Number of inactive orbitals                0
+      Number of active orbitals                  4
+      Number of secondary orbitals               8
+      Spin quantum number                      0.0
+      State symmetry                             1
+      Number of CSFs                            10
+      Number of root(s) available                2
+      Root passed to geometry opt.               2
+      A file JOBMIX will be created
+      This is a MULTI-STATE CASSCF reference
+      Number of CI roots used                    2
+      These are:                                 1   2
+      Off-diagonal elements of Heff are computed
+--
+ 
+++    Orbital specifications:
+      -----------------------
+ 
+      Symmetry species                           1
+                                                 a
+      Frozen orbitals                            0
+      Inactive orbitals                          0
+      Active orbitals                            4
+      Secondary orbitals                         8
+      Deleted orbitals                           0
+      Number of basis functions                 12
+--
+ 
+++    CASPT2 specifications:
+      ----------------------
+ 
+      Type of calculation                        XMS-CASPT2
+      Fock operator                              state-average
+      IPEA shift                                 0.00
+      Real shift                                 0.00
+      Imaginary shift                            0.25
+      The input orbitals will be transformed to quasi-canonical
+      The input states will be rotated to diagonalize the Fock operator
+--
+ 
+--------------------------------------------------------------------------------
+ Estimated memory requirements:
+  POLY3 :                   250490
+  RHS:                      253392
+  SIGMA :                   252048
+  PRPCTL:                        0
+ Available workspace:    230393135
+ 
+++ CASPT2 computation for group   1
+ 
+********************************************************************************
+ Multi-State initialization phase begins for group   1
+--------------------------------------------------------------------------------
+ 
+  H0 in the original model space basis:
+                1               2
+   1       -1.08477886     -0.00000000
+   2       -0.00000000     -0.45149870
+ 
+  H0 eigenvectors:
+                1               2
+   1        1.00000000     -0.00000000
+   2        0.00000000      1.00000000
+ 
+********************************************************************************
+ Compute H0 matrices for state    1
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ H0 matrices have been computed.
+ 
+********************************************************************************
+  CASPT2 EQUATION SOLUTION
+--------------------------------------------------------------------------------
+ 
+  Total nr of CASPT2 parameters:
+   Before reduction:        1040
+   After  reduction:          68
+ 
+ The contributions to the second order correlation energy in atomic units.
+-----------------------------------------------------------------------------------------------------------------------------
+  IT.      VJTU        VJTI        ATVX        AIVX        VJAI        BVAT        BJAT        BJAI        TOTAL       RNORM  
+-----------------------------------------------------------------------------------------------------------------------------
+   1     0.000000    0.000000   -0.000415    0.000000    0.000000   -0.008443    0.000000    0.000000   -0.008858    0.001066
+   2     0.000000    0.000000   -0.000414    0.000000    0.000000   -0.008450    0.000000    0.000000   -0.008864    0.000138
+   3     0.000000    0.000000   -0.000414    0.000000    0.000000   -0.008451    0.000000    0.000000   -0.008865    0.000015
+   4     0.000000    0.000000   -0.000414    0.000000    0.000000   -0.008451    0.000000    0.000000   -0.008865    0.000001
+   5     0.000000    0.000000   -0.000414    0.000000    0.000000   -0.008451    0.000000    0.000000   -0.008865    0.000000
+-----------------------------------------------------------------------------------------------------------------------------
+ 
+  FINAL CASPT2 RESULT:
+ 
+      Reference energy:          -1.1570805161
+      E2 (Non-variational):      -0.0088649619
+      Shift correction:          -0.0000354761
+      E2 (Variational):          -0.0089004380
+      Total energy:              -1.1659809541
+      Residual norm:              0.0000000069
+      Reference weight:           0.99780
+ 
+      Contributions to the CASPT2 correlation energy
+      Active & Virtual Only:         -0.0088649619
+      One Inactive Excited:           0.0000000000
+      Two Inactive Excited:           0.0000000000
+ 
+ 
+++ Denominators, etc.
+--------------------------------------------------------------------------------------------------------------
+ Report on small energy denominators, large coefficients, and large energy contributions.
+CASE  SYMM ACTIVE-MIX  NON-ACTIVE INDICES          DENOMINATOR     RHS VALUE       COEFFICIENT     CONTRIBUTION
+BVATP    1  Mu1.0001  Se1.005 Se1.005               3.71967989     -0.11116927      0.02975239     -0.00330755
+BVATP    1  Mu1.0001  Se1.006 Se1.006               3.71967989     -0.11116927      0.02975239     -0.00330755
+--
+ 
+   (Skipping property calculation,
+    use PROP keyword to activate)
+********************************************************************************
+ Compute H0 matrices for state    2
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ H0 matrices have been computed.
+ 
+********************************************************************************
+  CASPT2 EQUATION SOLUTION
+--------------------------------------------------------------------------------
+ 
+  Total nr of CASPT2 parameters:
+   Before reduction:        1040
+   After  reduction:          68
+ 
+ The contributions to the second order correlation energy in atomic units.
+-----------------------------------------------------------------------------------------------------------------------------
+  IT.      VJTU        VJTI        ATVX        AIVX        VJAI        BVAT        BJAT        BJAI        TOTAL       RNORM  
+-----------------------------------------------------------------------------------------------------------------------------
+   1     0.000000    0.000000   -0.001956    0.000000    0.000000   -0.002990    0.000000    0.000000   -0.004945    0.001485
+   2     0.000000    0.000000   -0.001979    0.000000    0.000000   -0.002993    0.000000    0.000000   -0.004973    0.000111
+   3     0.000000    0.000000   -0.001979    0.000000    0.000000   -0.002994    0.000000    0.000000   -0.004972    0.000024
+   4     0.000000    0.000000   -0.001978    0.000000    0.000000   -0.002994    0.000000    0.000000   -0.004972    0.000000
+-----------------------------------------------------------------------------------------------------------------------------
+ 
+  FINAL CASPT2 RESULT:
+ 
+      Reference energy:          -0.6766357485
+      E2 (Non-variational):      -0.0049722493
+      Shift correction:          -0.0000221498
+      E2 (Variational):          -0.0049943991
+      Total energy:              -0.6816301476
+      Residual norm:              0.0000000155
+      Reference weight:           0.99870
+ 
+      Contributions to the CASPT2 correlation energy
+      Active & Virtual Only:         -0.0049722493
+      One Inactive Excited:           0.0000000000
+      Two Inactive Excited:           0.0000000000
+ 
+ 
+++ Denominators, etc.
+--------------------------------------------------------------------------------------------------------------
+ Report on small energy denominators, large coefficients, and large energy contributions.
+CASE  SYMM ACTIVE-MIX  NON-ACTIVE INDICES          DENOMINATOR     RHS VALUE       COEFFICIENT     CONTRIBUTION
+--
+ 
+   (Skipping property calculation,
+    use PROP keyword to activate)
+--
+ 
+  Total CASPT2 energies:
+ 
+  State-specific CASPT2 energies obtained using
+  rotated states do not have a well-defined physical
+  meaning, however they can be extracted from the
+  diagonal of the effective Hamiltonian.
+ 
+++ Multi-State CASPT2 section:
+********************************************************************************
+  MULTI-STATE CASPT2 SECTION
+--------------------------------------------------------------------------------
+ 
+ 
+  Effective Hamiltonian matrix (Symmetric):
+ 
+                1               2
+   1        -1.16598095
+   2         0.00000000     -0.68163015
+ 
+       Total XMS-CASPT2 energies:
+::    XMS-CASPT2 Root  1     Total energy:     -1.16598095
+::    XMS-CASPT2 Root  2     Total energy:     -0.68163015
+ 
+       Eigenvectors:
+            1.00000000      0.00000000
+           -0.00000000      1.00000000
+ 
+       In terms of the input states:
+            1.00000000     -0.00000000
+            0.00000000      1.00000000
+ 
+--
+ 
+  THE ORIGINAL CI ARRAYS ARE NOW MIXED AS LINEAR
+  COMBINATIONS, GIVEN BY THE EIGENVECTORS.
+  A NEW JOBIPH FILE NAMED 'JOBMIX' IS PREPARED.
+********************************************************************************
+ 
+++ Mixed CI coefficients:
+  The CI coefficients for the MIXED state nr.   1
+--------------------------------------------------------------------------------
+ CI COEFFICIENTS LARGER THAN  0.50D-01
+  Occupation of active orbitals, and spin coupling
+  of open shells. (u,d: Spin up or down).
+  SGUGA info is (Midvert:IsyUp:UpperWalk/LowerWalk)
+        Conf  SGUGA info        Occupation    Coefficient         Weight
+           1  ( 1:1:   1/   1)   2000            0.987585       0.975325
+           3  ( 1:1:   1/   3)   0200           -0.050925       0.002593
+           4  ( 2:1:   1/   1)   u0d0            0.092502       0.008557
+           7  ( 2:1:   2/   2)   0u0d            0.074752       0.005588
+           8  ( 3:1:   1/   1)   0020           -0.055381       0.003067
+          10  ( 3:1:   3/   1)   0002           -0.069789       0.004871
+ 
+  The CI coefficients for the MIXED state nr.   2
+--------------------------------------------------------------------------------
+ CI COEFFICIENTS LARGER THAN  0.50D-01
+  Occupation of active orbitals, and spin coupling
+  of open shells. (u,d: Spin up or down).
+  SGUGA info is (Midvert:IsyUp:UpperWalk/LowerWalk)
+        Conf  SGUGA info        Occupation    Coefficient         Weight
+           2  ( 1:1:   1/   2)   ud00            0.992342       0.984742
+           6  ( 2:1:   1/   2)   0ud0           -0.122846       0.015091
+ 
+--
+ 
+--- Stop Module: caspt2 at Mon Jul 13 23:02:40 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+>>> COPY /scratch_local/slurm_job.21226199/h2_S1_casscf/h2_S1_casscf.JobMix /scratch_local/slurm_job.21226199/h2_S1_casscf/JOB001
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: alaska at Mon Jul 13 23:02:40 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &ALASKA
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33561
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: alaska at Mon Jul 13 23:02:40 2026 /rc=_RC_INVOKED_OTHER_MODULE_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: numerical_gradient at Mon Jul 13 23:02:40 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                        &NUMERICAL_GRADIENT
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33582
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+ Root to use:                      2
+ Number of internal degrees                                 1
+ Number of constraints                                      0
+ Number of displacements                                    2
+ Effective number of displacements                          2
+ Relative displacements                  1.000000000000000E-002
+ 
+   * Point #   1 of    2 done.
+    (Perturbation    1)
+   * Point #   2 of    2 done.
+    (Perturbation    2)
+ 
+ Numerical gradient, root     1
+  ---------------------------------------------
+                 X           Y           Z
+  ---------------------------------------------
+  H1          -0.022360    0.000150    0.000069
+  H2           0.022360   -0.000150   -0.000069
+  ---------------------------------------------
+ 
+ Numerical gradient, root     2
+  ---------------------------------------------
+                 X           Y           Z
+  ---------------------------------------------
+  H1           0.139540   -0.000937   -0.000433
+  H2          -0.139540    0.000937    0.000433
+  ---------------------------------------------
+--- Stop Module: numerical_gradient at Mon Jul 13 23:02:43 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+--- Module numerical_gradient spent 2 seconds ---
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: slapaf at Mon Jul 13 23:02:43 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &SLAPAF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33639
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+ 
+ 
+++       Slapaf input parameters:
+         ------------------------
+ 
+ Maximum number of iterations:              2000
+ Convergence test a la Schlegel.
+ Convergence criterion on gradient/para.<=: 3.0E-04
+ Convergence criterion on step/parameter<=: 3.0E-04
+ Convergence criterion on energy change <=: 0.0E+00
+ Parameters for step-restricted optimization
+ Maximum step length (initial seed):       3.00E-01
+ 
+ -RFO activated with parameters:
+   Maximum number of data points used in RFO:      5
+ Line search is performed
+ 
+ 
+ -Optimization for minimum.
+  Optimization method: RS-RFO.
+ 
+ -Initial Hessian guessed by Hessian Model Function (HMF).
+  HMF augmented with weak interactions.
+ 
+ -Hessian update method: Broyden-Fletcher-Goldfarb-Shanno
+  Maximum number of points in Hessian update:  5
+ 
+ -Relaxation will be done on non-redundant internal coordinates, based on
+  force constant weighted redundant internal coordinates.
+ 
+--
+ 
+ ******************************************
+ * Statistics of the internal coordinates *
+ ******************************************
+ Translations and Rotations:         0
+ Bonds                     :         1
+ Angles                    :         0
+ Torsions                  :         0
+ Out-of-plane angles       :         0
+ 
+ 
+**********************************************************************************************************************
+*                                    Energy Statistics for Geometry Optimization                                     *
+**********************************************************************************************************************
+                       Energy     Grad      Grad              Step                 Estimated   Geom       Hessian     
+Iter      Energy       Change     Norm      Max    Element    Max     Element     Final Energy Update Update   Index  
+  1     -0.68163015  0.00000000 0.197344  0.139544 nrc001   0.300000* nrc001       -0.70256169 RS-RFO  None      0    
+ 
+       +----------------------------------+----------------------------------+
+       +    Cartesian Displacements       +    Gradient in internals         +
+       +  Value      Threshold Converged? +  Value      Threshold Converged? +
+ +-----+----------------------------------+----------------------------------+
+ + RMS + 1.5000E-01  1.2000E-03     No    + 1.9734E-01  3.0000E-04     No    +
+ +-----+----------------------------------+----------------------------------+
+ + Max + 1.5000E-01  1.8000E-03     No    + 1.3954E-01  4.5000E-04     No    +
+ +-----+----------------------------------+----------------------------------+
+ 
+ Convergence not reached yet!
+ 
+*****************************************************************************************************************
+*****************************************************************************************************************
+ 
+++ Geometry section
+ 
+********************************************************************************
+  Geometrical information of the new structure
+********************************************************************************
+ 
+ 
+ *********************************************************
+ * Nuclear coordinates for the next iteration / Bohr     *
+ *********************************************************
+  ATOM              X               Y               Z     
+  H1              -0.887170        0.005983        0.002731
+  H2               0.887161       -0.005932       -0.002771
+ 
+ 
+ *********************************************************
+ * Nuclear coordinates for the next iteration / Angstrom *
+ *********************************************************
+  ATOM              X               Y               Z     
+  H1              -0.469470        0.003166        0.001445
+  H2               0.469466       -0.003139       -0.001467
+ 
+ 
+                    *************************************** 
+                    *    InterNuclear Distances / Bohr    * 
+                    *************************************** 
+ 
+               1 H1            2 H2    
+    1 H1       0.000000
+    2 H2       1.774380        0.000000
+ 
+                    ******************************************* 
+                    *    InterNuclear Distances / Angstrom    * 
+                    ******************************************* 
+ 
+               1 H1            2 H2    
+    1 H1       0.000000
+    2 H2       0.938961        0.000000
+--
+--- Stop Module: slapaf at Mon Jul 13 23:02:43 2026 /rc=_RC_CONTINUE_LOOP_ ---
+*** files: h2_S1_casscf.geo.molden h2_S1_casscf.slapaf.h5 h2_S1_casscf.structure h2_S1_casscf.Opt.xyz xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+>>> END DO
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: seward at Mon Jul 13 23:02:43 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &SEWARD
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33663
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: seward at Mon Jul 13 23:02:43 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+>>> IF (ITER == 1)
+(Skipped)
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: rasscf at Mon Jul 13 23:02:43 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &RASSCF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33687
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: rasscf at Mon Jul 13 23:02:44 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: h2_S1_casscf.rasscf.molden h2_S1_casscf.rasscf.molden.1 h2_S1_casscf.rasscf.molden.2 h2_S1_casscf.RasOrb h2_S1_casscf.RasOrb.1 h2_S1_casscf.RasOrb.2
+           h2_S1_casscf.rasscf.h5 h2_S1_casscf.SpdOrb.1 h2_S1_casscf.SpdOrb.2 xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: caspt2 at Mon Jul 13 23:02:44 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &CASPT2
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33711
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: caspt2 at Mon Jul 13 23:02:44 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+>>> COPY /scratch_local/slurm_job.21226199/h2_S1_casscf/h2_S1_casscf.JobMix /scratch_local/slurm_job.21226199/h2_S1_casscf/JOB001
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: alaska at Mon Jul 13 23:02:44 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &ALASKA
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33738
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: alaska at Mon Jul 13 23:02:44 2026 /rc=_RC_INVOKED_OTHER_MODULE_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: numerical_gradient at Mon Jul 13 23:02:44 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                        &NUMERICAL_GRADIENT
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33759
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: numerical_gradient at Mon Jul 13 23:02:47 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+--- Module numerical_gradient spent 2 seconds ---
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: slapaf at Mon Jul 13 23:02:47 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &SLAPAF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33786
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+ 
+**********************************************************************************************************************
+*                                    Energy Statistics for Geometry Optimization                                     *
+**********************************************************************************************************************
+                       Energy     Grad      Grad              Step                 Estimated   Geom       Hessian     
+Iter      Energy       Change     Norm      Max    Element    Max     Element     Final Energy Update Update   Index  
+  1     -0.68163015  0.00000000 0.197344  0.139544 nrc001   0.300000* nrc001       -0.70256169 RS-RFO  None      0    
+  2     -0.70964857 -0.02801842 0.081649  0.057734 nrc001   0.202992  nrc001       -0.71550838 RS-RFO  BFGS      0    
+ 
+       +----------------------------------+----------------------------------+
+       +    Cartesian Displacements       +    Gradient in internals         +
+       +  Value      Threshold Converged? +  Value      Threshold Converged? +
+ +-----+----------------------------------+----------------------------------+
+ + RMS + 1.0150E-01  1.2000E-03     No    + 8.1649E-02  3.0000E-04     No    +
+ +-----+----------------------------------+----------------------------------+
+ + Max + 1.0150E-01  1.8000E-03     No    + 5.7734E-02  4.5000E-04     No    +
+ +-----+----------------------------------+----------------------------------+
+ 
+ Convergence not reached yet!
+ 
+*****************************************************************************************************************
+*****************************************************************************************************************
+ 
+++ Geometry section
+ 
+********************************************************************************
+  Geometrical information of the new structure
+********************************************************************************
+ 
+ 
+ *********************************************************
+ * Nuclear coordinates for the next iteration / Bohr     *
+ *********************************************************
+  ATOM              X               Y               Z     
+  H1              -0.988663        0.006664        0.003046
+  H2               0.988655       -0.006613       -0.003086
+ 
+ 
+ *********************************************************
+ * Nuclear coordinates for the next iteration / Angstrom *
+ *********************************************************
+  ATOM              X               Y               Z     
+  H1              -0.523178        0.003527        0.001612
+  H2               0.523173       -0.003499       -0.001633
+ 
+--
+--- Stop Module: slapaf at Mon Jul 13 23:02:47 2026 /rc=_RC_CONTINUE_LOOP_ ---
+*** files: h2_S1_casscf.geo.molden h2_S1_casscf.slapaf.h5 h2_S1_casscf.structure h2_S1_casscf.Opt.xyz xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+>>> END DO
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: seward at Mon Jul 13 23:02:47 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &SEWARD
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33810
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: seward at Mon Jul 13 23:02:47 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+>>> IF (ITER == 1)
+(Skipped)
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: rasscf at Mon Jul 13 23:02:47 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &RASSCF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33834
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: rasscf at Mon Jul 13 23:02:48 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: h2_S1_casscf.rasscf.molden h2_S1_casscf.rasscf.molden.1 h2_S1_casscf.rasscf.molden.2 h2_S1_casscf.RasOrb h2_S1_casscf.RasOrb.1 h2_S1_casscf.RasOrb.2
+           h2_S1_casscf.rasscf.h5 h2_S1_casscf.SpdOrb.1 h2_S1_casscf.SpdOrb.2 xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: caspt2 at Mon Jul 13 23:02:48 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &CASPT2
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33858
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: caspt2 at Mon Jul 13 23:02:48 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+>>> COPY /scratch_local/slurm_job.21226199/h2_S1_casscf/h2_S1_casscf.JobMix /scratch_local/slurm_job.21226199/h2_S1_casscf/JOB001
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: alaska at Mon Jul 13 23:02:48 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &ALASKA
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33885
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: alaska at Mon Jul 13 23:02:48 2026 /rc=_RC_INVOKED_OTHER_MODULE_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: numerical_gradient at Mon Jul 13 23:02:48 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                        &NUMERICAL_GRADIENT
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33906
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: numerical_gradient at Mon Jul 13 23:02:50 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+--- Module numerical_gradient spent 2 seconds ---
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: slapaf at Mon Jul 13 23:02:50 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &SLAPAF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33933
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+ 
+**********************************************************************************************************************
+*                                    Energy Statistics for Geometry Optimization                                     *
+**********************************************************************************************************************
+                       Energy     Grad      Grad              Step                 Estimated   Geom       Hessian     
+Iter      Energy       Change     Norm      Max    Element    Max     Element     Final Energy Update Update   Index  
+  1     -0.68163015  0.00000000 0.197344  0.139544 nrc001   0.300000* nrc001       -0.70256169 RS-RFO  None      0    
+  2     -0.70964857 -0.02801842 0.081649  0.057734 nrc001   0.202992  nrc001       -0.71550838 RS-RFO  BFGS      0    
+  3     -0.71815191 -0.00850334 0.040129  0.028375 nrc001   0.189170  nrc001       -0.72083578 RS-RFO  BFGS      0    
+ 
+       +----------------------------------+----------------------------------+
+       +    Cartesian Displacements       +    Gradient in internals         +
+       +  Value      Threshold Converged? +  Value      Threshold Converged? +
+ +-----+----------------------------------+----------------------------------+
+ + RMS + 9.4585E-02  1.2000E-03     No    + 4.0129E-02  3.0000E-04     No    +
+ +-----+----------------------------------+----------------------------------+
+ + Max + 9.4585E-02  1.8000E-03     No    + 2.8375E-02  4.5000E-04     No    +
+ +-----+----------------------------------+----------------------------------+
+ 
+ Convergence not reached yet!
+ 
+*****************************************************************************************************************
+*****************************************************************************************************************
+ 
+++ Geometry section
+ 
+********************************************************************************
+  Geometrical information of the new structure
+********************************************************************************
+ 
+ 
+ *********************************************************
+ * Nuclear coordinates for the next iteration / Bohr     *
+ *********************************************************
+  ATOM              X               Y               Z     
+  H1              -1.083245        0.007299        0.003340
+  H2               1.083237       -0.007248       -0.003380
+ 
+ 
+ *********************************************************
+ * Nuclear coordinates for the next iteration / Angstrom *
+ *********************************************************
+  ATOM              X               Y               Z     
+  H1              -0.573229        0.003863        0.001767
+  H2               0.573224       -0.003836       -0.001788
+ 
+--
+--- Stop Module: slapaf at Mon Jul 13 23:02:51 2026 /rc=_RC_CONTINUE_LOOP_ ---
+*** files: h2_S1_casscf.geo.molden h2_S1_casscf.slapaf.h5 h2_S1_casscf.structure h2_S1_casscf.Opt.xyz xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+>>> END DO
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: seward at Mon Jul 13 23:02:51 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &SEWARD
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33957
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: seward at Mon Jul 13 23:02:51 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+>>> IF (ITER == 1)
+(Skipped)
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: rasscf at Mon Jul 13 23:02:51 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &RASSCF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 33981
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: rasscf at Mon Jul 13 23:02:52 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: h2_S1_casscf.rasscf.molden h2_S1_casscf.rasscf.molden.1 h2_S1_casscf.rasscf.molden.2 h2_S1_casscf.RasOrb h2_S1_casscf.RasOrb.1 h2_S1_casscf.RasOrb.2
+           h2_S1_casscf.rasscf.h5 h2_S1_casscf.SpdOrb.1 h2_S1_casscf.SpdOrb.2 xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: caspt2 at Mon Jul 13 23:02:52 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &CASPT2
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34005
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: caspt2 at Mon Jul 13 23:02:52 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+>>> COPY /scratch_local/slurm_job.21226199/h2_S1_casscf/h2_S1_casscf.JobMix /scratch_local/slurm_job.21226199/h2_S1_casscf/JOB001
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: alaska at Mon Jul 13 23:02:52 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &ALASKA
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34032
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: alaska at Mon Jul 13 23:02:52 2026 /rc=_RC_INVOKED_OTHER_MODULE_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: numerical_gradient at Mon Jul 13 23:02:52 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                        &NUMERICAL_GRADIENT
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34053
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: numerical_gradient at Mon Jul 13 23:02:54 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+--- Module numerical_gradient spent 2 seconds ---
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: slapaf at Mon Jul 13 23:02:54 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &SLAPAF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34080
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+ 
+**********************************************************************************************************************
+*                                    Energy Statistics for Geometry Optimization                                     *
+**********************************************************************************************************************
+                       Energy     Grad      Grad              Step                 Estimated   Geom       Hessian     
+Iter      Energy       Change     Norm      Max    Element    Max     Element     Final Energy Update Update   Index  
+  1     -0.68163015  0.00000000 0.197344  0.139544 nrc001   0.300000* nrc001       -0.70256169 RS-RFO  None      0    
+  2     -0.70964857 -0.02801842 0.081649  0.057734 nrc001   0.202992  nrc001       -0.71550838 RS-RFO  BFGS      0    
+  3     -0.71815191 -0.00850334 0.040129  0.028375 nrc001   0.189170  nrc001       -0.72083578 RS-RFO  BFGS      0    
+  4     -0.72173678 -0.00358487 0.015132  0.010700 nrc001   0.190951  nrc001       -0.72264414 RS-RFO  BFGS      0    
+ 
+       +----------------------------------+----------------------------------+
+       +    Cartesian Displacements       +    Gradient in internals         +
+       +  Value      Threshold Converged? +  Value      Threshold Converged? +
+ +-----+----------------------------------+----------------------------------+
+ + RMS + 9.5475E-02  1.2000E-03     No    + 1.5132E-02  3.0000E-04     No    +
+ +-----+----------------------------------+----------------------------------+
+ + Max + 9.5475E-02  1.8000E-03     No    + 1.0700E-02  4.5000E-04     No    +
+ +-----+----------------------------------+----------------------------------+
+ 
+ Convergence not reached yet!
+ 
+*****************************************************************************************************************
+*****************************************************************************************************************
+ 
+++ Geometry section
+ 
+********************************************************************************
+  Geometrical information of the new structure
+********************************************************************************
+ 
+ 
+ *********************************************************
+ * Nuclear coordinates for the next iteration / Bohr     *
+ *********************************************************
+  ATOM              X               Y               Z     
+  H1              -1.178718        0.007940        0.003636
+  H2               1.178710       -0.007889       -0.003676
+ 
+ 
+ *********************************************************
+ * Nuclear coordinates for the next iteration / Angstrom *
+ *********************************************************
+  ATOM              X               Y               Z     
+  H1              -0.623751        0.004202        0.001924
+  H2               0.623746       -0.004175       -0.001945
+ 
+--
+--- Stop Module: slapaf at Mon Jul 13 23:02:54 2026 /rc=_RC_CONTINUE_LOOP_ ---
+*** files: h2_S1_casscf.geo.molden h2_S1_casscf.slapaf.h5 h2_S1_casscf.structure h2_S1_casscf.Opt.xyz xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+>>> END DO
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: seward at Mon Jul 13 23:02:54 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &SEWARD
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34104
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: seward at Mon Jul 13 23:02:55 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+>>> IF (ITER == 1)
+(Skipped)
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: rasscf at Mon Jul 13 23:02:55 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &RASSCF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34128
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: rasscf at Mon Jul 13 23:02:56 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: h2_S1_casscf.rasscf.molden h2_S1_casscf.rasscf.molden.1 h2_S1_casscf.rasscf.molden.2 h2_S1_casscf.RasOrb h2_S1_casscf.RasOrb.1 h2_S1_casscf.RasOrb.2
+           h2_S1_casscf.rasscf.h5 h2_S1_casscf.SpdOrb.1 h2_S1_casscf.SpdOrb.2 xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: caspt2 at Mon Jul 13 23:02:56 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &CASPT2
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34152
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: caspt2 at Mon Jul 13 23:02:56 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+>>> COPY /scratch_local/slurm_job.21226199/h2_S1_casscf/h2_S1_casscf.JobMix /scratch_local/slurm_job.21226199/h2_S1_casscf/JOB001
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: alaska at Mon Jul 13 23:02:56 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &ALASKA
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34179
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: alaska at Mon Jul 13 23:02:56 2026 /rc=_RC_INVOKED_OTHER_MODULE_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: numerical_gradient at Mon Jul 13 23:02:56 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                        &NUMERICAL_GRADIENT
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34200
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: numerical_gradient at Mon Jul 13 23:02:58 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+--- Module numerical_gradient spent 2 seconds ---
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: slapaf at Mon Jul 13 23:02:58 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &SLAPAF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34228
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+ 
+**********************************************************************************************************************
+*                                    Energy Statistics for Geometry Optimization                                     *
+**********************************************************************************************************************
+                       Energy     Grad      Grad              Step                 Estimated   Geom       Hessian     
+Iter      Energy       Change     Norm      Max    Element    Max     Element     Final Energy Update Update   Index  
+  1     -0.68163015  0.00000000 0.197344  0.139544 nrc001   0.300000* nrc001       -0.70256169 RS-RFO  None      0    
+  2     -0.70964857 -0.02801842 0.081649  0.057734 nrc001   0.202992  nrc001       -0.71550838 RS-RFO  BFGS      0    
+  3     -0.71815191 -0.00850334 0.040129  0.028375 nrc001   0.189170  nrc001       -0.72083578 RS-RFO  BFGS      0    
+  4     -0.72173678 -0.00358487 0.015132  0.010700 nrc001   0.190951  nrc001       -0.72264414 RS-RFO  BFGS      0    
+  5     -0.72253722 -0.00080044 0.002253 -0.001593 nrc001  -0.029098  nrc001       -0.72256064 RS-RFO  BFGS      0    
+ 
+       +----------------------------------+----------------------------------+
+       +    Cartesian Displacements       +    Gradient in internals         +
+       +  Value      Threshold Converged? +  Value      Threshold Converged? +
+ +-----+----------------------------------+----------------------------------+
+ + RMS + 1.4549E-02  1.2000E-03     No    + 2.2530E-03  3.0000E-04     No    +
+ +-----+----------------------------------+----------------------------------+
+ + Max + 1.4549E-02  1.8000E-03     No    + 1.5931E-03  4.5000E-04     No    +
+ +-----+----------------------------------+----------------------------------+
+ 
+ Convergence not reached yet!
+ 
+*****************************************************************************************************************
+*****************************************************************************************************************
+ 
+++ Geometry section
+ 
+********************************************************************************
+  Geometrical information of the new structure
+********************************************************************************
+ 
+ 
+ *********************************************************
+ * Nuclear coordinates for the next iteration / Bohr     *
+ *********************************************************
+  ATOM              X               Y               Z     
+  H1              -1.164170        0.007843        0.003590
+  H2               1.164161       -0.007792       -0.003631
+ 
+ 
+ *********************************************************
+ * Nuclear coordinates for the next iteration / Angstrom *
+ *********************************************************
+  ATOM              X               Y               Z     
+  H1              -0.616052        0.004150        0.001900
+  H2               0.616048       -0.004123       -0.001921
+ 
+--
+--- Stop Module: slapaf at Mon Jul 13 23:02:58 2026 /rc=_RC_CONTINUE_LOOP_ ---
+*** files: h2_S1_casscf.geo.molden h2_S1_casscf.slapaf.h5 h2_S1_casscf.structure h2_S1_casscf.Opt.xyz xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+>>> END DO
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: seward at Mon Jul 13 23:02:58 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &SEWARD
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34252
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: seward at Mon Jul 13 23:02:59 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+>>> IF (ITER == 1)
+(Skipped)
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: rasscf at Mon Jul 13 23:02:59 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &RASSCF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34276
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: rasscf at Mon Jul 13 23:03:00 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: h2_S1_casscf.rasscf.molden h2_S1_casscf.rasscf.molden.1 h2_S1_casscf.rasscf.molden.2 h2_S1_casscf.RasOrb h2_S1_casscf.RasOrb.1 h2_S1_casscf.RasOrb.2
+           h2_S1_casscf.rasscf.h5 h2_S1_casscf.SpdOrb.1 h2_S1_casscf.SpdOrb.2 xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: caspt2 at Mon Jul 13 23:03:00 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &CASPT2
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34300
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: caspt2 at Mon Jul 13 23:03:00 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+>>> COPY /scratch_local/slurm_job.21226199/h2_S1_casscf/h2_S1_casscf.JobMix /scratch_local/slurm_job.21226199/h2_S1_casscf/JOB001
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: alaska at Mon Jul 13 23:03:00 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &ALASKA
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34327
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: alaska at Mon Jul 13 23:03:00 2026 /rc=_RC_INVOKED_OTHER_MODULE_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: numerical_gradient at Mon Jul 13 23:03:00 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                        &NUMERICAL_GRADIENT
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34348
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: numerical_gradient at Mon Jul 13 23:03:02 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+--- Module numerical_gradient spent 2 seconds ---
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: slapaf at Mon Jul 13 23:03:02 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &SLAPAF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34376
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+ 
+**********************************************************************************************************************
+*                                    Energy Statistics for Geometry Optimization                                     *
+**********************************************************************************************************************
+                       Energy     Grad      Grad              Step                 Estimated   Geom       Hessian     
+Iter      Energy       Change     Norm      Max    Element    Max     Element     Final Energy Update Update   Index  
+  1     -0.68163015  0.00000000 0.197344  0.139544 nrc001   0.300000* nrc001       -0.70256169 RS-RFO  None      0    
+  2     -0.70964857 -0.02801842 0.081649  0.057734 nrc001   0.202992  nrc001       -0.71550838 RS-RFO  BFGS      0    
+  3     -0.71815191 -0.00850334 0.040129  0.028375 nrc001   0.189170  nrc001       -0.72083578 RS-RFO  BFGS      0    
+  4     -0.72173678 -0.00358487 0.015132  0.010700 nrc001   0.190951  nrc001       -0.72264414 RS-RFO  BFGS      0    
+  5     -0.72253722 -0.00080044 0.002253 -0.001593 nrc001  -0.029098  nrc001       -0.72256064 RS-RFO  BFGS      0    
+  6     -0.72256048 -0.00002326 0.000027  0.000019 nrc001   0.000326  nrc001       -0.72256048 RS-RFO  BFGS      0    
+ 
+       +----------------------------------+----------------------------------+
+       +    Cartesian Displacements       +    Gradient in internals         +
+       +  Value      Threshold Converged? +  Value      Threshold Converged? +
+ +-----+----------------------------------+----------------------------------+
+ + RMS + 1.6304E-04  1.2000E-03     Yes   + 2.6688E-05  3.0000E-04     Yes   +
+ +-----+----------------------------------+----------------------------------+
+ + Max + 1.6304E-04  1.8000E-03     Yes   + 1.8871E-05  4.5000E-04     Yes   +
+ +-----+----------------------------------+----------------------------------+
+ 
+ Geometry is converged in   6 iterations to a Minimum Structure
+ 
+*****************************************************************************************************************
+*****************************************************************************************************************
+ 
+++ Geometry section
+ 
+********************************************************************************
+  Geometrical information of the final structure
+********************************************************************************
+ 
+  NOTE: on convergence the final predicted structure will be printed here.
+  This is not identical to the structure printed in the head of the output.
+ 
+ *********************************************************
+ * Nuclear coordinates of the final structure / Bohr     *
+ *********************************************************
+  ATOM              X               Y               Z     
+  H1              -1.164333        0.007844        0.003591
+  H2               1.164324       -0.007793       -0.003631
+ 
+ 
+ *********************************************************
+ * Nuclear coordinates of the final structure / Angstrom *
+ *********************************************************
+  ATOM              X               Y               Z     
+  H1              -0.616138        0.004151        0.001900
+  H2               0.616134       -0.004124       -0.001921
+ 
+ 
+                    *************************************** 
+                    *    InterNuclear Distances / Bohr    * 
+                    *************************************** 
+ 
+               1 H1            2 H2    
+    1 H1       0.000000
+    2 H2       2.328721        0.000000
+ 
+                    ******************************************* 
+                    *    InterNuclear Distances / Angstrom    * 
+                    ******************************************* 
+ 
+               1 H1            2 H2    
+    1 H1       0.000000
+    2 H2       1.232306        0.000000
+--
+--- Stop Module: slapaf at Mon Jul 13 23:03:02 2026 /rc=_RC_INVOKED_OTHER_MODULE_ ---
+*** files: h2_S1_casscf.geo.molden h2_S1_casscf.slapaf.h5 h2_S1_casscf.structure h2_S1_casscf.Opt.xyz xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: last_energy at Mon Jul 13 23:03:02 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                            &LAST_ENERGY
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34397
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+ 
+    Geometry read from RUNFILE
+ 
+               SEWARD will generate:
+                  Multipole Moment integrals up to order  2
+                  Kinetic Energy integrals
+                  Nuclear Attraction integrals (point charge)
+                  One-Electron Hamiltonian integrals
+                  Velocity integrals
+                  Orbital angular momentum around (-0.0000  0.0000 -0.0000 )
+                  Velocity quadrupole around (-0.0000  0.0000 -0.0000 )
+                  Two-Electron Repulsion integrals
+ 
+                   Integrals are discarded if absolute value <: 0.10E-13
+                   Integral cutoff threshold is set to       <: 0.10E-15
+ 
+            Nuclear Potential Energy              0.42942031 au
+ 
+ 
+      Basis set specifications :
+      Symmetry species         a  
+      Basis functions           12
+ 
+ 
+      Header of the ONEINT file:
+      --------------------------
+      
+      Integrals generated by Gateway/Seward, Mon Jul 13 23:03:02 2026
+ 
+ 
+      OrdInt status: non-squared
+ 
+ 
+      Cartesian coordinates in Angstrom:
+      -----------------------------------------------------
+      No.  Label        X            Y            Z        
+      -----------------------------------------------------
+       1   H1        -0.61613841   0.00415077   0.00190027
+       2   H2         0.61613386  -0.00412369  -0.00192146
+      -----------------------------------------------------
+      Nuclear repulsion energy =    0.42942031
+ 
+++    Wave function specifications:
+      -----------------------------
+ 
+      Number of closed shell electrons           0
+      Number of electrons in active shells       2
+      Max number of holes in RAS1 space          0
+      Max nr of electrons in RAS3 space          0
+      Number of inactive orbitals                0
+      Number of active orbitals                  4
+      Number of secondary orbitals               8
+      Spin quantum number                      0.0
+      State symmetry                             1
+--
+ 
+++    Orbital specifications:
+      -----------------------
+ 
+      Symmetry species                           1
+                                                 a
+      Frozen orbitals                            0
+      Inactive orbitals                          0
+      Active orbitals                            4
+      RAS1 orbitals                              0
+      RAS2 orbitals                              4
+      RAS3 orbitals                              0
+      Secondary orbitals                         8
+      Deleted orbitals                           0
+      Number of basis functions                 12
+--
+ 
+++    CI expansion specifications:
+      ----------------------------
+ 
+      Number of CSFs                            10
+      Number of determinants                    10
+      Number of root(s) required                 2
+      Root chosen for geometry opt.              1
+      CI roots used                              1     2
+      weights                                0.500 0.500
+      highest root included in the CI            2
+      max. size of the explicit Hamiltonian     10
+--
+ 
+++    Optimization specifications:
+      ----------------------------
+ 
+      RASSCF algorithm: Conventional
+      Maximum number of macro iterations       200
+      Maximum number of SX iterations          100
+      Threshold for RASSCF energy            0.100E-07
+      Threshold for max MO rotation          0.100E+00
+      Threshold for max BLB element          0.100E-03
+      Level shift parameter                  0.500E+00
+      Make Quasi-Newton update
+--
+      Starting CI array(s) will be read from file
+ 
+   File JOBOLD not found -- use JOBIPH.
+      The MO-coefficients are taken from the file:
+      JOBIPH
+      Title:H2 SA-2-CAS(2,2)SCF                                                     
+ 
+      Total molecular charge    0.00
+ 
+      ************************************************************************************************************************
+      *                                                                                                                      *
+      *                                            Wave function control section                                             *
+      *                                                                                                                      *
+      ************************************************************************************************************************
+ 
+ 
+                                         RASSCF iterations: Energy and convergence statistics
+                                         ----------------------------------------------------
+ 
+      Iter CI   SX   CI       RASSCF       Energy    max ROT     max BLB   max BLB  Level Ln srch  Step   QN   Walltime
+          iter iter root      energy       change     param      element    value   shift minimum  type update hh:mm:ss
+ Nr of preliminary CI iterations:   1
+        1   1    4    0    -0.90481390    0.00E+00   0.32E-04    1  11 1  0.42E-04   0.00   0.00    SX    NO    0:00:00
+        2   1    3    0    -0.90481390   -0.11E-08  -0.26E-04    1   5 1  0.75E-05   0.00   0.00    SX    NO    0:00:00
+        3   1    3    0    -0.90481390   -0.88E-10   0.16E-04    1   5 1  0.23E-05   0.00   0.00    SX    NO    0:00:00
+        4   1    3    0    -0.90481390   -0.16E-10   0.92E-05    1   5 1  0.78E-06   0.00   0.00    SX    NO    0:00:00
+      Convergence after  4 iterations
+        5   1    3    0    -0.90481390   -0.38E-11   0.92E-05    1   5 1  0.30E-06   0.00   0.00    SX    NO    0:00:00
+ 
+      ************************************************************************************************************************
+                                                      Wave function printout:
+                       occupation of active orbitals, and spin coupling of open shells (u,d: Spin up or down)
+      ************************************************************************************************************************
+ 
+      Note: transformation to natural orbitals
+      has been made, which may change the order of the CSFs.
+ 
+      printout of CI-coefficients larger than  0.05 for root  1
+      energy=      -1.097346
+      conf/sym  1111     Coeff  Weight
+             1  2000   0.97198 0.94474
+             3  0200  -0.15197 0.02310
+             4  u0d0   0.07498 0.00562
+             7  0u0d   0.13746 0.01890
+            10  0002  -0.07509 0.00564
+ 
+      printout of CI-coefficients larger than  0.05 for root  2
+      energy=      -0.712282
+      conf/sym  1111     Coeff  Weight
+             2  ud00   0.99404 0.98811
+             6  0ud0  -0.09793 0.00959
+ 
+      Natural orbitals and occupation numbers for root  1
+      sym 1:   1.900208   0.095100   0.004529   0.000162
+ 
+      Natural orbitals and occupation numbers for root  2
+      sym 1:   0.999653   0.999653   0.000347   0.000347
+ 
+      ************************************************************************************************************************
+      *                                                                                                                      *
+      *                                                    Final results                                                     *
+      *                                                                                                                      *
+      ************************************************************************************************************************
+ 
+ 
+++    Wave function specifications:
+      -----------------------------
+ 
+      Number of closed shell electrons           0
+      Number of electrons in active shells       2
+      Max number of holes in RAS1 space          0
+      Max nr of electrons in RAS3 space          0
+      Number of inactive orbitals                0
+      Number of active orbitals                  4
+      Number of secondary orbitals               8
+      Spin quantum number                      0.0
+      State symmetry                             1
+--
+ 
+++    Orbital specifications:
+      -----------------------
+ 
+      Symmetry species                           1
+                                                 a
+      Frozen orbitals                            0
+      Inactive orbitals                          0
+      Active orbitals                            4
+      RAS1 orbitals                              0
+      RAS2 orbitals                              4
+      RAS3 orbitals                              0
+      Secondary orbitals                         8
+      Deleted orbitals                           0
+      Number of basis functions                 12
+--
+ 
+++    CI expansion specifications:
+      ----------------------------
+ 
+      Number of CSFs                            10
+      Number of determinants                    10
+      Number of root(s) required                 2
+      CI roots used                              1     2
+      weights                                0.500 0.500
+      highest root included in the CI            2
+      Root passed to geometry opt.               1
+--
+ 
+++    Final optimization conditions:
+      ------------------------------
+ 
+      Average CI energy                              -0.90481390
+      RASSCF energy for state  1                     -1.09734616
+      Super-CI energy                                -0.00000000
+      RASSCF energy change                           -0.00000000
+      Max change in MO coefficients              -0.462E-05
+      Max non-diagonal density matrix element     0.916E-05
+      Maximum BLB matrix element                  0.296E-06
+      (orbital pair   1,   5 in symmetry   1)
+      Norm of electronic gradient            0.185E-01
+--
+ 
+ 
+      Final state energy(ies):
+      ------------------------
+ 
+::    RASSCF root number  1 Total energy:     -1.09734616
+::    RASSCF root number  2 Total energy:     -0.71228164
+ 
+++    Molecular orbitals:
+      -------------------
+ 
+      Pseudonatural active orbitals and approximate occupation numbers
+ 
+ 
+ 
+ 
+      Molecular orbitals for symmetry species 1: a  
+ 
+ 
+      Orbital                 1         2         3         4
+      Energy             0.0000    0.0000    0.0000    0.0000
+      Occ. No.           1.4425    0.5314    0.0099    0.0162
+ 
+     1 H1     1s         0.1593   -0.1062   -0.1135    0.2949
+     2 H1     *s         0.3241   -0.0903   -0.4746    0.8928
+     3 H1     *s         0.1673   -1.2249    0.6450   -1.4323
+     4 H1     *px        0.0361    0.0189   -0.3630    0.0487
+     5 H1     *py       -0.0002   -0.0001    0.0024   -0.0003
+     6 H1     *pz       -0.0001   -0.0001    0.0011   -0.0002
+     7 H2     1s         0.1593    0.1062   -0.1135   -0.2949
+     8 H2     *s         0.3241    0.0903   -0.4746   -0.8928
+     9 H2     *s         0.1673    1.2249    0.6450    1.4323
+    10 H2     *px       -0.0361    0.0189    0.3630    0.0487
+    11 H2     *py        0.0002   -0.0001   -0.0024   -0.0003
+    12 H2     *pz        0.0001   -0.0001   -0.0011   -0.0002
+--
+ 
+      Von Neumann Entropy (Root   1) =  0.30011
+ 
+
+      Mulliken population analysis for root number:  1
+      -----------------------------------------------
+ 
+ 
+++    Molecular charges:
+      ------------------
+ 
+      Mulliken charges per centre and basis function type
+      ---------------------------------------------------
+ 
+                H1      H2    
+      1s       0.1723  0.1723
+      *s       0.8215  0.8215
+      *px      0.0062  0.0062
+      *pz      0.0000  0.0000
+      *py      0.0000  0.0000
+      Total    1.0000  1.0000
+ 
+      N-E     -0.0000 -0.0000
+ 
+      Total electronic charge=    2.000000
+ 
+      Total            charge=   -0.000000
+--
+ 
+ 
+
+      Expectation values of various properties for root number:  1
+      -----------------------------------------------------------
+ 
+ 
+++    Molecular properties:
+      ---------------------
+ 
+      Charge (e):
+                      =   -0.0000
+      Dipole Moment (Debye):
+      Origin of the operator (Ang)=    0.0000    0.0000    0.0000
+                   X= -7.0548E-15               Y= -1.3120E-14               Z=  3.9531E-15           Total=  1.5412E-14
+      Quadrupole Moment (Debye*Ang):
+      Origin of the operator (Ang)=   -0.0000    0.0000   -0.0000
+                  XX= -1.6349E+00              XY= -6.6459E-03              XZ= -3.0696E-03              YY= -2.6246E+00
+                  YZ=  2.0612E-05              ZZ= -2.6246E+00
+      In traceless form (Debye*Ang)
+                  XX=  9.8972E-01              XY= -9.9689E-03              XZ= -4.6043E-03              YY= -4.9483E-01
+                  YZ=  3.0917E-05              ZZ= -4.9489E-01
+--
+ 
+      Von Neumann Entropy (Root   2) =  1.00449
+ 
+
+      Mulliken population analysis for root number:  2
+      -----------------------------------------------
+ 
+ 
+++    Molecular charges:
+      ------------------
+ 
+      Mulliken charges per centre and basis function type
+      ---------------------------------------------------
+ 
+                H1      H2    
+      1s       0.1265  0.1265
+      *s       0.8504  0.8504
+      *px      0.0231  0.0231
+      *pz      0.0000  0.0000
+      *py      0.0000  0.0000
+      Total    1.0000  1.0000
+ 
+      N-E     -0.0000  0.0000
+ 
+      Total electronic charge=    2.000000
+ 
+      Total            charge=   -0.000000
+--
+ 
+ 
+
+      Expectation values of various properties for root number:  2
+      -----------------------------------------------------------
+ 
+ 
+++    Molecular properties:
+      ---------------------
+ 
+      Charge (e):
+                      =   -0.0000
+      Dipole Moment (Debye):
+      Origin of the operator (Ang)=    0.0000    0.0000    0.0000
+                   X=  9.0301E-15               Y= -6.7042E-15               Z=  1.4010E-15           Total=  1.1334E-14
+      Quadrupole Moment (Debye*Ang):
+      Origin of the operator (Ang)=   -0.0000    0.0000   -0.0000
+                  XX= -7.8483E+00              XY=  2.7234E-02              XZ=  1.2579E-02              YY= -3.7926E+00
+                  YZ= -8.4463E-05              ZZ= -3.7925E+00
+      In traceless form (Debye*Ang)
+                  XX= -4.0557E+00              XY=  4.0851E-02              XZ=  1.8868E-02              YY=  2.0278E+00
+                  YZ= -1.2669E-04              ZZ=  2.0280E+00
+--
+ 
+ 
+  Input file to MOLDEN was generated!
+ 
+ 
+  Input file to MOLDEN was generated!
+ 
+ 
+  Input file to MOLDEN was generated!
+ 
+      Average orbitals are written to the RASORB file
+      Natural orbitals for root   1 are written to the RASORB.1 file
+      Natural orbitals for root   2 are written to the RASORB.2 file
+      Spin density orbitals for root   1 are written to the SPDORB.1 file
+      Spin density orbitals for root   2 are written to the SPDORB.2 file
+ 
+ 
+++    Wave function specifications:
+      -----------------------------
+ 
+      Number of closed shell electrons           0
+      Number of electrons in active shells       2
+      Max number of holes in RAS1 space          0
+      Max number of electrons in RAS3 space      0
+      Number of inactive orbitals                0
+      Number of active orbitals                  4
+      Number of secondary orbitals               8
+      Spin quantum number                      0.0
+      State symmetry                             1
+      Number of CSFs                            10
+      Number of root(s) available                2
+      Root passed to geometry opt.               2
+      A file JOBMIX will be created
+      This is a MULTI-STATE CASSCF reference
+      Number of CI roots used                    2
+      These are:                                 1   2
+      Off-diagonal elements of Heff are computed
+--
+ 
+++    Orbital specifications:
+      -----------------------
+ 
+      Symmetry species                           1
+                                                 a
+      Frozen orbitals                            0
+      Inactive orbitals                          0
+      Active orbitals                            4
+      Secondary orbitals                         8
+      Deleted orbitals                           0
+      Number of basis functions                 12
+--
+ 
+++    CASPT2 specifications:
+      ----------------------
+ 
+      Type of calculation                        XMS-CASPT2
+      Fock operator                              state-average
+      IPEA shift                                 0.00
+      Real shift                                 0.00
+      Imaginary shift                            0.25
+      The input orbitals will be transformed to quasi-canonical
+      The input states will be rotated to diagonalize the Fock operator
+--
+ 
+--------------------------------------------------------------------------------
+ Estimated memory requirements:
+  POLY3 :                   250490
+  RHS:                      253392
+  SIGMA :                   252048
+  PRPCTL:                        0
+ Available workspace:    230393135
+ 
+++ CASPT2 computation for group   1
+ 
+********************************************************************************
+ Multi-State initialization phase begins for group   1
+--------------------------------------------------------------------------------
+ 
+  H0 in the original model space basis:
+                1               2
+   1       -0.80040785     -0.00000000
+   2       -0.00000000     -0.39978737
+ 
+  H0 eigenvectors:
+                1               2
+   1        1.00000000     -0.00000000
+   2        0.00000000      1.00000000
+ 
+********************************************************************************
+ Compute H0 matrices for state    1
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ H0 matrices have been computed.
+ 
+********************************************************************************
+  CASPT2 EQUATION SOLUTION
+--------------------------------------------------------------------------------
+ 
+  Total nr of CASPT2 parameters:
+   Before reduction:        1040
+   After  reduction:          68
+ 
+ The contributions to the second order correlation energy in atomic units.
+-----------------------------------------------------------------------------------------------------------------------------
+  IT.      VJTU        VJTI        ATVX        AIVX        VJAI        BVAT        BJAT        BJAI        TOTAL       RNORM  
+-----------------------------------------------------------------------------------------------------------------------------
+   1     0.000000    0.000000   -0.000245    0.000000    0.000000   -0.004112    0.000000    0.000000   -0.004357    0.001583
+   2     0.000000    0.000000   -0.000246    0.000000    0.000000   -0.004126    0.000000    0.000000   -0.004372    0.000193
+   3     0.000000    0.000000   -0.000246    0.000000    0.000000   -0.004126    0.000000    0.000000   -0.004373    0.000027
+   4     0.000000    0.000000   -0.000246    0.000000    0.000000   -0.004126    0.000000    0.000000   -0.004372    0.000000
+-----------------------------------------------------------------------------------------------------------------------------
+ 
+  FINAL CASPT2 RESULT:
+ 
+      Reference energy:          -1.0973461632
+      E2 (Non-variational):      -0.0043723976
+      Shift correction:          -0.0000197205
+      E2 (Variational):          -0.0043921181
+      Total energy:              -1.1017382813
+      Residual norm:              0.0000000151
+      Reference weight:           0.99885
+ 
+      Contributions to the CASPT2 correlation energy
+      Active & Virtual Only:         -0.0043723976
+      One Inactive Excited:           0.0000000000
+      Two Inactive Excited:           0.0000000000
+ 
+ 
+++ Denominators, etc.
+--------------------------------------------------------------------------------------------------------------
+ Report on small energy denominators, large coefficients, and large energy contributions.
+CASE  SYMM ACTIVE-MIX  NON-ACTIVE INDICES          DENOMINATOR     RHS VALUE       COEFFICIENT     CONTRIBUTION
+--
+ 
+   (Skipping property calculation,
+    use PROP keyword to activate)
+********************************************************************************
+ Compute H0 matrices for state    2
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ H0 matrices have been computed.
+ 
+********************************************************************************
+  CASPT2 EQUATION SOLUTION
+--------------------------------------------------------------------------------
+ 
+  Total nr of CASPT2 parameters:
+   Before reduction:        1040
+   After  reduction:          68
+ 
+ The contributions to the second order correlation energy in atomic units.
+-----------------------------------------------------------------------------------------------------------------------------
+  IT.      VJTU        VJTI        ATVX        AIVX        VJAI        BVAT        BJAT        BJAI        TOTAL       RNORM  
+-----------------------------------------------------------------------------------------------------------------------------
+   1     0.000000    0.000000   -0.004477    0.000000    0.000000   -0.005691    0.000000    0.000000   -0.010168    0.001485
+   2     0.000000    0.000000   -0.004502    0.000000    0.000000   -0.005702    0.000000    0.000000   -0.010204    0.000119
+   3     0.000000    0.000000   -0.004502    0.000000    0.000000   -0.005703    0.000000    0.000000   -0.010204    0.000011
+   4     0.000000    0.000000   -0.004502    0.000000    0.000000   -0.005703    0.000000    0.000000   -0.010204    0.000001
+-----------------------------------------------------------------------------------------------------------------------------
+ 
+  FINAL CASPT2 RESULT:
+ 
+      Reference energy:          -0.7122816422
+      E2 (Non-variational):      -0.0102040778
+      Shift correction:          -0.0000747620
+      E2 (Variational):          -0.0102788399
+      Total energy:              -0.7225604821
+      Residual norm:              0.0000000430
+      Reference weight:           0.99672
+ 
+      Contributions to the CASPT2 correlation energy
+      Active & Virtual Only:         -0.0102040778
+      One Inactive Excited:           0.0000000000
+      Two Inactive Excited:           0.0000000000
+ 
+ 
+++ Denominators, etc.
+--------------------------------------------------------------------------------------------------------------
+ Report on small energy denominators, large coefficients, and large energy contributions.
+CASE  SYMM ACTIVE-MIX  NON-ACTIVE INDICES          DENOMINATOR     RHS VALUE       COEFFICIENT     CONTRIBUTION
+ATVX     1  Mu1.0003  Se1.005                       2.05403873      0.06888620     -0.03380017     -0.00232837
+--
+ 
+   (Skipping property calculation,
+    use PROP keyword to activate)
+--
+ 
+  Total CASPT2 energies:
+ 
+  State-specific CASPT2 energies obtained using
+  rotated states do not have a well-defined physical
+  meaning, however they can be extracted from the
+  diagonal of the effective Hamiltonian.
+ 
+++ Multi-State CASPT2 section:
+********************************************************************************
+  MULTI-STATE CASPT2 SECTION
+--------------------------------------------------------------------------------
+ 
+ 
+  Effective Hamiltonian matrix (Symmetric):
+ 
+                1               2
+   1        -1.10173828
+   2         0.00000000     -0.72256048
+ 
+       Total XMS-CASPT2 energies:
+::    XMS-CASPT2 Root  1     Total energy:     -1.10173828
+::    XMS-CASPT2 Root  2     Total energy:     -0.72256048
+ 
+       Eigenvectors:
+            1.00000000      0.00000000
+           -0.00000000      1.00000000
+ 
+       In terms of the input states:
+            1.00000000     -0.00000000
+            0.00000000      1.00000000
+ 
+--
+ 
+  THE ORIGINAL CI ARRAYS ARE NOW MIXED AS LINEAR
+  COMBINATIONS, GIVEN BY THE EIGENVECTORS.
+  A NEW JOBIPH FILE NAMED 'JOBMIX' IS PREPARED.
+********************************************************************************
+ 
+++ Mixed CI coefficients:
+  The CI coefficients for the MIXED state nr.   1
+--------------------------------------------------------------------------------
+ CI COEFFICIENTS LARGER THAN  0.50D-01
+  Occupation of active orbitals, and spin coupling
+  of open shells. (u,d: Spin up or down).
+  SGUGA info is (Midvert:IsyUp:UpperWalk/LowerWalk)
+        Conf  SGUGA info        Occupation    Coefficient         Weight
+           1  ( 1:1:   1/   1)   2000            0.971976       0.944737
+           3  ( 1:1:   1/   3)   0200           -0.151974       0.023096
+           4  ( 2:1:   1/   1)   u0d0            0.074980       0.005622
+           7  ( 2:1:   2/   2)   0u0d            0.137463       0.018896
+          10  ( 3:1:   3/   1)   0002           -0.075094       0.005639
+ 
+  The CI coefficients for the MIXED state nr.   2
+--------------------------------------------------------------------------------
+ CI COEFFICIENTS LARGER THAN  0.50D-01
+  Occupation of active orbitals, and spin coupling
+  of open shells. (u,d: Spin up or down).
+  SGUGA info is (Midvert:IsyUp:UpperWalk/LowerWalk)
+        Conf  SGUGA info        Occupation    Coefficient         Weight
+           2  ( 1:1:   1/   2)   ud00            0.994037       0.988109
+           6  ( 2:1:   1/   2)   0ud0           -0.097931       0.009591
+ 
+--
+ 
+--- Stop Module: last_energy at Mon Jul 13 23:03:04 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: h2_S1_casscf.rasscf.molden h2_S1_casscf.rasscf.molden.1 h2_S1_casscf.rasscf.molden.2 h2_S1_casscf.RasOrb h2_S1_casscf.RasOrb.1 h2_S1_casscf.RasOrb.2
+           h2_S1_casscf.SpdOrb.1 h2_S1_casscf.SpdOrb.2 xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+--- Module last_energy spent 1 second ---
+
+>>> END DO
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: mckinley at Mon Jul 13 23:03:04 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                             &MCKINLEY
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34424
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: mckinley at Mon Jul 13 23:03:04 2026 /rc=_RC_INVOKED_OTHER_MODULE_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: slapaf at Mon Jul 13 23:03:04 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &SLAPAF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34445
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+ 
+ 
+++       Slapaf input parameters:
+         ------------------------
+ 
+ Maximum number of iterations:                 0
+ Convergence test a la Schlegel.
+ Convergence criterion on gradient/para.<=: 3.0E-04
+ Convergence criterion on step/parameter<=: 3.0E-04
+ Convergence criterion on energy change <=: 0.0E+00
+ Parameters for step-restricted optimization
+ Maximum step length (initial seed):       3.00E-01
+ 
+ -RFO activated with parameters:
+   Maximum number of data points used in RFO:      5
+ Line search is performed
+ 
+ 
+ -Optimization for transition state.
+  Optimization method: RS-P-RFO
+  No mode to follow is specified!
+  Optimization will follow mode with the lowest eigenvalue.
+ 
+ -Initial Hessian guess is estimated with finite differences.
+    Two point symmetric formula, Delta= 0.10E-01
+ 
+ -Hessian update method: Broyden-Fletcher-Goldfarb-Shanno
+  Maximum number of points in Hessian update:  5
+ 
+ -Relaxation will be done on non-redundant internal coordinates, based on
+  force constant weighted redundant internal coordinates.
+ 
+--
+ 
+ ******************************************
+ * Statistics of the internal coordinates *
+ ******************************************
+ Translations and Rotations:         0
+ Bonds                     :         1
+ Angles                    :         0
+ Torsions                  :         0
+ Out-of-plane angles       :         0
+ 
+  Accumulate the gradient for selected numerical differentiation.
+     1 of     3
+--- Stop Module: slapaf at Mon Jul 13 23:03:04 2026 /rc=_RC_CONTINUE_LOOP_ ---
+*** files: h2_S1_casscf.slapaf.h5 xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: seward at Mon Jul 13 23:03:04 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &SEWARD
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34469
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: seward at Mon Jul 13 23:03:04 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: rasscf at Mon Jul 13 23:03:04 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &RASSCF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34493
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: rasscf at Mon Jul 13 23:03:05 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: h2_S1_casscf.rasscf.molden h2_S1_casscf.rasscf.molden.1 h2_S1_casscf.rasscf.molden.2 h2_S1_casscf.RasOrb h2_S1_casscf.RasOrb.1 h2_S1_casscf.RasOrb.2
+           h2_S1_casscf.rasscf.h5 h2_S1_casscf.SpdOrb.1 h2_S1_casscf.SpdOrb.2 xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: caspt2 at Mon Jul 13 23:03:05 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &CASPT2
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34517
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: caspt2 at Mon Jul 13 23:03:05 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: slapaf at Mon Jul 13 23:03:05 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &SLAPAF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34541
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: slapaf at Mon Jul 13 23:03:05 2026 /rc=_RC_INVOKED_OTHER_MODULE_ ---
+*** files: h2_S1_casscf.slapaf.h5 xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: alaska at Mon Jul 13 23:03:05 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &ALASKA
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34562
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: alaska at Mon Jul 13 23:03:05 2026 /rc=_RC_INVOKED_OTHER_MODULE_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: numerical_gradient at Mon Jul 13 23:03:05 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                        &NUMERICAL_GRADIENT
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34583
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: numerical_gradient at Mon Jul 13 23:03:08 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+--- Module numerical_gradient spent 2 seconds ---
+
+>>> EXPORT MOLCAS_TRAP = ON
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: slapaf at Mon Jul 13 23:03:08 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &SLAPAF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34610
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+  Accumulate the gradient for selected numerical differentiation.
+     2 of     3
+--- Stop Module: slapaf at Mon Jul 13 23:03:08 2026 /rc=_RC_CONTINUE_LOOP_ ---
+*** files: h2_S1_casscf.slapaf.h5 xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+>>> END DO
+
+>>> IF (ITER != 1)
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: seward at Mon Jul 13 23:03:08 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &SEWARD
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34637
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: seward at Mon Jul 13 23:03:08 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: rasscf at Mon Jul 13 23:03:08 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &RASSCF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34661
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: rasscf at Mon Jul 13 23:03:09 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: h2_S1_casscf.rasscf.molden h2_S1_casscf.rasscf.molden.1 h2_S1_casscf.rasscf.molden.2 h2_S1_casscf.RasOrb h2_S1_casscf.RasOrb.1 h2_S1_casscf.RasOrb.2
+           h2_S1_casscf.rasscf.h5 h2_S1_casscf.SpdOrb.1 h2_S1_casscf.SpdOrb.2 xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: caspt2 at Mon Jul 13 23:03:09 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &CASPT2
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34685
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: caspt2 at Mon Jul 13 23:03:09 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: slapaf at Mon Jul 13 23:03:09 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &SLAPAF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34709
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: slapaf at Mon Jul 13 23:03:09 2026 /rc=_RC_INVOKED_OTHER_MODULE_ ---
+*** files: h2_S1_casscf.slapaf.h5 xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: alaska at Mon Jul 13 23:03:09 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &ALASKA
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34730
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: alaska at Mon Jul 13 23:03:09 2026 /rc=_RC_INVOKED_OTHER_MODULE_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: numerical_gradient at Mon Jul 13 23:03:09 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                        &NUMERICAL_GRADIENT
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34751
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+--- Stop Module: numerical_gradient at Mon Jul 13 23:03:11 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+--- Module numerical_gradient spent 2 seconds ---
+
+>>> EXPORT MOLCAS_TRAP = ON
+
+*** symbolic link created: INPORB -> h2_S1_casscf.RasOrb
+--- Start Module: slapaf at Mon Jul 13 23:03:11 2026 ---
+ 
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+                                              &SLAPAF
+
+                                   only a single process is used
+                       available to each process: 2.0 GB of memory, 1 thread?
+                                             pid: 34778
+()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+ 
+ 
+  Numerical differentiation is finished!
+
+ Observe that the harmonic oscillator analysis is only valid at stationary points!
+
+ Note that rotational and translational degrees have been automatically removed,
+ if the energy is invariant to these degrees of freedom.
+
+
+ Harmonic frequencies in cm-1
+
+ IR Intensities in km/mol
+
+                        1
+ 
+     Frequency:      1725.54                                                                                            
+ 
+     Intensity:    8.097E-25
+     Red. mass:      1.00783
+ 
+     H1         x   -0.70434
+     H1         y    0.00473
+     H1         z    0.00218
+     H2         x    0.70434
+     H2         y   -0.00473
+     H2         z   -0.00218
+ 
+ 
+ 
+++ Thermochemistry
+ 
+ *********************
+ *                   *
+ *  THERMOCHEMISTRY  *
+ *                   *
+ *********************
+ 
+ Mass-centered Coordinates (Angstrom):
+ ********************************************************
+ Label        X           Y           Z          Mass  
+ --------------------------------------------------------
+ H1         0.000000    0.000000   -0.616153      1.00783
+ H2        -0.000000   -0.000000    0.616153      1.00783
+ --------------------------------------------------------
+ Molecular mass:    2.015650
+ Rotational Constants (cm-1):   22.0295   22.0295**********
+ Rotational Constants (GHz) :  660.4272  660.4272**********
+ Rotational temperatures (K):   31.6955   31.6955**********
+ Rotational Symmetry factor:  2
+ Vibrational temperature (K): 
+   2482.66
+ Number of trans. and rot. degrees of freedom:  6
+ ZPVE                 2.467 kcal/mol      0.003931 au.
+ ZPVE corrected energy                   -0.718627 au.
+ 
+ *****************************************************
+ Temperature =     0.00 Kelvin, Pressure =   1.00 atm
+ -----------------------------------------------------
+ Molecular Partition Function and Molar Entropy:
+                        q/V (M**-3)    S(kcal/mol*K)
+ Electronic            0.100000D+01        0.000
+ Translational         0.100000D+01        0.000
+ Rotational            0.100000D+01        2.981
+ Vibrational           0.100000D+01        0.000
+ TOTAL                 0.100000D+01        2.981
+ 
+ Thermal contributions to INTERNAL ENERGY:
+ Electronic           0.000 kcal/mol      0.000000 au.
+ Translational        0.000 kcal/mol      0.000000 au.
+ Rotational           0.000 kcal/mol      0.000000 au.
+ Vibrational          2.467 kcal/mol      0.003931 au.
+ TOTAL                2.467 kcal/mol      0.003931 au.
+ 
+ Thermal contributions to
+ ENTHALPY             2.467 kcal/mol      0.003931 au.
+ GIBBS FREE ENERGY    2.467 kcal/mol      0.003931 au.
+ 
+ Sum of energy and thermal contributions
+ INTERNAL ENERGY                         -0.718627 au.
+ ENTHALPY                                -0.718627 au.
+ GIBBS FREE ENERGY                       -0.718627 au.
+ -----------------------------------------------------
+ 
+ *****************************************************
+ Temperature =   100.00 Kelvin, Pressure =   1.00 atm
+ -----------------------------------------------------
+ Molecular Partition Function and Molar Entropy:
+                        q/V (M**-3)    S(kcal/mol*K)
+ Electronic            0.100000D+01        0.000
+ Translational         0.170070D+26       22.653
+ Rotational            0.316563D-07      -31.335
+ Vibrational           0.406450D-05        0.000
+ TOTAL                 0.218823D+13       -8.682
+ 
+ Thermal contributions to INTERNAL ENERGY:
+ Electronic           0.000 kcal/mol      0.000000 au.
+ Translational        0.298 kcal/mol      0.000475 au.
+ Rotational           0.298 kcal/mol      0.000475 au.
+ Vibrational          2.467 kcal/mol      0.003931 au.
+ TOTAL                3.063 kcal/mol      0.004881 au.
+ 
+ Thermal contributions to
+ ENTHALPY             3.262 kcal/mol      0.005198 au.
+ GIBBS FREE ENERGY    4.130 kcal/mol      0.006581 au.
+ 
+ Sum of energy and thermal contributions
+ INTERNAL ENERGY                         -0.717677 au.
+ ENTHALPY                                -0.717360 au.
+ GIBBS FREE ENERGY                       -0.715976 au.
+ -----------------------------------------------------
+ 
+ *****************************************************
+ Temperature =   273.15 Kelvin, Pressure =   1.00 atm
+ -----------------------------------------------------
+ Molecular Partition Function and Molar Entropy:
+                        q/V (M**-3)    S(kcal/mol*K)
+ Electronic            0.100000D+01        0.000
+ Translational         0.767765D+26       27.646
+ Rotational            0.142910D-06      -28.340
+ Vibrational           0.106270D-01        0.002
+ TOTAL                 0.116601D+18       -0.692
+ 
+ Thermal contributions to INTERNAL ENERGY:
+ Electronic           0.000 kcal/mol      0.000000 au.
+ Translational        0.814 kcal/mol      0.001298 au.
+ Rotational           0.814 kcal/mol      0.001298 au.
+ Vibrational          2.467 kcal/mol      0.003932 au.
+ TOTAL                4.096 kcal/mol      0.006527 au.
+ 
+ Thermal contributions to
+ ENTHALPY             4.639 kcal/mol      0.007392 au.
+ GIBBS FREE ENERGY    4.828 kcal/mol      0.007693 au.
+ 
+ Sum of energy and thermal contributions
+ INTERNAL ENERGY                         -0.716031 au.
+ ENTHALPY                                -0.715166 au.
+ GIBBS FREE ENERGY                       -0.714864 au.
+ -----------------------------------------------------
+ 
+ *****************************************************
+ Temperature =   298.15 Kelvin, Pressure =   1.00 atm
+ -----------------------------------------------------
+ Molecular Partition Function and Molar Entropy:
+                        q/V (M**-3)    S(kcal/mol*K)
+ Electronic            0.100000D+01        0.000
+ Translational         0.875546D+26       28.081
+ Rotational            0.162972D-06      -28.079
+ Vibrational           0.155581D-01        0.004
+ TOTAL                 0.221997D+18        0.006
+ 
+ Thermal contributions to INTERNAL ENERGY:
+ Electronic           0.000 kcal/mol      0.000000 au.
+ Translational        0.889 kcal/mol      0.001416 au.
+ Rotational           0.889 kcal/mol      0.001416 au.
+ Vibrational          2.468 kcal/mol      0.003933 au.
+ TOTAL                4.245 kcal/mol      0.006766 au.
+ 
+ Thermal contributions to
+ ENTHALPY             4.838 kcal/mol      0.007710 au.
+ GIBBS FREE ENERGY    4.836 kcal/mol      0.007707 au.
+ 
+ Sum of energy and thermal contributions
+ INTERNAL ENERGY                         -0.715792 au.
+ ENTHALPY                                -0.714848 au.
+ GIBBS FREE ENERGY                       -0.714851 au.
+ -----------------------------------------------------
+ 
+ *****************************************************
+ Temperature =   323.15 Kelvin, Pressure =   1.00 atm
+ -----------------------------------------------------
+ Molecular Partition Function and Molar Entropy:
+                        q/V (M**-3)    S(kcal/mol*K)
+ Electronic            0.100000D+01        0.000
+ Translational         0.987945D+26       28.481
+ Rotational            0.183893D-06      -27.839
+ Vibrational           0.214752D-01        0.008
+ TOTAL                 0.390154D+18        0.650
+ 
+ Thermal contributions to INTERNAL ENERGY:
+ Electronic           0.000 kcal/mol      0.000000 au.
+ Translational        0.963 kcal/mol      0.001535 au.
+ Rotational           0.963 kcal/mol      0.001535 au.
+ Vibrational          2.469 kcal/mol      0.003935 au.
+ TOTAL                4.396 kcal/mol      0.007005 au.
+ 
+ Thermal contributions to
+ ENTHALPY             5.038 kcal/mol      0.008028 au.
+ GIBBS FREE ENERGY    4.828 kcal/mol      0.007693 au.
+ 
+ Sum of energy and thermal contributions
+ INTERNAL ENERGY                         -0.715553 au.
+ ENTHALPY                                -0.714530 au.
+ GIBBS FREE ENERGY                       -0.714864 au.
+ -----------------------------------------------------
+ 
+ *****************************************************
+ Temperature =   373.15 Kelvin, Pressure =   1.00 atm
+ -----------------------------------------------------
+ Molecular Partition Function and Molar Entropy:
+                        q/V (M**-3)    S(kcal/mol*K)
+ Electronic            0.100000D+01        0.000
+ Translational         0.122589D+27       29.195
+ Rotational            0.228184D-06      -27.410
+ Vibrational           0.359613D-01        0.020
+ TOTAL                 0.100594D+19        1.805
+ 
+ Thermal contributions to INTERNAL ENERGY:
+ Electronic           0.000 kcal/mol      0.000000 au.
+ Translational        1.112 kcal/mol      0.001773 au.
+ Rotational           1.112 kcal/mol      0.001773 au.
+ Vibrational          2.473 kcal/mol      0.003941 au.
+ TOTAL                4.698 kcal/mol      0.007486 au.
+ 
+ Thermal contributions to
+ ENTHALPY             5.439 kcal/mol      0.008668 au.
+ GIBBS FREE ENERGY    4.766 kcal/mol      0.007595 au.
+ 
+ Sum of energy and thermal contributions
+ INTERNAL ENERGY                         -0.715071 au.
+ ENTHALPY                                -0.713890 au.
+ GIBBS FREE ENERGY                       -0.714963 au.
+ -----------------------------------------------------
+ 
+ *****************************************************
+ Temperature =   473.15 Kelvin, Pressure =   1.00 atm
+ -----------------------------------------------------
+ Molecular Partition Function and Molar Entropy:
+                        q/V (M**-3)    S(kcal/mol*K)
+ Electronic            0.100000D+01        0.000
+ Translational         0.175035D+27       30.375
+ Rotational            0.325805D-06      -26.702
+ Vibrational           0.729304D-01        0.066
+ TOTAL                 0.415902D+19        3.739
+ 
+ Thermal contributions to INTERNAL ENERGY:
+ Electronic           0.000 kcal/mol      0.000000 au.
+ Translational        1.410 kcal/mol      0.002248 au.
+ Rotational           1.410 kcal/mol      0.002248 au.
+ Vibrational          2.493 kcal/mol      0.003973 au.
+ TOTAL                5.314 kcal/mol      0.008468 au.
+ 
+ Thermal contributions to
+ ENTHALPY             6.254 kcal/mol      0.009966 au.
+ GIBBS FREE ENERGY    4.485 kcal/mol      0.007147 au.
+ 
+ Sum of energy and thermal contributions
+ INTERNAL ENERGY                         -0.714090 au.
+ ENTHALPY                                -0.712591 au.
+ GIBBS FREE ENERGY                       -0.715410 au.
+ -----------------------------------------------------
+--
+ 
+++    Isotopic shifts:
+      ----------------
+ 
+ 
+ 
+ ****************************************
+ *                                      *
+ * Isotope shifted frequencies in cm-1  *
+ *                                      *
+ ****************************************
+ 
+ 
+  Single substitutions:
+  -----------------------
+ 
+ Masses:
+ =======
+   2   1
+ 
+ 
+ Frequencies:
+ ============
+                         1         2         3         4         5         6
+ 
+            Freq.      i0.00     i0.00      0.00      0.00      0.00   1494.55                                               
+ 
+ 
+ Masses:
+ =======
+   3   1
+ 
+ 
+ Frequencies:
+ ============
+                         1         2         3         4         5         6
+ 
+            Freq.      i0.00      0.00      0.00      0.00      0.00   1409.33                                               
+ 
+ 
+ Masses:
+ =======
+   1   2
+ 
+ 
+ Frequencies:
+ ============
+                         1         2         3         4         5         6
+ 
+            Freq.      i0.00     i0.00     i0.00      0.00      0.00   1494.55                                               
+ 
+ 
+ Masses:
+ =======
+   1   3
+ 
+ 
+ Frequencies:
+ ============
+                         1         2         3         4         5         6
+ 
+            Freq.      i0.00      0.00      0.00      0.00      0.00   1409.33                                               
+ 
+ 
+ 
+  Full substitutions:
+  -----------------------
+ 
+ Masses:
+ =======
+   2   2
+ 
+ 
+ Frequencies:
+ ============
+                         1         2         3         4         5         6
+ 
+            Freq.      i0.00     i0.00     i0.00      0.00      0.00   1220.61                                               
+ 
+ 
+ Masses:
+ =======
+   3   3
+ 
+ 
+ Frequencies:
+ ============
+                         1         2         3         4         5         6
+ 
+            Freq.      i0.00     i0.00      0.00      0.00      0.00    997.46                                               
+ 
+ 
+--
+ 
+++ Principal components of the normal modes
+   ----------------------------------------
+ 
+   (Only contributions larger than 0.50 times the maximum are printed)
+ 
+ 
+      Mode      1
+        Frequency:         1725.54 cm-1
+      ---------------------------------
+        Bond H2 H1               1.0000
+      ---------------------------------
+--
+ 
+--- Stop Module: slapaf at Mon Jul 13 23:03:12 2026 /rc=_RC_ALL_IS_WELL_ ---
+*** files: h2_S1_casscf.freq.molden h2_S1_casscf.slapaf.h5 xmldump
+    saved to directory /g100_scratch/userexternal/gbotti00/MOLCAS_21226199
+
+>>> END DO
+
+>>> EXPORT MOLCAS_TRAP = UNKNOWN_VARIABLE
+
+>>> EXPORT MOLCAS_MAXITER = UNKNOWN_VARIABLE
+
+.##################.
+.# Happy landing! #.
+.##################.
+
+    Timing: Wall=32.94 User=25.94 System=5.23
