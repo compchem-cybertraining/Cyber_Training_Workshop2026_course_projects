@@ -1,0 +1,40 @@
+#!/bin/bash
+#
+#SBATCH --job-name=07_MECI_CASPT2
+#SBATCH --output=07_MECI_CASPT2.o%j
+#SBATCH --error=07_MECI_CASPT2.e%j
+#SBATCH --time=04:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=16
+#SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=2500
+#SBATCH --account=cyberwksp21
+#SBATCH --qos general-compute
+
+module load intel/2022.00
+
+cd $SLURM_SUBMIT_DIR
+mkdir scr_07_MECI_CASPT2 
+
+######## OpenMolcas Settings ###########
+export MOLCAS=/projects/academic/cyberwksp21/SOFTWARE_2026/OpenMolcas
+export PATH=$PATH:/projects/academic/cyberwksp21/SOFTWARE_2026/OpenMolcas
+export MOLCAS_PROJECT=07_MECI_CASPT2
+export MOLCAS_MEM=2000
+export MOLCAS_NODELIST=$SLURM_NODELIST
+export MOLCAS_NNODES=$SLURM_NNODES
+export MOLCAS_NPROCS=1
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=16
+export MOLCAS_MAXITER=900
+export MOLCAS_TRAP=YES
+export MOLCAS_WORKDIR=$SLURM_SUBMIT_DIR/scr_07_MECI_CASPT2
+export MOLCAS_MOLDEN=YES
+export MOLCAS_PRINT=NORMAL
+export MOLCAS_ECHO_INPUT=YES
+########################################
+
+pymolcas 07_MECI_CASPT2.in > 07_MECI_CASPT2.out
+
+rm -rf $SLURM_SUBMIT_DIR/scr_07_MECI_CASPT2  
+

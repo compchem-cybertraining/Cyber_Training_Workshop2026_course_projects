@@ -1,0 +1,40 @@
+#!/bin/bash
+#
+#SBATCH --job-name=09_Core_Hole_XPS
+#SBATCH --output=09_Core_Hole_XPS.o%j
+#SBATCH --error=09_Core_Hole_XPS.e%j
+#SBATCH --time=04:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=40
+#SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=2500
+#SBATCH --account=cyberwksp21
+#SBATCH --qos general-compute
+
+module load intel/2022.00
+
+cd $SLURM_SUBMIT_DIR
+mkdir scr_09_Core_Hole_XPS 
+
+######## OpenMolcas Settings ###########
+export MOLCAS=/projects/academic/cyberwksp21/SOFTWARE_2026/OpenMolcas
+export PATH=$PATH:/projects/academic/cyberwksp21/SOFTWARE_2026/OpenMolcas
+export MOLCAS_PROJECT=09_Core_Hole_XPS
+export MOLCAS_MEM=2000
+export MOLCAS_NODELIST=$SLURM_NODELIST
+export MOLCAS_NNODES=$SLURM_NNODES
+export MOLCAS_NPROCS=1
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=40
+export MOLCAS_MAXITER=900
+export MOLCAS_TRAP=YES
+export MOLCAS_WORKDIR=$SLURM_SUBMIT_DIR/scr_09_Core_Hole_XPS
+export MOLCAS_MOLDEN=YES
+export MOLCAS_PRINT=NORMAL
+export MOLCAS_ECHO_INPUT=YES
+########################################
+
+pymolcas 09_Core_Hole_XPS.in > 09_Core_Hole_XPS.out
+
+rm -rf $SLURM_SUBMIT_DIR/scr_09_Core_Hole_XPS  
+

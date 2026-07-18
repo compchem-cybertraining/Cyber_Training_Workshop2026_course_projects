@@ -1,0 +1,71 @@
+{
+  "band_states": [
+    0,
+    1,
+    2
+  ],
+  "decoupled_states": [
+    0
+  ],
+  "active_coupling_pairs": [
+    "1-2"
+  ],
+  "supervised_coupling_pairs": [
+    "1-2"
+  ],
+  "unsupervised_active_pairs": [],
+  "energy_scale_eV": 3.990302085876465,
+  "gap_eps_eV": 0.02,
+  "delta_special_eV": 0.02,
+  "eigenvalue_energy_mode": "mae",
+  "gap_weight": 40.0,
+  "energy_state_weights": [
+    1.0,
+    0.3,
+    0.3
+  ],
+  "l2_weight": 3e-05,
+  "clip_grad_norm": 10.0,
+  "power_sum_max_k": 3,
+  "character_weight": 20.0,
+  "character_eps": 0.001,
+  "diabatic_target_weight": 60.0,
+  "termination_patience": 0,
+  "stopping_key": "Gap-all-MAE-eV",
+  "lr_schedule": {
+    "kind": "ReduceLROnPlateau",
+    "factor": 0.5,
+    "patience": 25,
+    "min_lr": 1e-07
+  },
+  "weights": {
+    "energy": 1.0,
+    "eigenvalue_energy": 20.0,
+    "gap": 40.0,
+    "gradient": 1.0,
+    "coupling": 1.0,
+    "anchor": 1.0,
+    "smoothness": 0.0,
+    "decoupled_anchor": 20.0,
+    "character": 20.0,
+    "diabatic": 60.0
+  },
+  "network_params": {
+    "possible_species": [
+      0,
+      1,
+      6,
+      7,
+      8,
+      17
+    ],
+    "n_features": 128,
+    "n_sensitivities": 64,
+    "dist_soft_min": 0.7,
+    "dist_soft_max": 5.0,
+    "dist_hard_max": 6.0,
+    "n_interaction_layers": 3,
+    "n_atom_layers": 3
+  },
+  "note": "NQDH: W=D+V; energies=eig(W) via power sums; grad/coupling=diag/offdiag(U^T dW U), eigen-gap masked; decoupled states have structural-zero off-diagonals."
+}

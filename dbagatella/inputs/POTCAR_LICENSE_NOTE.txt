@@ -1,0 +1,7 @@
+CRITICAL NOTE ON VASP PSEUDOPOTENTIALS (POTCAR):
+Due to licensing and copyright restrictions enforced by the VASP Software GmbH (University of Vienna), original POTCAR files cannot be distributed in public GitHub repositories.
+
+To reproduce these calculations, please concatenate the standard PBE PAW pseudopotentials from your licensed VASP distribution in the following order:
+1. Ti_pv (Titanium with p and d valence states)
+2. O     (Oxygen standard)
+3. C     (Carbon standard for Graphene monolayer)

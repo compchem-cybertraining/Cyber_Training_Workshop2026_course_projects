@@ -1,0 +1,6 @@
+S1000_b3lyp: Actual=0.9426, Predicted=1.1350, Error=20.41%
+S1200_b3lyp: Actual=0.8295, Predicted=1.0811, Error=30.33%
+S1180_b3lyp: Actual=0.8610, Predicted=0.8682, Error=0.83%
+S1010_b3lyp: Actual=1.2144, Predicted=0.4546, Error=62.56%
+S1090_b3lyp: Actual=-1.7744, Predicted=-1.8609, Error=4.87%
+S1050_b3lyp: Actual=-1.3183, Predicted=-1.1160, Error=15.35%

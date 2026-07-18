@@ -1,0 +1,11 @@
+name: ag-chain-ai-recalibration
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - numpy=2.2
+  - scipy=1.15
+  - matplotlib=3.10
+  - pip
+  - pip:
+      - pyscf==2.13.1

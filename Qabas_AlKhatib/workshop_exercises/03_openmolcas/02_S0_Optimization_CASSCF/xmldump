@@ -1,0 +1,418 @@
+<module value="gateway">
+</module>
+<module value="seward">
+</module>
+<module value="scf">
+<method> "rhf"</method>
+<energy appear="Total SCF energy" units="a.u." level="1" type="real"> -78.03145543</energy>
+<kinetic appear="Kinetic energy" units="a.u." level="2" type="real"> 77.90991100</kinetic>
+<virial appear="Virial coefficient" units="a.u." level="2" type="real"> 1.00156006</virial>
+<spin appear="UHF spin" level="1" type="real"> 0.00000000</spin>
+<potnuc appear="Nuclear repulsion energy" units="a.u." level="1" type="real"> 33.47005806</potnuc>
+<energy1el appear="One electron energy" units="a.u." level="1" type="real"> -170.27133499</energy1el>
+<energy2el appear="Two electron energy" units="a.u." level="1" type="real"> 58.76982150</energy2el>
+<nsym appear="Number of irreps" level="1" type="int"> 1</nsym>
+<nbas appear="Number of basis functions" level="1" type="int"> 38</nbas>
+<norb appear="Number of orbitals" level="1" type="int"> 38</norb>
+<nocc appear="Number of occupied orbitals" level="1" type="int"> 8</nocc>
+<FormalCharge appear="Total charge" units="a.u" type="real"> -0.00000000</FormalCharge>
+<dipole appear="Dipole moment" units="debye" level="1" type="real" nx="3"><v> -0.00000000</v><v> 0.00000000</v><v> 0.00000000</v></dipole>
+</module>
+<module value="rasscf">
+<FormalCharge appear="Total charge" units="a.u" type="real"> -0.00000000</FormalCharge>
+<dipole appear="Dipole moment" units="debye" level="1" type="real" nx="3"><v> 0.00000000</v><v> 0.00000000</v><v> 0.00000000</v></dipole>
+<FormalCharge appear="Total charge" units="a.u" type="real"> -0.00000000</FormalCharge>
+<dipole appear="Dipole moment" units="debye" level="1" type="real" nx="3"><v> 0.00000000</v><v> -0.00000000</v><v> 0.00000000</v></dipole>
+<FormalCharge appear="Total charge" units="a.u" type="real"> -0.00000000</FormalCharge>
+<dipole appear="Dipole moment" units="debye" level="1" type="real" nx="3"><v> -0.00000000</v><v> 0.00000000</v><v> 0.00000000</v></dipole>
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+<dipole appear="Dipole moment" units="debye" level="1" type="real" nx="3"><v> 0.00000000</v><v> -0.00000000</v><v> 0.00000000</v></dipole>
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="last_energy">
+<FormalCharge appear="Total charge" units="a.u" type="real"> -0.00000000</FormalCharge>
+<dipole appear="Dipole moment" units="debye" level="1" type="real" nx="3"><v> -0.00000018</v><v> 0.00000001</v><v> -0.00000000</v></dipole>
+<FormalCharge appear="Total charge" units="a.u" type="real"> -0.00000000</FormalCharge>
+<dipole appear="Dipole moment" units="debye" level="1" type="real" nx="3"><v> -0.00000058</v><v> 0.00000002</v><v> -0.00000000</v></dipole>
+<FormalCharge appear="Total charge" units="a.u" type="real"> -0.00000000</FormalCharge>
+<dipole appear="Dipole moment" units="debye" level="1" type="real" nx="3"><v> 0.00000035</v><v> -0.00000001</v><v> -0.00000000</v></dipole>
+</module>
+<module value="mckinley">
+</module>
+<module value="mclr">
+<dipole appear="Dipole moment" units="debye" level="1" type="real" nx="3"><v> -0.00001250</v><v> 0.00000052</v><v> -0.00000000</v></dipole>
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>
+<module value="seward">
+</module>
+<module value="rasscf">
+</module>
+<module value="slapaf">
+</module>
+<module value="alaska">
+</module>
+<module value="mclr">
+</module>
+<module value="alaska">
+</module>
+<module value="slapaf">
+</module>

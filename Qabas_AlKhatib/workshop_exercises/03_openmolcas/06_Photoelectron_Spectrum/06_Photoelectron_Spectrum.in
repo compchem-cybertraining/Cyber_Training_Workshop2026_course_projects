@@ -1,0 +1,56 @@
+&GATEWAY
+  Coord
+  12
+  Uracil S0 planar (oxo form)
+  N      -1.464000     0.099000     0.000000
+  C      -1.031000    -1.198000     0.000000
+  N       0.336000    -1.380000     0.000000
+  C       1.252000    -0.347000     0.000000
+  C       0.731000     0.984000     0.000000
+  C      -0.585000     1.169000     0.000000
+  O      -1.806000    -2.117000     0.000000
+  O       2.460000    -0.524000     0.000000
+  H      -2.450000     0.290000     0.000000
+  H       0.704000    -2.322000     0.000000
+  H       1.430000     1.807000     0.000000
+  H      -1.030000     2.155000     0.000000
+  Basis = aug-cc-pVDZ
+  Group = NoSym
+  RICD
+
+&SEWARD
+&SCF
+  Charge = 0
+  Spin   = 1
+
+&RASSCF
+  Title    = Uracil neutral SA-3 CAS(14,10)
+  Symmetry = 1
+  Nactel   = 14 0 0
+  Spin     = 1
+  Inactive = 22
+  Ras2     = 10
+  ciroot   = 3 3 1
+  >> COPY $WorkDir/$Project.JobIph $WorkDir/JOB001
+
+&RASSCF
+  Title    = Uracil cation CAS(13,10) SA-20-D
+  Symmetry = 1
+  Nactel   = 13 0 0
+  Spin     = 2
+  Inactive = 22
+  Ras2     = 10
+  ciroot   = 20 20 1
+  >> COPY $WorkDir/$Project.JobIph $WorkDir/JOB002
+
+&RASSI
+  NrOfJobIphs = 2 2 20
+  1 2
+  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+  SUBSets = 2
+  EJob
+  DYSOn
+  DYSExport
+  1 0
+  CIPRint
+

@@ -1,0 +1,39 @@
+&GATEWAY
+  Coord
+  6
+  Ethylene
+  C      -1.979720      0.748150      0.000000
+  C      -0.655823      0.692790     -0.000000
+  H      -2.587863     -0.148840      0.000000
+  H      -2.510933      1.692731     -0.000000
+  H      -0.124610     -0.251791     -0.000000
+  H      -0.047680      1.589780      0.000000
+  Basis = 6-31G*
+  Group = NoSym
+  RICD
+
+&SEWARD
+
+&SCF
+  Charge = 0
+  Spin   = 1
+
+&RASSCF
+  Title    = Ethylene SA-3-CAS(2,2)SCF
+  Symmetry = 1
+  Nactel   = 2 0 0
+  Spin     = 1
+  Inactive = 7
+  Ras2     = 2
+  ciroot   = 3 3 1
+  >> COPY $WorkDir/$Project.JobIph $WorkDir/JOB001
+  >> COPY $WorkDir/$Project.JobIph $WorkDir/JOB002
+&RASSI
+  NR OF JOBIPHS = 2 1 2
+  1
+  2 3
+  NTOC
+  EJob
+  TRDI
+  TRD1
+
