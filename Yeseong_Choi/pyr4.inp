@@ -1,0 +1,62 @@
+#######################################################################
+###           pyrazine 4-mode multi-set                            ####
+#######################################################################
+
+RUN-SECTION
+name = pyr4   propagate
+tfinal = 120.0   tout = 0.5   tpsi= 1.0
+psi  auto=twice  steps  gridpop=el
+title =  pyrazine 4-mode multi-set, linear model, no combinations.
+end-run-section
+
+OPERATOR-SECTION
+opname = pyrmod4
+end-operator-section
+
+SPF-BASIS-SECTION
+multi-set
+      v10a =    7, 7
+      v6a  =   12, 11
+      v1   =    6, 5
+      v9a  =    5, 4
+end-spf-basis-section
+
+PRIMITIVE-BASIS-SECTION
+    v10a   HO     22   0.0     1.0     1.0
+    v6a    HO     32   0.0     1.0     1.0
+    v1     HO     21   0.0     1.0     1.0
+    v9a    HO     12   0.0     1.0     1.0
+    el     el      2
+end-primitive-basis-section
+
+INTEGRATOR-SECTION
+CMF/var = 0.5,  1.0d-06
+RK5/spf =       1.0d-06 ,  5.0d-02
+SIL/A   =  5 ,  1.0d-06
+end-integrator-section
+
+INIT_WF-SECTION
+build
+   init_state =  2
+   v10a HO   0.0    0.0    1.00
+   v6a  HO   0.0    0.0    1.00
+   v1   HO   0.0    0.0    1.00
+   v9a  HO   0.0    0.0    1.00
+end-build
+end-init_wf-section
+
+ALLOC-SECTION
+   maxkoe=50
+   maxhtm=60
+   maxhop=60
+   maxfac=15
+   maxdef=85
+   maxmuld=2
+   maxLMR=1
+   maxsub=80
+   maxedim=1
+   maxnhtmshift=1
+end-alloc-section
+
+end-input
+

@@ -1,0 +1,15 @@
+=== tower_pyr4: pyrmod4  states=[1, 2] donor=2  Kp=(6, 3, 3, 3)  spawn=True  cutoff=5 (n_sel=81 / 162 full) ===
+  t=   0.0 fs  P(don=2)=1.00000  frames=1  R=1  N=81  Z=1.000000
+  t=  10.0 fs  P(don=2)=0.99229  frames=3  R=1  N=129  Z=1.000003
+  t=  20.0 fs  P(don=2)=0.76185  frames=5  R=1  N=177  Z=1.000014
+  t=  30.0 fs  P(don=2)=0.37250  frames=7  R=1  N=225  Z=1.000041
+  t=  40.0 fs  P(don=2)=0.24769  frames=9  R=1  N=273  Z=0.998581
+  t=  50.0 fs  P(don=2)=0.19155  frames=11  R=1  N=321  Z=1.001293
+  t=  60.0 fs  P(don=2)=0.16704  frames=13  R=1  N=369  Z=0.997979
+  t=  70.0 fs  P(don=2)=0.19767  frames=15  R=1  N=417  Z=0.997942
+  t=  80.0 fs  P(don=2)=0.37850  frames=17  R=1  N=465  Z=0.998644
+  t=  90.0 fs  P(don=2)=0.32777  frames=19  R=1  N=513  Z=0.999489
+  t= 100.0 fs  P(don=2)=0.23937  frames=21  R=1  N=561  Z=0.999362
+  t= 110.0 fs  P(don=2)=0.22858  frames=23  R=1  N=609  Z=1.001933
+  t= 120.0 fs  P(don=2)=0.21161  frames=25  R=1  N=657  Z=0.999725
+Z drift = 3.07e-03   -> swarm_pop_pyrmod4.csv
