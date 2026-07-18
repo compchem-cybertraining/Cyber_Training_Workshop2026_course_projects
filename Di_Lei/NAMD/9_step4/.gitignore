@@ -1,0 +1,10 @@
+.ipynb_checkpoints
+res-*
+namd_regular
+*.txt
+*_icond_*
+recipes/__pycache__
+data1
+data2
+data3
+
