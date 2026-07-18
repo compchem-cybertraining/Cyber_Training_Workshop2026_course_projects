@@ -17,7 +17,7 @@ This report covers that single-chain foundation, in two stages:
   beta(r) = beta(r_eq) + A*(r - r_eq)^q      (q = 1 here)
   V(r)    = -beta(r_eq) * B * (r_eq/r)^p
   ```
-  with a phenomenological electron-hole term `f_xc^A = -alpha * sum_B dq_B / sqrt(r_AB^2 + gamma^2)` driving exciton formation in real-time Ehrenfest dynamics.
+  with a phenomenological electron-hole term `f_xc^A = -alpha * sum_B dq_B / sqrt(r_AB^2 + gamma^2)` (a soft-core Coulomb-like attraction between a charge fluctuation `dq_B` at site B and site A, with `alpha` setting its overall strength and `gamma` a short-range softening length that keeps it finite at r_AB=0) driving exciton formation in real-time Ehrenfest dynamics.
 - **Part II**, below: porting the corrected model into Libra, the nonadiabatic molecular dynamics package used throughout this workshop, and running real-time excited-state dynamics to observe — and directly visualize — exciton self-trapping.
 
 ---
@@ -40,7 +40,7 @@ PBE is known to systematically underestimate band gaps. The natural instinct is 
 
 ## 1.3 Strategy
 
-**Ab initio recipe.** All calculations use pySCF, the `gth-pbe`/`gth-szv-molopt-sr` pseudopotential/basis pair (the only Ag combination bundled by default with pySCF; carries the full 4d^10 5s^1 valence manifold, not just the 5s band the TB model represents), and isolated finite Ag_n clusters (even n, symmetric dimer-pair termination) rather than periodic supercells for the correlated (CCSD, TDDFT) steps, since those methods don't support k-point sampling.
+**Ab initio recipe.** All calculations use pySCF, the `gth-pbe`/`gth-szv-molopt-sr` pseudopotential/basis pair (the only Ag combination bundled by default with pySCF; carries the full 4d^10 5s^1 valence manifold, not just the 5s band the TB model represents), and isolated finite Ag_n clusters (even n, symmetric dimer-pair termination) rather than periodic supercells for the correlated (CCSD, TDDFT) steps, since those methods don't support k-point sampling. `natoms` (= n) is the number of Ag atoms in that finite cluster; because a finite cluster is only an approximation to the infinite chain, every quantity computed this way is evaluated at several natoms and extrapolated to the infinite-chain limit (natoms → infinity, i.e. 1/natoms → 0). Where that extrapolation matters enough to question, three "flavors" are compared as a rough uncertainty estimate: fitting all computed natoms points ("all-points"), fitting only the four largest, best-converged clusters ("largest-4"), or fitting a quadratic rather than linear form in 1/natoms ("quadratic") — see Figure 2's table and Figure 4 for where this uncertainty shows up numerically.
 
 **The metal-to-semiconductor test (Figure 1).** A quick periodic HF scan near delta=0 shows the gap does *not* vanish at the undimerized limit (~3.4 eV at delta=0, rising with dimerization) — a known HF/post-HF failure for 1D half-filled metals (missing screening/correlation, the same class of effect documented for polyacetylene). PBE, by contrast, gives exactly 0 eV at delta=0 for every lattice length tested. This rules out simply replacing the PBE-fit `beta(r)` with an HF-derived one: doing so would break the one qualitative feature the whole project depends on.
 
@@ -100,13 +100,15 @@ The most-corrected estimate (~1.2-1.4 eV) is larger than the model's original al
 
 ### 1.4.5 Orbital character: the excited electron is on the Ag 5s manifold
 
-Natural Transition Orbital (NTO) analysis of the lowest CIS/TDA excited state (natoms=8, lattice_length=6.0 Å, delta=0.0864) gives direct, visual support for the single s-band TB picture:
+Natural Transition Orbital (NTO) analysis re-expresses a (possibly multi-configurational) excited state as a sum of independent hole→particle orbital pairs, ordered by how much each pair contributes to the transition — a standard way to ask "which single orbital-to-orbital transition, if any, dominates this excited state" even when the raw CIS wavefunction is a sum of many configurations. Applied to the lowest CIS/TDA excited state (natoms=8, lattice_length=6.0 Å, delta=0.0864), it gives direct, visual support for the single s-band TB picture:
 
 | NTO pair | weight | hole 5s-character | electron 5s-character |
 |---|---|---|---|
 | 1 (dominant) | 0.697 | 0.000 | 0.554 |
 | 2 | 0.191 | 0.000 | 0.440 |
 | 3 | 0.074 | 0.000 | 0.233 |
+
+`weight` is that pair's fractional contribution to the excited state (the three shown account for 0.697+0.191+0.074 ≈ 96% of it); `hole/electron 5s-character` is the fraction of each pair's hole or particle orbital that projects onto Ag 5s atomic orbitals specifically, as opposed to the 4d/5p manifold pySCF's basis also carries (Section 1.3) but the TB model omits entirely.
 
 Across all three leading pairs, the hole carries essentially zero Ag 5s character (it is p/d-derived), while the electron carries substantial and consistent 5s character.
 
@@ -214,6 +216,12 @@ Three Ehrenfest molecular dynamics runs were carried out from the equilibrium di
 1. **Unseeded exciton dynamics.** The system starts on the exciton potential energy surface with zero nuclear velocity. With the ring's exact symmetry and no velocity to break it, the exciton has no channel to spontaneously localize.
 2. **Seeded exciton dynamics.** Identical setup, but nuclear velocities are drawn from a small random (Maxwell-Boltzmann) distribution rather than starting at exactly zero — a physically reasonable initial condition (a real system carries some thermal/zero-point nuclear motion at the instant of excitation) that gives the exciton a channel to break symmetry.
 3. **Ground-state control.** The same velocity seed as run 2, but propagated on the ground-state potential energy surface instead of the exciton surface — isolates whether any structure seen in run 2 is actually driven by the exciton, rather than being an artifact of the random kick itself.
+
+**Diagnostics used throughout Section 2.4.** Three quantities are read off each trajectory:
+
+- **Hole/electron density**, `rho_hole(site)` and `rho_elec(site)`: the real-space probability that the exciton's hole (missing electron) or excited electron is found at a given atomic site, obtained by projecting the instantaneous CIS eigenvector onto the site basis; each is individually normalized to sum to 1 over all sites. Plotted as a heatmap (site index vs. time) in Figures 6 and 8. Not defined for the ground-state control (Run 3), since there is no exciton to have a hole/electron density.
+- **Inverse participation ratio (IPR)**, computed from either density as `IPR = 1 / sum_site(rho(site)^2)`: a standard localization measure that equals the number of sites (64 here) for a perfectly uniform/delocalized density and approaches 1 as the density concentrates onto a single site. Plotted vs. time in Figures 7 and 9.
+- **RMS bond-length distortion**: the root-mean-square, over all bonds in the ring, of each bond's length change relative to its value at t=0 — a single scalar summarizing how far the lattice geometry as a whole has moved from its starting point, regardless of whether that movement is spatially localized or spread out. Plotted both as a bond-index-vs-time heatmap (per-bond distortion, signed, Figures 6/8/10) and as a single time trace (Figures 7/9/11).
 
 ## 2.4 Results
 
