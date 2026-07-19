@@ -1,0 +1,92 @@
+{
+  "target": "GW_QP_BandGap",
+  "n_samples": 64,
+  "n_cv_folds": 5,
+  "features": [
+    "homo_lumo_gap_eV",
+    "cis_s1_eV",
+    "cis_s1_osc_strength",
+    "dipole_debye",
+    "n_atoms",
+    "GapC",
+    "AtomNumC",
+    "MolWtS",
+    "RhoC",
+    "EpsilonC"
+  ],
+  "metrics": {
+    "mean_baseline": {
+      "rmse": 1.0707247993986675,
+      "mae": 0.8213103737745099,
+      "r2": -0.058672796354782175
+    },
+    "naive_cheap_S1_only": {
+      "rmse": 1.9045641891042961,
+      "mae": 1.8020485641408663,
+      "r2": -2.349633248332825
+    },
+    "ridge_pyscf_only": {
+      "rmse": 0.6666895191181629,
+      "mae": 0.4405436953865016,
+      "r2": 0.5895565912322729
+    },
+    "ridge": {
+      "rmse": 0.21902747545521667,
+      "mae": 0.16263665566790353,
+      "r2": 0.955700051103146
+    },
+    "random_forest": {
+      "rmse": 0.4205870809143759,
+      "mae": 0.25087164712682963,
+      "r2": 0.8366504707678609
+    },
+    "gradient_boosting": {
+      "rmse": 0.4282275379302549,
+      "mae": 0.2509707523159938,
+      "r2": 0.8306616927206804
+    }
+  },
+  "best_model": "ridge",
+  "feature_importance_random_forest": [
+    {
+      "feature": "GapC",
+      "importance": 0.7572356582333669
+    },
+    {
+      "feature": "homo_lumo_gap_eV",
+      "importance": 0.12508379982988305
+    },
+    {
+      "feature": "cis_s1_eV",
+      "importance": 0.06935707746554143
+    },
+    {
+      "feature": "RhoC",
+      "importance": 0.022452386265884184
+    },
+    {
+      "feature": "MolWtS",
+      "importance": 0.00665071165162462
+    },
+    {
+      "feature": "dipole_debye",
+      "importance": 0.004332146786324346
+    },
+    {
+      "feature": "n_atoms",
+      "importance": 0.004056219399570326
+    },
+    {
+      "feature": "EpsilonC",
+      "importance": 0.0039837536524522715
+    },
+    {
+      "feature": "cis_s1_osc_strength",
+      "importance": 0.0038565261930597118
+    },
+    {
+      "feature": "AtomNumC",
+      "importance": 0.0029917205222931478
+    }
+  ]
+}
