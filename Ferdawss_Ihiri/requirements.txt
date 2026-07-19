@@ -1,0 +1,13 @@
+# Core (dataset build + scikit-learn ML + figures)
+numpy>=1.22
+pandas>=1.5
+matplotlib>=3.5
+scikit-learn>=1.2
+
+# Cheap electronic structure (use dedicated qc env)
+# pyscf>=2.0
+
+# ChemML AutoML
+# chemml>=1.3
+# rdkit
+# openbabel-wheel

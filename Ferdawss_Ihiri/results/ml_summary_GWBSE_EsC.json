@@ -1,0 +1,92 @@
+{
+  "target": "GWBSE_EsC",
+  "n_samples": 64,
+  "n_cv_folds": 5,
+  "features": [
+    "homo_lumo_gap_eV",
+    "cis_s1_eV",
+    "cis_s1_osc_strength",
+    "dipole_debye",
+    "n_atoms",
+    "GapC",
+    "AtomNumC",
+    "MolWtS",
+    "RhoC",
+    "EpsilonC"
+  ],
+  "metrics": {
+    "mean_baseline": {
+      "rmse": 0.8376418421137114,
+      "mae": 0.6426539968349358,
+      "r2": -0.06440536557059362
+    },
+    "naive_cheap_S1_only": {
+      "rmse": 2.2693818227827043,
+      "mae": 2.205397670390867,
+      "r2": -6.812777794573463
+    },
+    "ridge_pyscf_only": {
+      "rmse": 0.5760293842056151,
+      "mae": 0.3770703389817503,
+      "r2": 0.49663895236423417
+    },
+    "ridge": {
+      "rmse": 0.2662533615648154,
+      "mae": 0.20464550737347725,
+      "r2": 0.8924574009881874
+    },
+    "random_forest": {
+      "rmse": 0.31975985264161944,
+      "mae": 0.21940560384135266,
+      "r2": 0.8448905710581246
+    },
+    "gradient_boosting": {
+      "rmse": 0.35061230139281957,
+      "mae": 0.22322438787829776,
+      "r2": 0.8135146896707433
+    }
+  },
+  "best_model": "ridge",
+  "feature_importance_random_forest": [
+    {
+      "feature": "GapC",
+      "importance": 0.7894839458847933
+    },
+    {
+      "feature": "cis_s1_eV",
+      "importance": 0.118472475585332
+    },
+    {
+      "feature": "homo_lumo_gap_eV",
+      "importance": 0.03200972860119102
+    },
+    {
+      "feature": "RhoC",
+      "importance": 0.024983808352908598
+    },
+    {
+      "feature": "MolWtS",
+      "importance": 0.009056563164723197
+    },
+    {
+      "feature": "EpsilonC",
+      "importance": 0.007143033279044464
+    },
+    {
+      "feature": "AtomNumC",
+      "importance": 0.0061373060653810915
+    },
+    {
+      "feature": "cis_s1_osc_strength",
+      "importance": 0.006035822189622224
+    },
+    {
+      "feature": "dipole_debye",
+      "importance": 0.0041110529640120495
+    },
+    {
+      "feature": "n_atoms",
+      "importance": 0.002566263912991985
+    }
+  ]
+}
