@@ -712,6 +712,7 @@ def Holstein2_rev(q, params, full_id):
     x = float(q.col(indx).get(0))
     x = jnp.array(x, dtype=jnp.float64)
 
+    # AI-generated version
     # Real-valued Hamiltonian; we'll cast to complex only at the end
     def H_real(x_scalar, E_n, x_n, k_n, V):
         diag = E_n + 0.5 * k_n * (x_scalar - x_n) ** 2  # real (n,)
@@ -722,7 +723,7 @@ def Holstein2_rev(q, params, full_id):
         H = H.at[idx + 1, idx].set(V)
         return H  # real (n, n)
 
-    # Jacobian dH/dx: shape (n, n), real-valued, no complex issues.[web:31]
+    # Jacobian dH/dx: shape (n, n), real-valued, no complex issues.
     dHdx_real = jax.jacrev(H_real, argnums=0)(x, E_n, x_n, k_n, V)
     H_real_val = H_real(x, E_n, x_n, k_n, V)
 
